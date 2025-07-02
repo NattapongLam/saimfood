@@ -398,9 +398,9 @@
 <!-- Modal -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordLabel" aria-hidden="true">
   <div class="modal-dialog">
-    {{-- <form method="POST" action="{{ route('persons.update') }}">
+    <form method="POST" action="{{ route('persons.update',auth()->user()->id) }}">
     @csrf
-    @method('PUT') --}}
+    @method('PUT')
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="changePasswordLabel">เปลี่ยนรหัสผ่าน</h5>
@@ -410,16 +410,13 @@
           <div class="mb-3">
             <label for="new_password" class="form-label">รหัสผ่านใหม่</label>
             <input type="password" class="form-control" name="new_password" required>
-          </div>
-          <div class="mb-3">
-            <label for="new_password_confirmation" class="form-label">ยืนยันรหัสผ่านใหม่</label>
-            <input type="password" class="form-control" name="new_password_confirmation" required>
+            <input type="hidden" value="new-pass" name="checktype">
           </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">บันทึก</button>
         </div>
       </div>
-    {{-- </form> --}}
+    </form>
   </div>
 </div>

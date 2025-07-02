@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+<link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -17,89 +18,193 @@
                         @endif       
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ใบแจ้งซ่อม</h5>
-                                <div class="page-title-right">
-                                    <h5 class="my-0 text-primary">
-                                        <a href="{{route('machine-repair-docus.create')}}">
-                                            เพิ่มข้อมูล
-                                        </a>
-                                    </h5>                  
+                                    <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ใบแจ้งซ่อม (สถานะ : {{$hd->machine_repair_status_name}})</h5>                              
+                            </div>
+                            <form class="custom-validation" action="{{ route('machine-repair-docus.update',$hd->machine_repair_dochd_id) }}" method="POST" enctype="multipart/form-data" validate>
+                            @csrf    
+                            @method('PUT')  
+                            <h5>รายการแจ้งซ่อม</h5>
+                            <div class="card-body">
+                               <div class="row"> 
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่</label>
+                                            <input class="form-control" type="date" name="machine_repair_dochd_date" value="{{$hd->machine_repair_dochd_date}}" readonly required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ประเภท</label>
+                                            <select class="form-select" name="machine_repair_dochd_type" required>
+                                                @if ($hd->machine_repair_dochd_type == "ปกติ")
+                                                    <option value="ปกติ">ปกติ</option>
+                                                    <option value="ด่วน">ด่วน</option>
+                                                @elseif($hd->machine_repair_dochd_type == "ด่วน")
+                                                    <option value="ด่วน">ด่วน</option>
+                                                    <option value="ปกติ">ปกติ</option>                                                  
+                                                @endif
+                                               
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">เครื่องจักร</label>
+                                            <select class="select2 form-select" name="machine_code" required>
+                                                <option value="">กรุณาเลือก</option>
+                                                @foreach ($machine as $item)
+                                                <option value="{{$item->machine_code}}" {{ $item->machine_code == $hd->machine_code ? 'selected' : '' }}>
+                                                    {{$item->machine_code}} / {{$item->machine_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ที่ตั้ง</label>
+                                            <input class="form-control" type="type" name="machine_repair_dochd_location" value="{{$hd->machine_repair_dochd_location}}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="form-label">ปัญหา</label>
+                                        <textarea class="form-control" name="machine_repair_dochd_case" required>{{$hd->machine_repair_dochd_case}}</textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <form method="GET" class="form-horizontal">
-                            @csrf
-                                <div class="row">                              
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <input type="date" class="form-control" name="datestart" value="{{$datestart}}">
-                                            </div>                                          
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <input type="date" class="form-control" name="dateend" value="{{$dateend}}">
-                                            </div>                                          
-                                        </div>
-                                        <div class="col-3">
-                                             <div class="form-group">
-                                                <button class="btn btn-info w-lg">
-                                                    <i class="fas fa-search"></i> ค้นหา
-                                                </button>
-                                             </div>                                          
-                                        </div>                                
-                                </div>
-                            </form>
+                            <h5>รายละเอียดการรับงานซ่อม</h5>
+                            @if ($hd->machine_repair_status_id == 1 || $hd->machine_repair_status_id == 9)
                             <div class="card-body">
                                 <div class="row"> 
-                                    <table id="DataTableList" class="table table-bordered dt-responsive  nowrap w-100 text-center">
-                                        <thead>
-                                            <tr>
-                                                <th>สถานะ</th>
-                                                <th>วันที่</th>
-                                                <th>เลขที่</th>
-                                                <th>เครื่องจักร</th>
-                                                <th>ประเภท</th>
-                                                <th>ปัญหา</th>
-                                                <th>ผู้แจ้งซ่อม</th>
-                                                <th>ผู้รับงานซ่อม</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($hd as $item)
-                                                <tr>
-                                                    <td>{{$item->machine_repair_status_name}}</td>
-                                                    <td>{{$item->machine_repair_dochd_date}}</td>
-                                                    <td>{{$item->machine_repair_dochd_docuno}}</td>
-                                                    <td>
-                                                        <img src="{{ asset($item->machine_pic1 ?? 'images/no-image.png') }}" alt="Machine Image" class="rounded-circle avatar-xl"><br>
-                                                        {{$item->machine_code}}/{{$item->machine_name}}
-                                                    </td>
-                                                    <td>{{$item->machine_repair_dochd_type}}</td>
-                                                    <td>
-                                                        {{$item->machine_repair_dochd_case}}<br>
-                                                        (ที่ตั้ง : {{$item->machine_repair_dochd_location}})
-                                                    </td>
-                                                    <td>      
-                                                        {{$item->person_at}}                                                
-                                                    </td>
-                                                    <td>      
-                                                        {{$item->accepting_at}}                                                
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>                                                                                                            
-                                                    </td>
-                                                    <td>
-                                                        @if ($item->machine_repair_status_id == 1)
-                                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->machine_repair_dochd_id }}')"><i class="fas fa-trash"></i></a>           
-                                                        @endif                                                      
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                    <div class="form-group">
+                                        <label class="form-label">หมายเหตุรับงานซ่อม</label>
+                                        <textarea class="form-control" name="accepting_note" required>{{$hd->accepting_note}}</textarea>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row"> 
+                                     <div class="col-12" style="text-align: right;">
+                                                <a href="javascript:void(0);" class="btn btn-secondary" id="addRowBtn">เพิ่มรายการ</a>
+                                            </div>
+                                            <table class="table table-striped mb-0 text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>รายละเอียด</th>
+                                                        <th>ค่าใช้จ่าย</th>
+                                                        <th>หมายเหตุ</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($hd->details as $key => $item)
+                                                        <tr>
+                                                            <td>
+                                                                {{$item->machine_repair_docdt_listno}}
+                                                                <input type="hidden" name="machine_repair_docdt_listno[]" value="{{$item->machine_repair_docdt_listno}}">
+                                                            </td>
+                                                            <td>                              
+                                                                <input class="form-control" name="machine_repair_docdt_remark[]" value="{{$item->machine_repair_docdt_remark}}">
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_cost[]" value="{{number_format($item->machine_repair_docdt_cost,2)}}">                                                              
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_note[]" value="{{$item->machine_repair_docdt_note}}">                                    
+                                                            </td>
+                                                            <td>
+                                                                <input type="hidden" name="machine_repair_docdt_id[]" value="{{$item->machine_repair_docdt_id}}">
+                                                                <div class="square-switch">
+                                                                    @if($item->machine_repair_docdt_flag == 1)
+                                                                    <input type="checkbox" id="square-switch1" switch="none" name="machine_repair_docdt_flag[]" value="true" checked/>
+                                                                    @else
+                                                                    <input type="checkbox" id="square-switch1" switch="none" name="machine_repair_docdt_flag[]" />
+                                                                    @endif
+                                                                    <label for="square-switch1" data-on-label="On" data-off-label="Off"></label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach   
+                                                </tbody>
+                                                <tbody id="tableBody">
+                                                </tbody>
+                                            </table>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="d-flex flex-wrap gap-2 justify-content">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light" >
+                                            รับงานซ่อม
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                            @elseif($hd->machine_repair_status_id == 2)
+                            <div class="card-body">
+                                <div class="row"> 
+                                    <div class="form-group">
+                                        <label class="form-label">หมายเหตุรับงานซ่อม</label>
+                                        <textarea class="form-control" name="accepting_note" required>{{$hd->accepting_note}}</textarea>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <h5>เพิ่มเติม</h5>
+                                    <table class="table table-striped table-bordered mb-0 text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>รายการ</th>
+                                                            <th>ค่าใช้จ่าย</th>
+                                                            <th>หมายเหตุ</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($hd->details->where('machine_repair_docdt_flag', true) as $key => $item)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{$item->machine_repair_docdt_remark}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
+                                                                <td>{{$item->machine_repair_docdt_note}}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                    </table>         
+                                </div>                                                           
+                            </div>
+                            <h5>รายละเอียดอนุมัติซ่อม</h5>
+                            <div class="card-body">
+                                <div class="row"> 
+                                    <div class="form-group">
+                                        <label class="form-label">เลือกสถานะ</label>
+                                        <select class="form-select" name="machine_repair_status_id" required>
+                                            <option value="">กรุณาเลือก</option>
+                                            @foreach ($status as $item)
+                                               <option value="{{$item->machine_repair_status_id}}">{{$item->machine_repair_status_name}}</option> 
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">หมายเหตุอนุมัติซ่อม</label>
+                                        <textarea class="form-control" name="approval_note"></textarea>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="d-flex flex-wrap gap-2 justify-content">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light" >
+                                            อนุมัติซ่อม
+                                        </button>
+                                    </div>
+                                </div>
+                             </div>
+                            @endif                          
+                            </form>
                         </div>
                 </div>
             </div>
@@ -108,90 +213,52 @@
 </div>
 @endsection
 @section('script')
+<script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
 <script>
-$(document).ready(function() {
-    $('#DataTableList').DataTable({
-        "paging": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "order": [[0, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
-        "language": {
-            "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
-            "zeroRecords": "ไม่พบข้อมูล",
-            "info": "แสดง _START_ ถึง _END_ จาก _TOTAL_ รายการ",
-            "infoEmpty": "ไม่มีข้อมูล",
-            "search": "ค้นหา:",
-            "paginate": {
-                "first": "หน้าแรก",
-                "last": "หน้าสุดท้าย",
-                "next": "ถัดไป",
-                "previous": "ก่อนหน้า"
-            }
-        },
-        "columnDefs": [
-            { "className": "text-center", "targets": "_all" }
-        ]
+$(document).ready(function () {
+    $('.select2').select2({
+        placeholder: "เลือกเครื่องจักร",
+        allowClear: true,
+        width: '100%'
     });
 });
-confirmDel = (refid) =>{
-Swal.fire({
-    title: 'คุณแน่ใจหรือไม่ !',
-    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'ยืนยัน',
-    cancelButtonText: 'ยกเลิก',
-    confirmButtonClass: 'btn btn-success',
-    cancelButtonClass: 'btn btn-danger',
-    buttonsStyling: false         
-}).then(function(result) {
-    if (result.value) {
-        $.ajax({
-            url: `{{ url('/confirmDelMachineRepairHd') }}`,
-            type: "POST",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "refid": refid,               
-            },           
-            dataType: "json",
-            success: function(data) {
-                // console.log(data);
-                if (data.status == true) {
-                    Swal.fire({
-                        title: 'สำเร็จ',
-                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
-                        icon: 'success'
-                    }).then(function() {
-                        location.reload();
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'ไม่สำเร็จ',
-                        text: 'ยกเลิกรายการไม่สำเร็จ',
-                        icon: 'error'
-                    });
-                }
-               
-            },
-            error: function(data) {
-                Swal.fire({
-                        title: 'ไม่สำเร็จ',
-                        text: 'ยกเลิกรายการไม่สำเร็จ',
-                        icon: 'error'
-                    });            }
-        });
+let listNoStart = {{ $hd->details->max('machine_repair_docdt_listno') ?? 0 }};
+function updateRowNumbers() {
+    const rows = document.querySelectorAll('#tableBody tr');
+    rows.forEach((row, index) => {
+        const listno = listNoStart + index + 1;
+        row.querySelector('.row-number').textContent = listno;
+        row.querySelector('.row-number-hidden').value = listno;
+    });
+}
+document.addEventListener('DOMContentLoaded', function () {
+    const addRowBtn = document.getElementById('addRowBtn');
+    if (addRowBtn) {
+        addRowBtn.addEventListener('click', function () {
+            const tbody = document.getElementById('tableBody');
 
-    } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire({
-            title: 'ยกเลิก',
-            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
-            icon: 'error'
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>
+                    <span class="row-number"></span>
+                    <input type="hidden" name="machine_repair_docdt_listno[]" class="row-number-hidden"/>
+                </td>
+                <td><input type="text" name="machine_repair_docdt_remark[]" class="form-control"/></td>
+                <td><input type="text" name="machine_repair_docdt_cost[]" value="0"  class="form-control"/></td>
+                <td><input type="text" name="machine_repair_docdt_note[]" class="form-control"/></td>
+                <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
+            `;
+
+            tbody.appendChild(newRow);
+            updateRowNumbers();
         });
     }
 });
-}
+document.getElementById('tableBody').addEventListener('click', function (e) {
+    if (e.target.classList.contains('deleteRow')) {
+        e.target.closest('tr').remove();
+        updateRowNumbers(); // อัปเดตลำดับหลังจากลบ
+    }
+});
 </script>
 @endsection

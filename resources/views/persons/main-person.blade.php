@@ -32,18 +32,27 @@
             <div class="card-body">
                 <div class="row">
                     <div class="table-responsive">
-                        <table class="table mb-0">
+                        <table class="table table-bordered dt-responsive  nowrap w-100 text-center">
                             <thead>
                                 <tr>
+                                    <th>สถานะ</th>
                                     <th>รหัสพนักงาน</th>
                                     <th>ชื่อ - นามสกุล</th>         
                                     <th>ชื่อผู้ใช้งาน</th>                             
                                     <th>กำหนดสิทธิ</th>
+                                    <th>แก้ไข</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($users as $item)
                                     <tr>
+                                        <td>
+                                            @if ($item->status)
+                                                <span class="badge bg-success">ใช้งาน</span>
+                                            @else
+                                                <span class="badge bg-danger">ไม่ใช้งาน</span>
+                                            @endif                                                          
+                                        </td>
                                         <td>{{$item->employee_code}}</td>
                                         <td>{{$item->employee_fullname}}</td>
                                         <td>{{$item->username}}</td>
@@ -52,6 +61,12 @@
                                             class="btn btn-sm btn-info">
                                             <i class="fas fa-user"></i>
                                             </a> 
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('persons.edit', $item->id) }}"
+                                                class="btn btn-warning btn-sm">
+                                                <i class="bx bx-edit-alt"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

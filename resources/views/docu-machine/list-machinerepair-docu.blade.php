@@ -87,7 +87,9 @@
                                                         {{$item->accepting_at}}                                                
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>                                                                                                            
+                                                        @if ($item->machine_repair_status_id <> 7 || $item->machine_repair_status_id <> 8)
+                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>   
+                                                        @endif                                                      
                                                     </td>
                                                     <td>
                                                         @if ($item->machine_repair_status_id == 1)

@@ -27,7 +27,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class="form-label">วันที่</label>
-                                            <input class="form-control" type="date" name="machine_repair_dochd_date" required>
+                                            <input class="form-control" type="date" name="machine_repair_dochd_date" value="{{ date('Y-m-d') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-6">

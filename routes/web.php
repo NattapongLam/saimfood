@@ -29,14 +29,14 @@ Route::get('/', function () {
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 require __DIR__.'/auth.php';
-Route::get('/', [WelcomeController::class, 'index'])->name('home');
+Route::get('/home', [WelcomeController::class, 'index'])->name('home');
 Route::group([
     'middleware' =>  ['auth','role:superadmin|admin|user']
 ],function(){
+Route::resource('/persons' , App\Http\Controllers\PersonController::class);
     Route::group([
         'middleware' =>  ['auth','role:superadmin']
-    ],function(){
-        Route::resource('/persons' , App\Http\Controllers\PersonController::class);
+    ],function(){       
         Route::resource('/permissions' , App\Http\Controllers\PermissionController::class);
     });
     Route::group([
@@ -70,5 +70,6 @@ Route::group([
     });
 Route::resource('/machine-repair-docus' , App\Http\Controllers\MachineRepairDocuController::class);
 Route::post('/confirmDelMachineRepairHd' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairHd']);
+Route::post('/confirmDelMachineRepairDt' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairDt']);
 });
 

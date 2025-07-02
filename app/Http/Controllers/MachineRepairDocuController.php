@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Machine;
 use Illuminate\Http\Request;
+use App\Models\MachineRepairDocdt;
 use App\Models\MachineRepairDochd;
 use Illuminate\Support\Facades\DB;
+use App\Models\MachineRepairStatus;
 use Illuminate\Support\Facades\Auth;
 
 class MachineRepairDocuController extends Controller
@@ -115,7 +117,11 @@ class MachineRepairDocuController extends Controller
      */
     public function edit($id)
     {
-        //
+        $hd = MachineRepairDochd::leftjoin('machine_repair_statuses','machine_repair_dochds.machine_repair_status_id','=','machine_repair_statuses.machine_repair_status_id')
+        ->find($id);      
+        $machine = Machine::where('machine_flag',true)->get();
+        $status = MachineRepairStatus::whereIn('machine_repair_status_id',[3,8,9])->get();
+        return view('docu-machine.edit-machinerepair-docu',compact('hd','machine','status'));
     }
 
     /**
@@ -127,7 +133,84 @@ class MachineRepairDocuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ck = MachineRepairDochd::where('machine_repair_dochd_id',$id)->first();
+        if($ck->machine_repair_status_id == 1 || $ck->machine_repair_status_id == 9){
+            $request->validate([
+                'accepting_note' => 'required',
+            ]);            
+            try 
+            {
+                DB::beginTransaction();
+                MachineRepairDochd::where('machine_repair_dochd_id',$id)
+                ->update([
+                    'machine_repair_dochd_type' => $request->machine_repair_dochd_type,
+                    'machine_repair_dochd_case' => $request->machine_repair_dochd_case,
+                    'machine_repair_dochd_location' => $request->machine_repair_dochd_location,
+                    'machine_repair_status_id' => 2,
+                    'accepting_at' => Auth::user()->name,
+                    'accepting_date' =>  Carbon::now(),
+                    'accepting_note' => $request->accepting_note
+                ]);
+                $listnos = $request->machine_repair_docdt_listno ?? [];
+                $ids = $request->machine_repair_docdt_id ?? [];
+                foreach ($listnos as $key => $listno) {
+                    $docdtId = $ids[$key] ?? null;
+                    $cost = str_replace(',', '', $request->machine_repair_docdt_cost[$key]);
+                    $flag = $request->machine_repair_docdt_flag[$key] ?? false;
+                    $flag = $flag == 'on' || $flag == 'true' ? true : false;
+                    if ($docdtId) {
+                        MachineRepairDocdt::where('machine_repair_docdt_id', $docdtId)
+                            ->update([
+                                'machine_repair_docdt_listno' => $listno,
+                                'machine_repair_docdt_remark' => $request->machine_repair_docdt_remark[$key],
+                                'machine_repair_docdt_cost' => $cost,
+                                'machine_repair_docdt_note' => $request->machine_repair_docdt_note[$key],
+                                'machine_repair_docdt_flag' => $flag,
+                                'person_at' => Auth::user()->name,
+                                'updated_at' => Carbon::now(),
+                            ]);
+                    } else {
+                        MachineRepairDocdt::create([
+                            'machine_repair_dochd_id' => $ck->machine_repair_dochd_id,
+                            'machine_repair_docdt_listno' => $listno,
+                            'machine_repair_docdt_remark' => $request->machine_repair_docdt_remark[$key],
+                            'machine_repair_docdt_cost' => $cost,
+                            'machine_repair_docdt_note' => $request->machine_repair_docdt_note[$key],
+                            'machine_repair_docdt_flag' => true,
+                            'person_at' => Auth::user()->name,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                        ]);
+                    }
+                }
+                DB::commit();
+                return redirect()->route('machine-repair-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            }  
+        }else if($ck->machine_repair_status_id == 2){
+            try 
+            {
+                DB::beginTransaction();
+                MachineRepairDochd::where('machine_repair_dochd_id',$id)
+                ->update([
+                    'machine_repair_status_id' => $request->machine_repair_status_id,
+                    'approval_at' => Auth::user()->name,
+                    'approval_date' =>  Carbon::now(),
+                    'approval_note' => $request->approval_note
+                ]);
+                DB::commit();
+                return redirect()->route('machine-repair-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            }  
+        }
     }
 
     /**
@@ -149,6 +232,30 @@ class MachineRepairDocuController extends Controller
             DB::beginTransaction();
             MachineRepairDochd::where('machine_repair_dochd_id',$id)->update([
                 'machine_repair_status_id' => 7,
+                'person_at' => Auth::user()->name,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    public function confirmDelMachineRepairDt(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            MachineRepairDocdt::where('machine_repair_docdt_id',$id)->update([
+                'machine_repair_docdt_flag' => false,
                 'person_at' => Auth::user()->name,
                 'updated_at'=> Carbon::now(),
             ]);
