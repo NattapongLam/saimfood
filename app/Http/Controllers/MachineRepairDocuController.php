@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Machine;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\MachineRepairDocdt;
 use App\Models\MachineRepairDochd;
@@ -210,6 +211,95 @@ class MachineRepairDocuController extends Controller
                 dd($message);
                 return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
             }  
+        }else if($ck->machine_repair_status_id == 3){
+            $request->validate([
+                'accepting_note' => 'required',
+                'repairer_datetime' => 'required',
+            ]);
+            $datetime = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $request->repairer_datetime);
+            $data = [
+                'machine_repair_status_id' => 4,
+                'repairer_at' => Auth::user()->name,
+                'repairer_date' =>  $datetime->format('Y-m-d'),
+                'repairer_note' => $request->repairer_note,
+                'repairer_datetime' => $datetime,
+                'repairer_type' => $request->repairer_type,
+                'repairer_problem' => $request->repairer_problem,
+            ];
+            if ($request->hasFile('repairer_pic1') && $request->file('repairer_pic1')->isValid()) {
+                $filename = "MTN_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('repairer_pic1')->getClientOriginalExtension();
+                $request->file('repairer_pic1')->storeAs('machine_repair_img', $filename, 'public');
+                $data['repairer_pic1'] = 'storage/machine_repair_img/' . $filename;
+            }
+            if ($request->hasFile('repairer_pic2') && $request->file('repairer_pic2')->isValid()) {
+                $filename = "MTN_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('repairer_pic2')->getClientOriginalExtension();
+                $request->file('repairer_pic2')->storeAs('machine_repair_img', $filename, 'public');
+                $data['repairer_pic2'] = 'storage/machine_repair_img/' . $filename;
+            }  
+            try 
+            {
+                DB::beginTransaction();
+                MachineRepairDochd::where('machine_repair_dochd_id',$id)->update($data);
+                $listnos = $request->machine_repair_docdt_listno ?? [];
+                foreach ($listnos as $key => $listno) {
+                    MachineRepairDocdt::create([
+                        'machine_repair_dochd_id' => $ck->machine_repair_dochd_id,
+                        'machine_repair_docdt_listno' => $listno,
+                        'machine_repair_docdt_remark' => $request->machine_repair_docdt_remark[$key],
+                        'machine_repair_docdt_cost' => $cost,
+                        'machine_repair_docdt_note' => $request->machine_repair_docdt_note[$key],
+                        'machine_repair_docdt_flag' => true,
+                        'person_at' => Auth::user()->name,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+                DB::commit();
+                return redirect()->route('machine-repair-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            }   
+        }else if($ck->machine_repair_status_id == 4){
+            try 
+            {
+                DB::beginTransaction();
+                MachineRepairDochd::where('machine_repair_dochd_id',$id)
+                ->update([
+                    'machine_repair_status_id' => 5,
+                    'inspector_at' => Auth::user()->name,
+                    'inspector_date' =>  Carbon::now(),
+                    'inspector_note' => $request->inspector_note
+                ]);
+                DB::commit();
+                return redirect()->route('machine-repair-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            } 
+        }else if($ck->machine_repair_status_id == 5){ 
+            try 
+            {
+                DB::beginTransaction();
+                MachineRepairDochd::where('machine_repair_dochd_id',$id)
+                ->update([
+                    'machine_repair_status_id' => 6,
+                    'closing_at' => Auth::user()->name,
+                    'closing_date' =>  Carbon::now(),
+                    'closing_note' => $request->closing_note
+                ]);
+                DB::commit();
+                return redirect()->route('machine-repair-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            } 
         }
     }
 

@@ -34,6 +34,10 @@ return new class extends Migration
             $table->string('repairer_at')->nullable();
             $table->date('repairer_date')->nullable();
             $table->timestamp('repairer_datetime')->nullable();
+            $table->string('repairer_type')->nullable();
+            $table->string('repairer_problem')->nullable();
+            $table->string('repairer_pic1')->nullable();
+            $table->string('repairer_pic2')->nullable();
             $table->string('repairer_note')->nullable();
             $table->string('inspector_at')->nullable();
             $table->date('inspector_date')->nullable();

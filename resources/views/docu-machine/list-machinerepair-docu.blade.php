@@ -50,7 +50,7 @@
                             </form>
                             <div class="card-body">
                                 <div class="row"> 
-                                    <table id="DataTableList" class="table table-bordered dt-responsive  nowrap w-100 text-center">
+                                    <table id="DataTableList" class="table table-bordered dt-responsive nowrap w-100 text-center table-sm">
                                         <thead>
                                             <tr>
                                                 <th>สถานะ</th>
@@ -60,7 +60,7 @@
                                                 <th>ประเภท</th>
                                                 <th>ปัญหา</th>
                                                 <th>ผู้แจ้งซ่อม</th>
-                                                <th>ผู้รับงานซ่อม</th>
+                                                <th>ผู้ดำเนินการ</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -68,14 +68,48 @@
                                         <tbody>
                                             @foreach ($hd as $item)
                                                 <tr>
-                                                    <td>{{$item->machine_repair_status_name}}</td>
+                                                    <td>
+                                                        @if ($item->machine_repair_status_id == 1 || $item->machine_repair_status_id == 9)
+                                                            <span class="badge bg-warning">{{$item->machine_repair_status_name}}</span>                                                           
+                                                        @elseif($item->machine_repair_status_id == 7 || $item->machine_repair_status_id == 8)
+                                                            <span class="badge bg-danger">{{$item->machine_repair_status_name}}</span>   
+                                                        @elseif($item->machine_repair_status_id == 6)
+                                                            <span class="badge bg-success">{{$item->machine_repair_status_name}}</span>  
+                                                        @else
+                                                            <span class="badge bg-secondary">{{$item->machine_repair_status_name}}</span>
+                                                        @endif                                                      
+                                                    </td>
                                                     <td>{{$item->machine_repair_dochd_date}}</td>
                                                     <td>{{$item->machine_repair_dochd_docuno}}</td>
                                                     <td>
                                                         <img src="{{ asset($item->machine_pic1 ?? 'images/no-image.png') }}" alt="Machine Image" class="rounded-circle avatar-xl"><br>
                                                         {{$item->machine_code}}/{{$item->machine_name}}
                                                     </td>
-                                                    <td>{{$item->machine_repair_dochd_type}}</td>
+                                                    <td>
+                                                        @if ($item->machine_repair_dochd_type == "ด่วน")
+                                                            <span class="badge badge-soft-danger">งาน :  {{$item->machine_repair_dochd_type}}</span>
+                                                        @else
+                                                            <span class="badge badge-soft-primary">งาน :  {{$item->machine_repair_dochd_type}}</span>
+                                                        @endif
+                                                       
+                                                        @if ($item->repairer_type)
+                                                            @if ($item->repairer_type == "หยุดเครื่อง")
+                                                                <br><span class="badge badge-soft-danger">สถานะ : {{$item->repairer_type}}</span>
+                                                            @else
+                                                                <br><span class="badge badge-soft-primary">สถานะ : {{$item->repairer_type}}</span>
+                                                            @endif
+
+                                                        @endif
+                                                        @if ($item->repairer_problem)
+                                                            @if ($item->repairer_problem == "ควรซื้อใหม่")
+                                                                <br><span class="badge badge-soft-danger">เพิ่มเติม : {{$item->repairer_problem}}</span>
+                                                            @else
+                                                                <br><span class="badge badge-soft-primary">เพิ่มเติม :{{$item->repairer_problem}}</span>
+                                                            @endif
+                                                        
+                                                        @endif
+
+                                                    </td>
                                                     <td>
                                                         {{$item->machine_repair_dochd_case}}<br>
                                                         (ที่ตั้ง : {{$item->machine_repair_dochd_location}})
@@ -83,12 +117,20 @@
                                                     <td>      
                                                         {{$item->person_at}}                                                
                                                     </td>
-                                                    <td>      
-                                                        {{$item->accepting_at}}                                                
+                                                    <td>  
+                                                        @if ($item->accepting_at)
+                                                            ผู้รับงานซ่อม : {{$item->accepting_at}}  
+                                                        @endif    
+                                                        @if ($item->repairer_at)
+                                                            <br>ผู้ซ่อม : {{$item->repairer_at}}   
+                                                        @endif
+                                                                                                    
                                                     </td>
                                                     <td>
-                                                        @if ($item->machine_repair_status_id <> 7 || $item->machine_repair_status_id <> 8)
-                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>   
+                                                        @if($item->machine_repair_status_id == 6)
+                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-primary btn-sm">รายละเอียด</a>
+                                                        @elseif ($item->machine_repair_status_id <> 7 || $item->machine_repair_status_id <> 8)
+                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>                                
                                                         @endif                                                      
                                                     </td>
                                                     <td>
@@ -118,7 +160,7 @@ $(document).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "order": [[0, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
+        "order": [[1, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
         "language": {
             "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
             "zeroRecords": "ไม่พบข้อมูล",
