@@ -189,7 +189,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <table id="DataTableList" class="table table-bordered dt-responsive  nowrap w-100">
+                <table id="DataTableList" class="table table-bordered dt-responsive nowrap w-100 table-sm">
                     <thead>
                         <tr>
                             <th>สถานะ</th>
@@ -200,6 +200,7 @@
                             <th>กลุ่มเครื่องจักรและอุปกรณ์</th>
                             <th>Serial Number</th>
                             <th>วันที่หมดประกัน</th>
+                            <th>วันที่ซ่อมล่าสุด</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -222,6 +223,7 @@
                             <td>{{$item->machinegroup_name}}</td>
                             <td>{{$item->serial_number}}</td>
                             <td>{{$item->insurance_date}}</td>
+                            <td>{{$item->last_repair}}</td>
                             <td>
                                 <a href="{{ route('machines.edit', $item->machine_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> แก้ไข</a>
                             </td>

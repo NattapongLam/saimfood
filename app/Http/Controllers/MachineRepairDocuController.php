@@ -240,6 +240,9 @@ class MachineRepairDocuController extends Controller
             {
                 DB::beginTransaction();
                 MachineRepairDochd::where('machine_repair_dochd_id',$id)->update($data);
+                $mc = Machine::where('machine_code',$ck->machine_code)->update([
+                    'last_repair' => $datetime->format('Y-m-d'),
+                ]);
                 $listnos = $request->machine_repair_docdt_listno ?? [];
                 foreach ($listnos as $key => $listno) {
                     MachineRepairDocdt::create([
