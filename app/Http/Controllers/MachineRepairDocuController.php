@@ -244,7 +244,9 @@ class MachineRepairDocuController extends Controller
                     'last_repair' => $datetime->format('Y-m-d'),
                 ]);
                 $listnos = $request->machine_repair_docdt_listno ?? [];
+              
                 foreach ($listnos as $key => $listno) {
+                    $cost = str_replace(',', '', $request->machine_repair_docdt_cost[$key]);
                     MachineRepairDocdt::create([
                         'machine_repair_dochd_id' => $ck->machine_repair_dochd_id,
                         'machine_repair_docdt_listno' => $listno,
