@@ -71,6 +71,13 @@
                                 </div>
                                 <br>
                                 <div class="row">
+                                    <div class="col-6">
+                                        <label class="form-label">วันที่ต้องการเสร็จ</label>
+                                        <input class="form-control" type="date" name="machine_repair_dochd_duedate" value="{{$hd->machine_repair_dochd_duedate}}" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
                                     <div class="form-group">
                                         <label class="form-label">ปัญหา</label>
                                         <textarea class="form-control" name="machine_repair_dochd_case" required>{{$hd->machine_repair_dochd_case}}</textarea>
@@ -80,6 +87,12 @@
                             @if ($hd->machine_repair_status_id == 1 || $hd->machine_repair_status_id == 9)
                             <h5>รายละเอียดการรับงานซ่อม</h5>
                             <div class="card-body">
+                                <div class="row"> 
+                                    <div class="form-group">
+                                         <label class="form-label">วันที่คาดว่าจะซ่อมเสร็จ</label>
+                                         <input class="form-control" type="date" name="accepting_duedate" value="{{ date('Y-m-d') }}" required>
+                                    </div>
+                                </div>
                                 <div class="row"> 
                                     <div class="form-group">
                                         <label class="form-label">หมายเหตุรับงานซ่อม</label>
@@ -98,6 +111,7 @@
                                                         <th>รายละเอียด</th>
                                                         <th>ค่าใช้จ่าย</th>
                                                         <th>หมายเหตุ</th>
+                                                        <th>ชื่อร้าน</th>                                                       
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -116,6 +130,9 @@
                                                             </td>
                                                             <td>
                                                                 <input class="form-control" name="machine_repair_docdt_note[]" value="{{$item->machine_repair_docdt_note}}">                                    
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_vendor[]" value="{{$item->machine_repair_docdt_vendor}}">                                    
                                                             </td>
                                                             <td>
                                                                 <input type="hidden" name="machine_repair_docdt_id[]" value="{{$item->machine_repair_docdt_id}}">
@@ -147,6 +164,12 @@
                             @elseif($hd->machine_repair_status_id == 2)
                             <h5>รายละเอียดการรับงานซ่อม ผู้รับงานซ่อม : {{$hd->accepting_at}} วันที่ : {{$hd->accepting_date}}</h5>
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                         <label class="form-label">วันที่คาดว่าจะซ่อมเสร็จ</label>
+                                         <input class="form-control" type="date" name="accepting_duedate" value="{{$hd->accepting_duedate}}" readonly>
+                                    </div>
+                                </div>
                                 <div class="row"> 
                                     <div class="form-group">
                                         <label class="form-label">หมายเหตุรับงานซ่อม</label>
@@ -163,6 +186,7 @@
                                                             <th>รายการ</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
+                                                            <th>ชื่อร้าน</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -172,6 +196,7 @@
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
+                                                                <td>{{$item->machine_repair_docdt_vendor}}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -223,6 +248,7 @@
                                                             <th>รายการ</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
+                                                            <th>ชื่อร้าน</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -232,6 +258,7 @@
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
+                                                                <td>{{$item->machine_repair_docdt_vendor}}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -334,6 +361,7 @@
                                                         <th>รายละเอียด</th>
                                                         <th>ค่าใช้จ่าย</th>
                                                         <th>หมายเหตุ</th>
+                                                        <th>ชื่อร้าน</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -706,6 +734,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td><input type="text" name="machine_repair_docdt_remark[]" class="form-control"/></td>
                 <td><input type="text" name="machine_repair_docdt_cost[]" value="0"  class="form-control"/></td>
                 <td><input type="text" name="machine_repair_docdt_note[]" class="form-control"/></td>
+                <td><input type="text" name="machine_repair_docdt_vendor[]" class="form-control"/></td>
                 <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
             `;
 

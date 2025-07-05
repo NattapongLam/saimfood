@@ -62,6 +62,13 @@
                                 </div>
                                 <br>
                                 <div class="row">
+                                    <div class="col-6">
+                                        <label class="form-label">วันที่ต้องการเสร็จ</label>
+                                        <input class="form-control" type="date" name="machine_repair_dochd_duedate" value="{{ date('Y-m-d') }}" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
                                     <div class="form-group">
                                         <label class="form-label">ปัญหา</label>
                                         <textarea class="form-control" name="machine_repair_dochd_case" required></textarea>

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('machine_repair_dochds', function (Blueprint $table) {
             $table->id('machine_repair_dochd_id');
             $table->date('machine_repair_dochd_date');
+            $table->date('machine_repair_dochd_duedate');
             $table->timestamp('machine_repair_dochd_datetime');
             $table->string('machine_repair_dochd_docuno');
             $table->integer('machine_repair_dochd_docunum');
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->BigInteger('machine_repair_status_id');
             $table->string('accepting_at')->nullable();
             $table->date('accepting_date')->nullable();
+            $table->date('accepting_duedate')->nullable();
             $table->string('accepting_note')->nullable();
             $table->string('approval_at')->nullable();
             $table->date('approval_date')->nullable();

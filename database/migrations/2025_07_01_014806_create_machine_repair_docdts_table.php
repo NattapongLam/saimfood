@@ -22,6 +22,8 @@ return new class extends Migration
             $table->decimal('machine_repair_docdt_cost', 18, 2)->default(0);
             $table->boolean('machine_repair_docdt_flag')->default(true); 
             $table->string('machine_repair_docdt_note')->nullable();
+            $table->string('machine_repair_docdt_vendor')->nullable();
+            $table->string('machine_repair_docdt_file')->nullable();
             $table->string('person_at');
             $table->timestamps();
         });

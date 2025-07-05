@@ -70,6 +70,7 @@ class MachineRepairDocuController extends Controller
             'machine_code' => 'required',
             'machine_repair_dochd_location' => 'required',
             'machine_repair_dochd_case' => 'required',
+            'machine_repair_dochd_duedate' => 'required',
         ]);
         $data = [
             'machine_repair_dochd_date' => $request->machine_repair_dochd_date,
@@ -83,7 +84,8 @@ class MachineRepairDocuController extends Controller
             'updated_at'=> Carbon::now(),
             'machine_repair_dochd_datetime' => Carbon::now(),
             'machine_repair_dochd_docuno' => $docs,
-            'machine_repair_dochd_docunum' => $docs_number
+            'machine_repair_dochd_docunum' => $docs_number,
+            'machine_repair_dochd_duedate' => $request->machine_repair_dochd_duedate
         ]; 
         try 
         {
@@ -147,10 +149,12 @@ class MachineRepairDocuController extends Controller
                     'machine_repair_dochd_type' => $request->machine_repair_dochd_type,
                     'machine_repair_dochd_case' => $request->machine_repair_dochd_case,
                     'machine_repair_dochd_location' => $request->machine_repair_dochd_location,
+                    'machine_repair_dochd_duedate' => $request->machine_repair_dochd_duedate,
                     'machine_repair_status_id' => 2,
                     'accepting_at' => Auth::user()->name,
                     'accepting_date' =>  Carbon::now(),
-                    'accepting_note' => $request->accepting_note
+                    'accepting_note' => $request->accepting_note,
+                    'accepting_duedate' => $request->accepting_duedate,
                 ]);
                 $listnos = $request->machine_repair_docdt_listno ?? [];
                 $ids = $request->machine_repair_docdt_id ?? [];
@@ -169,6 +173,7 @@ class MachineRepairDocuController extends Controller
                                 'machine_repair_docdt_flag' => $flag,
                                 'person_at' => Auth::user()->name,
                                 'updated_at' => Carbon::now(),
+                                'machine_repair_docdt_vendor' => $request->machine_repair_docdt_vendor[$key] ?? null,
                             ]);
                     } else {
                         MachineRepairDocdt::create([
@@ -181,6 +186,7 @@ class MachineRepairDocuController extends Controller
                             'person_at' => Auth::user()->name,
                             'created_at' => Carbon::now(),
                             'updated_at' => Carbon::now(),
+                            'machine_repair_docdt_vendor' => $request->machine_repair_docdt_vendor[$key] ?? null,
                         ]);
                     }
                 }
@@ -257,6 +263,7 @@ class MachineRepairDocuController extends Controller
                         'person_at' => Auth::user()->name,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
+                        'machine_repair_docdt_vendor' => $request->machine_repair_docdt_vendor[$key] ?? null,
                     ]);
                 }
                 DB::commit();
