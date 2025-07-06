@@ -71,5 +71,6 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
 Route::resource('/machine-repair-docus' , App\Http\Controllers\MachineRepairDocuController::class);
 Route::post('/confirmDelMachineRepairHd' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairHd']);
 Route::post('/confirmDelMachineRepairDt' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairDt']);
+Route::put('/machine-repair-docus/{id}/safety-update', [App\Http\Controllers\MachineRepairDocuController::class, 'updateSafety'])->name('machine-repair-docus.safety-update');
 });
 

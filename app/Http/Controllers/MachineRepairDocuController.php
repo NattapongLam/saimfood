@@ -109,7 +109,10 @@ class MachineRepairDocuController extends Controller
      */
     public function show($id)
     {
-        //
+        $hd = MachineRepairDochd::leftjoin('machine_repair_statuses','machine_repair_dochds.machine_repair_status_id','=','machine_repair_statuses.machine_repair_status_id')
+        ->find($id);      
+        $machine = Machine::where('machine_flag',true)->get();
+        return view('docu-machine.safety-machinerepair-docu',compact('hd','machine'));
     }
 
     /**
@@ -163,6 +166,15 @@ class MachineRepairDocuController extends Controller
                     $cost = str_replace(',', '', $request->machine_repair_docdt_cost[$key]);
                     $flag = $request->machine_repair_docdt_flag[$key] ?? false;
                     $flag = $flag == 'on' || $flag == 'true' ? true : false;
+                    $filePath = null;
+                    if ($request->hasFile('machine_repair_docdt_file') && $request->file('machine_repair_docdt_file')[$key] ?? false) {
+                        $file = $request->file('machine_repair_docdt_file')[$key];
+                        if ($file->isValid()) {
+                            $filename = "MTN_FILE_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $file->getClientOriginalExtension();
+                            $file->storeAs('machine_repair_img', $filename, 'public');
+                            $filePath = 'storage/machine_repair_img/' . $filename;
+                        }
+                    }
                     if ($docdtId) {
                         MachineRepairDocdt::where('machine_repair_docdt_id', $docdtId)
                             ->update([
@@ -174,6 +186,7 @@ class MachineRepairDocuController extends Controller
                                 'person_at' => Auth::user()->name,
                                 'updated_at' => Carbon::now(),
                                 'machine_repair_docdt_vendor' => $request->machine_repair_docdt_vendor[$key] ?? null,
+                                'machine_repair_docdt_file' => $filePath,
                             ]);
                     } else {
                         MachineRepairDocdt::create([
@@ -187,6 +200,7 @@ class MachineRepairDocuController extends Controller
                             'created_at' => Carbon::now(),
                             'updated_at' => Carbon::now(),
                             'machine_repair_docdt_vendor' => $request->machine_repair_docdt_vendor[$key] ?? null,
+                            'machine_repair_docdt_file' => $filePath,
                         ]);
                     }
                 }
@@ -373,5 +387,39 @@ class MachineRepairDocuController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+    }
+    public function updateSafety(Request $request, $id)
+    {
+        $data = [
+            'safety_type' => $request->safety_type,
+            'safety_ppe' => $request->safety_ppe,
+            'safety_note' => $request->safety_note,
+            'safety_at' => Auth::user()->name,
+            'safety_date' => Carbon::now(),
+        ];
+
+        if ($request->hasFile('safety_pic1') && $request->file('safety_pic1')->isValid()) {
+            $filename = "SAFETY1_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('safety_pic1')->getClientOriginalExtension();
+            $request->file('safety_pic1')->storeAs('machine_repair_img', $filename, 'public');
+            $data['safety_pic1'] = 'storage/machine_repair_img/' . $filename;
+        }
+
+        if ($request->hasFile('safety_pic2') && $request->file('safety_pic2')->isValid()) {
+            $filename = "SAFETY2_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('safety_pic2')->getClientOriginalExtension();
+            $request->file('safety_pic2')->storeAs('machine_repair_img', $filename, 'public');
+            $data['safety_pic2'] = 'storage/machine_repair_img/' . $filename;
+        }
+        try
+        {
+            DB::beginTransaction();
+            MachineRepairDochd::where('machine_repair_dochd_id', $id)->update($data);
+            DB::commit();
+            return redirect()->route('machine-repair-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+        } catch (\Exception $e) {
+            DB::rollback();
+            $message = $e->getMessage();
+            dd($message);
+            return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+        } 
     }
 }

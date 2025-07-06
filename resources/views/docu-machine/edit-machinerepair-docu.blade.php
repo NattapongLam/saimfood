@@ -111,7 +111,8 @@
                                                         <th>รายละเอียด</th>
                                                         <th>ค่าใช้จ่าย</th>
                                                         <th>หมายเหตุ</th>
-                                                        <th>ชื่อร้าน</th>                                                       
+                                                        <th>ชื่อร้าน</th>   
+                                                        <th>แนบไฟล์</th>                                                        
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -133,6 +134,11 @@
                                                             </td>
                                                             <td>
                                                                 <input class="form-control" name="machine_repair_docdt_vendor[]" value="{{$item->machine_repair_docdt_vendor}}">                                    
+                                                            </td>
+                                                            <td>
+                                                                @if (isset($item->machine_repair_docdt_file) && $item->machine_repair_docdt_file)
+                                                                    <a href="{{ asset('/'.$item->machine_repair_docdt_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                                @endif                               
                                                             </td>
                                                             <td>
                                                                 <input type="hidden" name="machine_repair_docdt_id[]" value="{{$item->machine_repair_docdt_id}}">
@@ -187,6 +193,7 @@
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
                                                             <th>ชื่อร้าน</th>
+                                                            <th>แนบไฟล์</th>  
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -197,6 +204,11 @@
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
                                                                 <td>{{$item->machine_repair_docdt_vendor}}</td>
+                                                                <td>
+                                                                    @if (isset($item->machine_repair_docdt_file) && $item->machine_repair_docdt_file)
+                                                                        <a href="{{ asset('/'.$item->machine_repair_docdt_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                                    @endif                               
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -249,6 +261,7 @@
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
                                                             <th>ชื่อร้าน</th>
+                                                            <th>แนบไฟล์</th>  
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -259,6 +272,11 @@
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
                                                                 <td>{{$item->machine_repair_docdt_vendor}}</td>
+                                                                <td>
+                                                                    @if (isset($item->machine_repair_docdt_file) && $item->machine_repair_docdt_file)
+                                                                        <a href="{{ asset('/'.$item->machine_repair_docdt_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                                    @endif                               
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -362,6 +380,7 @@
                                                         <th>ค่าใช้จ่าย</th>
                                                         <th>หมายเหตุ</th>
                                                         <th>ชื่อร้าน</th>
+                                                        <th>แนบไฟล์</th>  
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -397,6 +416,8 @@
                                                             <th>รายการ</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
+                                                            <th>ชื่อร้าน</th>
+                                                            <th>แนบไฟล์</th>  
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -406,6 +427,12 @@
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
+                                                                <td>{{$item->machine_repair_docdt_vendor}}</td>
+                                                                <td>
+                                                                    @if (isset($item->machine_repair_docdt_file) && $item->machine_repair_docdt_file)
+                                                                        <a href="{{ asset('/'.$item->machine_repair_docdt_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                                    @endif                               
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -498,6 +525,8 @@
                                                             <th>รายการ</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
+                                                            <th>ชื่อร้าน</th>
+                                                            <th>แนบไฟล์</th>  
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -507,6 +536,12 @@
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
+                                                                <td>{{$item->machine_repair_docdt_vendor}}</td>
+                                                                <td>
+                                                                    @if (isset($item->machine_repair_docdt_file) && $item->machine_repair_docdt_file)
+                                                                        <a href="{{ asset('/'.$item->machine_repair_docdt_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                                    @endif                               
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -608,6 +643,8 @@
                                                             <th>รายการ</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
+                                                            <th>ชื่อร้าน</th>
+                                                            <th>แนบไฟล์</th>  
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -617,6 +654,12 @@
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
+                                                                <td>{{$item->machine_repair_docdt_vendor}}</td>
+                                                                <td>
+                                                                    @if (isset($item->machine_repair_docdt_file) && $item->machine_repair_docdt_file)
+                                                                        <a href="{{ asset('/'.$item->machine_repair_docdt_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                                    @endif                               
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -735,6 +778,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td><input type="text" name="machine_repair_docdt_cost[]" value="0"  class="form-control"/></td>
                 <td><input type="text" name="machine_repair_docdt_note[]" class="form-control"/></td>
                 <td><input type="text" name="machine_repair_docdt_vendor[]" class="form-control"/></td>
+                <td><input type="file" name="machine_repair_docdt_file[]" class="form-control"/></td>
                 <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
             `;
 

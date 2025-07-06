@@ -47,6 +47,13 @@ return new class extends Migration
             $table->string('closing_at')->nullable();
             $table->date('closing_date')->nullable();
             $table->string('closing_note')->nullable();
+            $table->string('safety_at')->nullable();
+            $table->date('safety_date')->nullable();
+            $table->string('safety_note')->nullable();
+            $table->string('safety_type')->nullable();
+            $table->string('safety_pic1')->nullable();
+            $table->string('safety_pic2')->nullable();
+            $table->string('safety_ppe')->nullable();
             $table->timestamps();
         });
     }

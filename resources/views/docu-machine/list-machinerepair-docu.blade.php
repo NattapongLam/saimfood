@@ -63,6 +63,7 @@
                                                 <th>ผู้ดำเนินการ</th>
                                                 <th></th>
                                                 <th></th>
+                                                <th>จป.</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -137,6 +138,16 @@
                                                         @if ($item->machine_repair_status_id == 1)
                                                             <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->machine_repair_dochd_id }}')"><i class="fas fa-trash"></i></a>           
                                                         @endif                                                      
+                                                    </td>
+                                                    <td>
+                                                        @if($item->safety_at)
+                                                            {{{$item->safety_type}}}<br>
+                                                            ความเห็น : {{$item->safety_note}}
+                                                        @else
+                                                            @if ($item->machine_repair_status_id <> 7 || $item->machine_repair_status_id <> 8)
+                                                            <a href="{{ route('machine-repair-docus.show', $item->machine_repair_dochd_id) }}"class="btn btn-secondary btn-sm">บันทึก</a> 
+                                                            @endif   
+                                                        @endif  
                                                     </td>
                                                 </tr>
                                             @endforeach
