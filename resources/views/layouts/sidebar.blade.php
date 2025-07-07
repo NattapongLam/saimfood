@@ -66,6 +66,7 @@
                                         <ul class="sub-menu" aria-expanded="true">
                                             <li><a href="{{route('machine-planing-docus.index')}}" key="t-starter-page">แผนการซ่อมบำรุง</a></li>
                                             <li><a href="{{route('machine-checksheet-docus.index')}}" key="t-starter-page">ตรวจเช็คประจำวัน</a></li>
+                                            <li><a href="{{route('machine-create-docus.index')}}" key="t-starter-page">ใบสร้างงาน</a></li>
                                             <li><a href="{{route('machine-repair-docus.index')}}" key="t-starter-page">ใบแจ้งซ่อม</a></li>
                                         </ul>
                                     </li>
@@ -82,6 +83,16 @@
                             </li>
                             @endrole
                             <li class="menu-title" key="t-pages">Report</li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-bar-chart-alt-2"></i>
+                                    <span key="t-starter-page">รายงานซ่อมบำรุง</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="{{url('/report-machine')}}" key="t-starter-page">ภายในองค์กร</a></li>
+                                </ul>
+                            </li>
+                            
                         </ul>
                     </div>
                     <!-- Sidebar -->

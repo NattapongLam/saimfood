@@ -30,6 +30,7 @@ class MachineRepairDocuController extends Controller
         $hd = MachineRepairDochd::leftjoin('machine_repair_statuses','machine_repair_dochds.machine_repair_status_id','=','machine_repair_statuses.machine_repair_status_id')
         ->leftjoin('machines','machine_repair_dochds.machine_code','=','machines.machine_code')
         ->whereBetween('machine_repair_dochds.machine_repair_dochd_date', [$datestart, $dateend])
+        ->where('machine_repair_dochds.docutype', 'R')
         ->select('machine_repair_dochds.*','machines.machine_name','machines.machine_pic1','machine_repair_statuses.machine_repair_status_name')
         ->get();
         return view('docu-machine.list-machinerepair-docu',compact('hd','dateend','datestart'));
@@ -85,7 +86,8 @@ class MachineRepairDocuController extends Controller
             'machine_repair_dochd_datetime' => Carbon::now(),
             'machine_repair_dochd_docuno' => $docs,
             'machine_repair_dochd_docunum' => $docs_number,
-            'machine_repair_dochd_duedate' => $request->machine_repair_dochd_duedate
+            'machine_repair_dochd_duedate' => $request->machine_repair_dochd_duedate,
+            'docutype' => "R"
         ]; 
         try 
         {

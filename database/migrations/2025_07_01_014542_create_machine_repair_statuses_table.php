@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('machine_repair_statuses', function (Blueprint $table) {
             $table->id('machine_repair_status_id');
             $table->string('machine_repair_status_name');
+            $table->string('machine_create_status_name');
             $table->timestamps();
         });
     }

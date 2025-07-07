@@ -72,5 +72,7 @@ Route::resource('/machine-repair-docus' , App\Http\Controllers\MachineRepairDocu
 Route::post('/confirmDelMachineRepairHd' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairHd']);
 Route::post('/confirmDelMachineRepairDt' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairDt']);
 Route::put('/machine-repair-docus/{id}/safety-update', [App\Http\Controllers\MachineRepairDocuController::class, 'updateSafety'])->name('machine-repair-docus.safety-update');
+Route::resource('/machine-create-docus' , App\Http\Controllers\MachineCreateDocuController::class);
+Route::get('/report-machine' , [App\Http\Controllers\MachineReportController::class , 'ReportMachine']);
 });
 

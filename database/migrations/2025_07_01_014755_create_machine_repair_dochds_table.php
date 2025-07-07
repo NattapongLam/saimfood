@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('machine_repair_dochd_id');
             $table->date('machine_repair_dochd_date');
             $table->date('machine_repair_dochd_duedate');
+            $table->string('docutype');
             $table->timestamp('machine_repair_dochd_datetime');
             $table->string('machine_repair_dochd_docuno');
             $table->integer('machine_repair_dochd_docunum');
