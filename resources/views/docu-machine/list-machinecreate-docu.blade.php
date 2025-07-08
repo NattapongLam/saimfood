@@ -93,7 +93,7 @@
                                                         @endif
                                                        
                                                         @if ($item->repairer_type)
-                                                            @if ($item->repairer_type == "หยุดเครื่อง")
+                                                            @if ($item->repairer_type == "หยุดการทำงาน")
                                                                 <br><span class="badge badge-soft-danger">สถานะ : {{$item->repairer_type}}</span>
                                                             @else
                                                                 <br><span class="badge badge-soft-primary">สถานะ : {{$item->repairer_type}}</span>
@@ -101,10 +101,10 @@
 
                                                         @endif
                                                         @if ($item->repairer_problem)
-                                                            @if ($item->repairer_problem == "ควรซื้อใหม่")
-                                                                <br><span class="badge badge-soft-danger">เพิ่มเติม : {{$item->repairer_problem}}</span>
+                                                            @if ($item->repairer_problem == "ไม่ติดปัญหา")
+                                                                <br><span class="badge badge-soft-primary">เพิ่มเติม : {{$item->repairer_problem}}</span>
                                                             @else
-                                                                <br><span class="badge badge-soft-primary">เพิ่มเติม :{{$item->repairer_problem}}</span>
+                                                                <br><span class="badge badge-soft-danger">เพิ่มเติม :{{$item->repairer_problem}}</span>
                                                             @endif
                                                         
                                                         @endif
@@ -119,10 +119,10 @@
                                                     </td>
                                                     <td>  
                                                         @if ($item->accepting_at)
-                                                            ผู้รับงานซ่อม : {{$item->accepting_at}}  
+                                                            ผู้รับงานสร้าง : {{$item->accepting_at}}  
                                                         @endif    
                                                         @if ($item->repairer_at)
-                                                            <br>ผู้ซ่อม : {{$item->repairer_at}}   
+                                                            <br>ผู้สร้าง : {{$item->repairer_at}}   
                                                         @endif
                                                                                                     
                                                     </td>
@@ -203,7 +203,7 @@ Swal.fire({
 }).then(function(result) {
     if (result.value) {
         $.ajax({
-            url: `{{ url('/confirmDelMachineRepairHd') }}`,
+            url: `{{ url('/confirmDelMachineCreateHd') }}`,
             type: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",

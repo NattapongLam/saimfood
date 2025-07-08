@@ -139,6 +139,9 @@
         <!-- Sweet alert init js-->
         <script src="{{ asset('/assets/js/pages/sweet-alerts.init.js') }}"></script>
         <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
+        <!-- Chart JS -->
+        <script src="{{ asset('assets/libs/chart.js/Chart.bundle.min.js')}}"></script>
+        <script src="{{ asset('assets/js/pages/chartjs.init.js')}}"></script> 
         @yield('script')
     </body>
 </html>
