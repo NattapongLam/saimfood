@@ -1,5 +1,20 @@
 @extends('layouts.main')
 @section('content')
+<style>
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .qr-print, .qr-print * {
+        visibility: visible;
+    }
+    .qr-print {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+</style>
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -20,6 +35,11 @@
                                 <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>เครื่องจักรและอุปกรณ์</h5>
                             </div>
                             <div class="card-body">
+                                <div class="form-group mt-4">
+                                    <div class="text-center">
+                                       {!! QrCode::encoding('UTF-8')->size(200)->generate(url('machine-qrcode/'.$hd->machine_code)) !!}                                      
+                                    </div>
+                                </div>
                                 <form class="custom-validation" action="{{ route('machines.update',$hd->machine_id) }}" method="POST" enctype="multipart/form-data" validate>
                                 @csrf   
                                 @method('PUT')  
