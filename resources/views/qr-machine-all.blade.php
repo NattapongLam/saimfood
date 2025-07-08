@@ -56,6 +56,7 @@
                                         </div>                                       
                                         </center>
                                     </div>
+                                    <br>
                                     <div class="row">
                                         <div class="col-4">
                                             <a href="{{route('machine-repair-docus.create')}}" class="btn btn-soft-primary btn-lg">
