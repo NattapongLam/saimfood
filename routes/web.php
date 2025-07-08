@@ -78,4 +78,5 @@ Route::post('/confirmDelMachineCreateDt' , [App\Http\Controllers\MachineCreateDo
 Route::put('/machine-create-docus/{id}/safety-update', [App\Http\Controllers\MachineCreateDocuController::class, 'updateSafety'])->name('machine-create-docus.safety-update');
 Route::get('/report-machine' , [App\Http\Controllers\MachineReportController::class , 'ReportMachine']);
 });
-
+//QrCodeScan
+Route::get('/machine-qrcode/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanMachine']);
