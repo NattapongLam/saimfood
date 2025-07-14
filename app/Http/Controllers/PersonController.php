@@ -32,7 +32,8 @@ class PersonController extends Controller
      */
     public function create()
     {
-        return view('persons.create-person');
+        $emp = DB::table('tg_employee_list')->get();
+        return view('persons.create-person',compact('emp'));
     }
 
     /**
@@ -45,14 +46,14 @@ class PersonController extends Controller
     {
         $request->validate([
             'username' => 'required',
-            'name' => 'required',
             'password' => 'required',
         ]);
+        $emp = DB::table('tg_employee_list')->where('personcode',$request->username)->first();
         $data = [
-            'name' => $request->name,
+            'name' => $emp->personfullname,
             'username' => $request->username,
             'employee_code' => $request->username,
-            'employee_fullname' => $request->name,
+            'employee_fullname' => $emp->personfullname,
             'email' => $request->email,
             'status' => true,   
             'password' => Hash::make($request->password),        

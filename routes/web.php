@@ -68,6 +68,13 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/confirmDelMachineChecksheetDocuHd' , [App\Http\Controllers\MachineChecksheetDocuController::class , 'confirmDelMachineChecksheetDocuHd']);
         Route::get('/get-machine-checkdetails/{id}', [App\Http\Controllers\MachineChecksheetDocuController::class, 'getCheckDetails']);
     });
+    Route::group([
+        'middleware' =>  ['auth','permission:setup-equipment']
+    ],function(){
+        Route::resource('/equipments' , App\Http\Controllers\EquipmentController::class);
+        Route::resource('/equipment-transfer' , App\Http\Controllers\EquipmentTransferController::class);
+        Route::resource('/customers' , App\Http\Controllers\CustomerController::class);
+    });
 Route::resource('/machine-repair-docus' , App\Http\Controllers\MachineRepairDocuController::class);
 Route::post('/confirmDelMachineRepairHd' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairHd']);
 Route::post('/confirmDelMachineRepairDt' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairDt']);

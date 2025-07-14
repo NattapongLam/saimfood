@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+<link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -23,16 +24,15 @@
                                 <form class="custom-validation" action="{{ route('persons.store') }}" method="POST" enctype="multipart/form-data" validate>
                                 @csrf      
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <label class="form-label">รหัสพนักงาน</label>
-                                            <input class="form-control" type="text" name="username" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="form-label">ชื่อ - นามสกุล</label>
-                                            <input class="form-control" type="text" name="name" required>
+                                            <label class="form-label">พนักงาน</label>
+                                            <select class="select2 form-select" name="username" required>
+                                                <option value=""></option>
+                                                @foreach ($emp as $item)
+                                                    <option value="{{$item->personcode}}">{{$item->personcode}} / {{$item->personfullname}}  {{$item->company}} แผนก : {{$item->department}} ตำแหน่ง : {{$item->position}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -67,4 +67,16 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
+<script>
+$(document).ready(function () {
+    $('.select2').select2({
+        placeholder: "เลือกรหัสพนักงาน",
+        allowClear: true,
+        width: '100%'
+    });
+});
+</script>
 @endsection
