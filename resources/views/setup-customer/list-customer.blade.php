@@ -17,59 +17,53 @@
                         @endif       
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ใบโอนย้ายอุปกรณ์ลูกค้า</h5>
-                             <div class="page-title-right">
+                                <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ลูกค้า</h5>
+                            <div class="page-title-right">  
                             <h5 class="my-0 text-primary">
-                                <a href="{{route('equipment-transfer.create')}}">
+                                <a href="{{route('customers.create')}}">
                                     เพิ่มข้อมูล
                                 </a>
-                            </h5>                  
-                        </div>
+                            </h5>                                  
+                            </div>
                             </div>
                             <div class="card-body">
                                 <div class="row"> 
-                                    <table id="DataTableList" class="table table-bordered dt-responsive  nowrap w-100">
+                                     <table id="DataTableList" class="table table-bordered dt-responsive  nowrap w-100">
                                         <thead>
                                             <tr>
                                                 <th>สถานะ</th>
-                                                <th>วันที่</th>
-                                                <th>เลขที่</th>
-                                                <th>ลูกค้า</th>
+                                                <th>รหัสลูกค้า</th>
+                                                <th>ชื่อลูกค้า</th>
+                                                <th>สาขา</th>
+                                                <th>จังหวัด</th>
                                                 <th>ผู้ติดต่อ</th>
-                                                <th>ผู้บันทึก</th>
-                                                <th>หมายเหตุ</th>
-                                                <th></th>
+                                                <th>เบอร์ติดต่อ</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($hd as $item)
+                                            @foreach ($cust as $item)
                                                 <tr>
                                                     <td>
-                                                        <strong>{{$item->equipment_transfer_status_name}}</strong>
-                                                    </td>
-                                                    <td>{{$item->equipment_transfer_hd_date}}</td>
-                                                    <td>{{$item->equipment_transfer_hd_docuno}}</td>
-                                                    <td>{{$item->customer_fullname}}</td>
-                                                    <td>{{$item->contact_person}} {{$item->contact_tel}}</td>
-                                                    <td>{{$item->person_at}}</td>
-                                                    <td>{{$item->equipment_transfer_hd_remark}}</td>
-                                                    <td>
-                                                        @if ($item->equipment_transfer_status_id == 1)
-                                                            <a href="{{ route('equipment-transfer.edit', $item->equipment_transfer_hd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>
+                                                        @if ($item->customer_flag)
+                                                            <span class="badge bg-success">ใช้งาน</span>
                                                         @else
-                                                            @if ($item->recheck_file)
-                                                                <a href="{{ asset($item->recheck_file) }}" target="_blank" class="text-dark"><i class="bx bx-file-blank"></i></a>
-                                                            @endif
+                                                            <span class="badge bg-danger">ไม่ใช้งาน</span>
                                                         @endif                                                       
                                                     </td>
+                                                    <td>{{$item->customer_code}}</td>
+                                                    <td>{{$item->customer_name}}</td>
+                                                    <td>{{$item->branch_name}}</td>
+                                                    <td>{{$item->customer_province}}</td>
+                                                    <td>{{$item->contact_person}}</td>
+                                                    <td>{{$item->contact_tel}}</td>
                                                     <td>
-                                                        <a href="{{ route('equipment-transfer.show', $item->equipment_transfer_hd_id) }}"class="btn btn-info btn-sm"><i class="bx bx-task"></i> เอกสาร</a>
+                                                         <a href="{{ route('customers.edit', $item->customer_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> แก้ไข</a>
                                                     </td>
-                                                </tr>  
+                                                </tr>
                                             @endforeach
                                         </tbody>
-                                    </table>
+                                     </table>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +82,7 @@ $(document).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "order": [[2, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
+        "order": [[1, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
         "language": {
             "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
             "zeroRecords": "ไม่พบข้อมูล",

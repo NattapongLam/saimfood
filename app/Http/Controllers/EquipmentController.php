@@ -136,7 +136,7 @@ class EquipmentController extends Controller
             'equipmente_date' => 'required',
             'insurance_date' => 'required',
         ]);
-        $flag = $request->machine_flag;
+        $flag = $request->equipment_flag;
         if ($flag == 'on' || $flag == 'true') {
             $flag = true;
         } else {
@@ -172,7 +172,7 @@ class EquipmentController extends Controller
             $request->file('equipment_pic4')->storeAs('equipment_img', $filename, 'public');
             $data['equipment_pic4'] = 'storage/equipment_img/' . $filename;
         }
-          try {
+        try {
             DB::beginTransaction();
             Equipment::where('equipment_id',$id)->update($data);
             DB::commit();

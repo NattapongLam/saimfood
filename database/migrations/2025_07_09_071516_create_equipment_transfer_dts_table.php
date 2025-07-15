@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('equipment_transfer_dt_remark')->nullable();
             $table->boolean('equipment_transfer_dt_flag')->default(true); 
             $table->string('person_at');
+            $table->BigInteger('equipment_id');
+            $table->BigInteger('equipment_transfer_status_id');
             $table->timestamps();
         });
     }

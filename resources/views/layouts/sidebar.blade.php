@@ -45,7 +45,7 @@
                                         @can('setup-equipment')
                                         <a href="javascript: void(0);" class="has-arrow" key="t-starter-page">ลูกค้า</a>
                                         <ul class="sub-menu" aria-expanded="true">
-                                            <li><a href="{{route('customers.index')}}" key="t-starter-page">รหัสลูกค้า</a></li>
+                                            <li><a href="{{route('customers.index')}}" key="t-starter-page">ลูกค้า</a></li>
                                             <li><a href="{{route('equipments.index')}}" key="t-starter-page">อุปกรณ์ลูกค้า</a></li>
                                             <li><a href="#" key="t-starter-page">ตั้งค่าตรวจเช็คตามแผน</a></li>
                                         </ul>

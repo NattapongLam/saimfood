@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('equipment_location')->nullable();
             $table->date('last_transfer')->nullable();
             $table->BigInteger('equipment_status_id');
+            $table->string('equipment_refdocuno')->nullable();
             $table->timestamps();
             $table->unique(['equipment_code', 'equipment_flag'], 'uq_equipment_code_flag');
         });

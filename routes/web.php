@@ -87,3 +87,4 @@ Route::get('/report-machine' , [App\Http\Controllers\MachineReportController::cl
 });
 //QrCodeScan
 Route::get('/machine-qrcode/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanMachine']);
+Route::get('/customer-transfer/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanCustomerTransfer']);

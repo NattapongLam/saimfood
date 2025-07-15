@@ -23,6 +23,13 @@ return new class extends Migration
             $table->string('customer_fullname');
             $table->string('customer_address');
             $table->string('person_at');
+            $table->BigInteger('customer_id');
+            $table->string('contact_person');
+            $table->string('contact_tel');
+            $table->string('recheck_at')->nullable();
+            $table->string('recheck_date')->nullable();
+            $table->string('recheck_remark')->nullable();
+            $table->string('recheck_file')->nullable();
             $table->timestamps();
         });
     }
