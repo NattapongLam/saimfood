@@ -74,6 +74,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/equipments' , App\Http\Controllers\EquipmentController::class);
         Route::resource('/equipment-transfer' , App\Http\Controllers\EquipmentTransferController::class);
         Route::resource('/customers' , App\Http\Controllers\CustomerController::class);
+        Route::resource('/equipment-repair' , App\Http\Controllers\EquipmentRepairController::class);
     });
 Route::resource('/machine-repair-docus' , App\Http\Controllers\MachineRepairDocuController::class);
 Route::post('/confirmDelMachineRepairHd' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairHd']);
@@ -88,3 +89,4 @@ Route::get('/report-machine' , [App\Http\Controllers\MachineReportController::cl
 //QrCodeScan
 Route::get('/machine-qrcode/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanMachine']);
 Route::get('/customer-transfer/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanCustomerTransfer']);
+Route::resource('/customer-repair' , App\Http\Controllers\CustomerRepairController::class);

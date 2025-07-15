@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Machine;
 use Illuminate\Http\Request;
 use App\Models\MachineRepairDochd;
+use Illuminate\Support\Facades\DB;
 use App\Models\EquipmentTransferDt;
 use App\Models\EquipmentTransferHd;
 use App\Models\MachinePlaningdocuHd;
@@ -28,8 +29,13 @@ class QrsacnController extends Controller
 
     public function QrcodeScanCustomerTransfer($id)
     {
-        $hd = EquipmentTransferHd::where('equipment_transfer_hd_docuno',$id)->first();
-        $dt = EquipmentTransferDt::where('equipment_transfer_hd_id',$hd->equipment_transfer_hd_id)->where('equipment_transfer_dt_flag',true)->get();
-        return view('qr-customer-transfer',compact('hd','dt'));
+        $hd = DB::table('equipment_transfer_hds')
+        ->leftjoin('equipment_transfer_dts','equipment_transfer_hds.equipment_transfer_hd_id','=','equipment_transfer_dts.equipment_transfer_hd_id')
+        ->leftjoin('equipment','equipment.equipment_id','=','equipment_transfer_dts.equipment_id')
+        ->select('equipment_transfer_dts.*','equipment_transfer_hds.equipment_transfer_hd_date','equipment_transfer_hds.customer_address','equipment.equipment_pic1','equipment_transfer_hds.equipment_transfer_hd_docuno')
+        ->where('equipment_transfer_hds.equipment_transfer_hd_docuno',$id)
+        ->where('equipment_transfer_dts.equipment_transfer_dt_flag',true)
+        ->get();
+        return view('qr-customer-transfer',compact('hd'));
     }
 }

@@ -22,49 +22,68 @@
         </header>
         <div class="page-content">
            <div class="container-fluid">
-                    <div class="row p-1">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header bg-transparent border-primary">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                                <h3 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>รหัสเครื่อง : {{$mc->machine_code}} ชื่อเครื่อง : {{$mc->machine_name}}</h3>
-                                                <div class="page-title-right">
-                                                    <h3 class="my-0 text-primary">
-                                                        Serial : {{$mc->serial_number}}
-                                                        @if ($mc->machine_pic2)
-                                                            <a href="{{ asset($mc->machine_pic2) }}" target="_blank"><i class="fas fa-file"></i>ใบรับประกัน</a>
-                                                        @endif
-                                                        @if ($mc->machine_pic3)
-                                                            <a href="{{ asset($mc->machine_pic3) }}" target="_blank"><i class="fas fa-file"></i>คู่มือ</a>
-                                                        @endif
-                                                    </h3>
-                                                </div>                  
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                             <div class="col-xl-6">
+                                                <div class="product-detai-imgs">
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-3 col-4">
+                                                            <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                                                <a class="nav-link active" id="product-1-tab" data-bs-toggle="pill" href="#product-1" role="tab" aria-controls="product-1" aria-selected="true">
+                                                                    <img src="{{ asset($mc->machine_pic1 ?? 'images/no-image.png') }}" alt="" class="img-fluid mx-auto d-block rounded">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7 offset-md-1 col-sm-9 col-8">
+                                                            <div class="tab-content" id="v-pills-tabContent">
+                                                                <div class="tab-pane fade show active" id="product-1" role="tabpanel" aria-labelledby="product-1-tab">
+                                                                    <div>
+                                                                        <img src="{{ asset($mc->machine_pic1 ?? 'images/no-image.png') }}" alt="" class="img-fluid mx-auto d-block">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center">
+                                                                <a href="{{route('machine-repair-docus.create')}}" class="btn btn-primary waves-effect waves-light mt-2 me-1">
+                                                                    แจ้งซ่อม
+                                                                </a>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h4>เพิ่มเติม : {{$mc->machine_details}}</h4>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <center>
-                                        <div class="col-12">
-                                            <img src="{{ asset($mc->machine_pic1 ?? 'images/no-image.png') }}" class="img-fluid" alt="Responsive image">
-                                        </div>                                       
-                                        </center>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <a href="{{route('machine-repair-docus.create')}}" class="btn btn-soft-primary btn-lg">
-                                                แจ้งซ่อม
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <br>
+                                            <div class="col-xl-6">
+                                                <div class="mt-4 mt-xl-3">
+                                                    <a href="javascript: void(0);" class="text-primary">{{$mc->machine_code}}</a>
+                                                    <h4 class="mt-1 mb-3">{{$mc->machine_name}}</h4>  
+                                                    <p class="text-muted mb-4">Serial : {{$mc->serial_number}}</p>
+                                                    <p class="text-muted mb-4">{{$mc->machine_details}}</p>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <div>
+                                                                @if ($mc->machine_pic2)
+                                                                    <a class="text-muted" href="{{ asset($mc->machine_pic2) }}" target="_blank">
+                                                                        <i class="fas fa-file font-size-16 align-middle text-primary me-1"></i> ใบรับประกัน
+                                                                    </a>
+                                                                @endif                                                               
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div>
+                                                                @if ($mc->machine_pic3)
+                                                                    <a class="text-muted" href="{{ asset($mc->machine_pic3) }}" target="_blank">
+                                                                        <i class="fas fa-file font-size-16 align-middle text-primary me-1"></i> คู่มือ
+                                                                    </a>
+                                                                @endif                                              
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                        </div>
+                         <br>
                                     <div class="row">
                                         <table class="table table-bordered dt-responsive  nowrap w-100 text-center">
                                             <thead>
@@ -161,7 +180,7 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="col-xl-12 col-lg-12">
                                         <div class="card">
                                             <!-- Nav tabs -->
                                             <ul class="nav nav-tabs nav-tabs-custom justify-content-center pt-2" role="tablist">
@@ -253,17 +272,17 @@
                                                 </table>
                                             </div>
                                             </div>
-                                </div>
-                            </div>
-                                    </div>                                   
-                                </div>
-                            </div>
-                        </div>
+                                        </div>
+                                        </div>
+                                    </div>
                     </div>
-                </div>
+                    </div>
+                </div>                                                                                 
+        </div>
             </div>
         </div>
-    </div> 
+    </div>
+ 
 <div class="rightbar-overlay"></div>
  <!-- JAVASCRIPT -->
 <script src="{{asset('assets/libs/jquery/jquery.min.js')}}"></script>

@@ -22,29 +22,40 @@
         </header>
         <div class="page-content">
            <div class="container-fluid">
-            <div class="row p-1">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header bg-transparent border-primary">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                                <h3 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>เลขที่ : {{$hd->equipment_transfer_hd_docuno}} วันที่ : {{ \Carbon\Carbon::parse($hd->equipment_transfer_hd_date)->translatedFormat('j F Y') }}</h3>
-                                                <div class="page-title-right">
-                                                    <h3 class="my-0 text-primary">
-                                                        ลูกค้า  : {{$hd->customer_fullname}} ผู้ติดต่อ : {{$hd->contact_person}} เบอร์ : {{$hd->contact_tel}}
-                                                    </h3>
-                                                </div>                  
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="row">
+                @foreach ($hd as $item)
+                    <div class="col-xl-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="favorite-icon">
+                                <a><i class="mdi mdi-checkbook"></i> {{$item->equipment_transfer_hd_docuno}}</a>
                             </div>
+                            <img src="{{ asset($item->equipment_pic1 ?? 'images/no-image.png') }}" alt="" height="50" class="mb-3">
+                            <h5 class="fs-17 mb-2"><a href="#" class="text-dark">{{$item->equipment_name}} ({{$item->equipment_code}})</a> <small class="text-muted fw-normal"><i class="mdi mdi-calendar-month"></i>{{ \Carbon\Carbon::parse($item->equipment_transfer_hd_date)->format('d/M/y') }}</small></h5>
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item">
+                                    <p class="text-muted fs-14 mb-1">Serial : {{$item->serial_number}}</p>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i> {{$item->customer_address}}</p>
+                                </li>
+                            </ul>           
+                            <div class="mt-3 hstack gap-2">
+                            @if ($item->equipment_transfer_status_id == 1)
+                                <span class="badge rounded-1 badge-soft-warning">รอจัดส่ง</span>
+                            @elseif($item->equipment_transfer_status_id == 2)
+                                <span class="badge rounded-1 badge-soft-success">จัดส่งเรียบร้อย</span>
+                            @elseif($item->equipment_transfer_status_id == 3)
+                                <span class="badge rounded-1 badge-soft-danger">แจ้งซ่อม</span>
+                            @endif
+                            </div>
+                            <div class="mt-4 hstack gap-2">
+                                <a href="#" class="btn btn-primary w-100">แจ้งซ่อม</a>
+                            </div>                  
                         </div>
+                    </div>
+                </div>
+                @endforeach               
             </div>
            </div>
         </div>
