@@ -50,7 +50,7 @@
                             @endif
                             </div>
                             <div class="mt-4 hstack gap-2">
-                                <a href="#" class="btn btn-primary w-100">แจ้งซ่อม</a>
+                                <a href="{{ route('customer-repair.show', $item->equipment_transfer_dt_id) }}" class="btn btn-primary w-100">แจ้งซ่อม</a>
                             </div>                  
                         </div>
                     </div>

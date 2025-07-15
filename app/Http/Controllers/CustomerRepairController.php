@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerRepairController extends Controller
 {
@@ -45,7 +46,9 @@ class CustomerRepairController extends Controller
      */
     public function show($id)
     {
-        //
+        $dt = DB::table('equipment_transfer_dts')->where('equipment_transfer_dt_id',$id)->first();
+        $hd = DB::table('equipment_transfer_hds')->where('equipment_transfer_hd_id',$dt->equipment_transfer_hd_id)->first();
+        return view('create-customerrepair-docu',compact('dt','hd'));
     }
 
     /**
