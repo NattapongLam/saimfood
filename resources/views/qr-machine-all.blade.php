@@ -85,7 +85,8 @@
                         </div>
                          <br>
                                     <div class="row">
-                                        <table class="table table-bordered dt-responsive  nowrap w-100 text-center">
+                                        <div class="table-responsive">
+                                              <table class="table table-bordered dt-responsive  nowrap w-100 text-center">
                                             <thead>
                                                 <tr>
                                                     <th>สถานะ</th>
@@ -177,6 +178,8 @@
                                             @endforeach
                                         </tbody>
                                         </table>
+                                        </div>
+                                      
                                     </div>
                                     <br>
                                     <div class="row">
@@ -199,8 +202,9 @@
                                             <!-- Tab panes -->
                                             <div class="tab-content p-4">
                                                 <div class="tab-pane active show" id="all-post" role="tabpanel">
-                                                    <div class="row">
-                                                        <table class="table table-bordered dt-responsive  nowrap w-100 text-center">
+                                            <div class="row">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered dt-responsive  nowrap w-100 text-center">
                                                 <thead>
                                                     <tr>
                                                         <th>วันที่</th>
@@ -227,12 +231,14 @@
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
-                                            </table>
+                                                </table>
+                                                </div>                                               
                                             </div>
                                             </div>
 
                                             <div class="tab-pane" id="archive" role="tabpanel">
-                                                <table class="table table-bordered dt-responsive  nowrap w-100 text-center">
+                                                <div class="table-responsive">
+                                                      <table class="table table-bordered dt-responsive  nowrap w-100 text-center">
                                                     <thead>
                                                         <tr>
                                                             <th>วันที่</th>
@@ -243,33 +249,35 @@
                                                         </tr>
                                                     </thead>
                                                      <tbody>
-                                            @foreach ($plan as $item)
-                                                <tr>
-                                                    <td>{{$item->machine_planingdocu_dt_date}}</td>
-                                                    <td>{{$item->machine_planingdocu_dt_note}}</td>
-                                                    <td>
-                                                        @if($item->machine_planingdocu_dt_plan)
-                                                            <input class="form-check-input" type="checkbox" id="formCheckcolor1" checked="">
-                                                        @else
-                                                            <input class="form-check-input" type="checkbox" id="formCheckcolor1">
-                                                        @endif  
-                                                    </td>
-                                                    <td>
-                                                        @if($item->machine_planingdocu_dt_action)
-                                                            <input class="form-check-input" type="checkbox" id="formCheckcolor2" checked="">
-                                                        @else
-                                                            <input class="form-check-input" type="checkbox" id="formCheckcolor2">
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if($item->machine_planingdocu_dt_action == 0)
-                                                            <a href="{{ route('machine-planing-docus.edit', $item->machine_planingdocu_dt_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>                                                        
-                                                        @endif                                                        
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
+                                                    @foreach ($plan as $item)
+                                                        <tr>
+                                                            <td>{{$item->machine_planingdocu_dt_date}}</td>
+                                                            <td>{{$item->machine_planingdocu_dt_note}}</td>
+                                                            <td>
+                                                                @if($item->machine_planingdocu_dt_plan)
+                                                                    <input class="form-check-input" type="checkbox" id="formCheckcolor1" checked="">
+                                                                @else
+                                                                    <input class="form-check-input" type="checkbox" id="formCheckcolor1">
+                                                                @endif  
+                                                            </td>
+                                                            <td>
+                                                                @if($item->machine_planingdocu_dt_action)
+                                                                    <input class="form-check-input" type="checkbox" id="formCheckcolor2" checked="">
+                                                                @else
+                                                                    <input class="form-check-input" type="checkbox" id="formCheckcolor2">
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @if($item->machine_planingdocu_dt_action == 0)
+                                                                    <a href="{{ route('machine-planing-docus.edit', $item->machine_planingdocu_dt_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>                                                        
+                                                                @endif                                                        
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
                                                 </table>
+                                                </div>
+                                              
                                             </div>
                                             </div>
                                         </div>
