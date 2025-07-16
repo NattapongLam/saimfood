@@ -41,7 +41,7 @@
                                 </li>
                             </ul>           
                             <div class="mt-3 hstack gap-2">
-                            @if ($item->equipment_transfer_status_id == 1 || $item->equipment_transfer_status_id == 5)
+                            @if ($item->equipment_transfer_status_id == 1)
                                 <span class="badge rounded-1 badge-soft-warning">รอจัดส่ง</span>
                             @elseif($item->equipment_transfer_status_id == 2)
                                 <span class="badge rounded-1 badge-soft-success">จัดส่งเรียบร้อย</span>
