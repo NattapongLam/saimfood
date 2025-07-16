@@ -47,9 +47,11 @@
                                 <span class="badge rounded-1 badge-soft-success">จัดส่งเรียบร้อย</span>
                             @elseif($item->equipment_transfer_status_id == 4)
                                 <span class="badge rounded-1 badge-soft-danger">แจ้งซ่อม</span>
+                            @elseif($item->equipment_transfer_status_id == 5)
+                                <span class="badge rounded-1 badge-soft-info">กำลังดำเนินการ</span>
                             @endif
                             </div>
-                            @if ($item->equipment_transfer_status_id == 4)
+                            @if ($item->equipment_transfer_status_id == 4 || $item->equipment_transfer_status_id == 5)
                                 <div class="mt-4 hstack gap-2">
                                     <a href="#"><h6>เลขที่แจ้งซ่อม : {{$item->case->customer_repair_docu_docuno}} (สถานะ : {{$item->case->customer_repair_status_name}})</h6></a>
                                 </div>
