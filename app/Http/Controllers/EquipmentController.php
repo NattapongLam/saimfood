@@ -63,7 +63,8 @@ class EquipmentController extends Controller
             'person_at' => Auth::user()->name,
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now(),
-            'equipment_status_id' => 1
+            'equipment_status_id' => 1,
+            'equipment_cost' => $request->equipment_cost
         ];
         if ($request->hasFile('equipment_pic1') && $request->file('equipment_pic1')->isValid()) {
             $filename = "EQ_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('equipment_pic1')->getClientOriginalExtension();
@@ -131,7 +132,7 @@ class EquipmentController extends Controller
     public function update(Request $request, $id)
     {
         
-         $request->validate([
+        $request->validate([
             'equipment_name' => 'required',
             'equipmente_date' => 'required',
             'insurance_date' => 'required',
@@ -151,6 +152,7 @@ class EquipmentController extends Controller
             'equipment_flag' =>  $flag,           
             'person_at' => Auth::user()->name,
             'updated_at'=> Carbon::now(),
+            'equipment_cost' => $request->equipment_cost
         ];
         if ($request->hasFile('equipment_pic1') && $request->file('equipment_pic1')->isValid()) {
             $filename = "EQ_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('equipment_pic1')->getClientOriginalExtension();

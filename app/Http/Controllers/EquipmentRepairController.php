@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CustomerRepairSub;
+use App\Models\CustomerRepairDocu;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class EquipmentRepairController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +21,10 @@ class EquipmentRepairController extends Controller
      */
     public function index()
     {
-        //
+        $case = CustomerRepairDocu::leftjoin('customer_repair_statuses','customer_repair_docus.customer_repair_status_id','=','customer_repair_statuses.customer_repair_status_id')
+        ->select('customer_repair_docus.*','customer_repair_statuses.customer_repair_status_name')
+        ->get();
+        return view('docu-equipment.list-equipmentrepair',compact('case'));
     }
 
     /**
@@ -56,7 +67,9 @@ class EquipmentRepairController extends Controller
      */
     public function edit($id)
     {
-        //
+        $case = CustomerRepairDocu::leftjoin('customer_repair_statuses','customer_repair_docus.customer_repair_status_id','=','customer_repair_statuses.customer_repair_status_id')
+        ->find($id);
+        return view('docu-equipment.edit-equipmentrepair',compact('case'));
     }
 
     /**
@@ -68,7 +81,80 @@ class EquipmentRepairController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ck = CustomerRepairDocu::find($id);
+        if($ck->customer_repair_status_id == 1){
+            $request->validate([
+                'person_result' => 'required',
+                'result_remark' => 'required',
+                'person_date' => 'required',
+            ]);
+            $data = [
+                'customer_repair_status_id' => 2,
+                'person_at' => Auth::user()->name,
+                'person_datetime'=> now(),
+                'person_date' => $request->person_date,
+                'updated_at' => now(),
+                'person_result' => $request->person_result,
+                'result_remark' => $request->result_remark,
+                'person_note' => $request->person_note
+            ];
+            try {
+            DB::beginTransaction();
+            CustomerRepairDocu::where('customer_repair_docu_id',$id)->update($data);
+            DB::table('equipment_transfer_dts')
+            ->where('equipment_transfer_dt_id',$ck->transfer_id)
+            ->update([
+                'equipment_transfer_status_id' => 5
+            ]);
+            DB::table('equipment')
+            ->where('equipment_id',$ck->equipment_id)
+            ->update([
+                'equipment_status_id' => 5,
+            ]);
+            $listnos = $request->customer_repair_sub_listno ?? [];
+            foreach ($listnos as $key => $listno) {
+                $costRaw = $request->customer_repair_sub_cost[$key] ?? 0;
+                $remark = $request->customer_repair_sub_remark[$key] ?? null;
+                $vendor = $request->customer_repair_sub_vendor[$key] ?? "-";
+
+                if ($costRaw === null || $remark === null || $vendor === null) {
+                    continue; // หรือแจ้งเตือนว่าข้อมูลไม่ครบ
+                }
+
+                $cost = str_replace(',', '', $costRaw);
+
+                $filePath = null;
+                if ($request->hasFile('customer_repair_sub_file') && isset($request->file('customer_repair_sub_file')[$key])) {
+                    $file = $request->file('customer_repair_sub_file')[$key];
+                    if ($file && $file->isValid()) {
+                        $filename = "ET_FILE_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $file->getClientOriginalExtension();
+                        $file->storeAs('equipment_repair_img', $filename, 'public');
+                        $filePath = 'storage/equipment_repair_img/' . $filename;
+                    }
+                }
+                CustomerRepairSub::create([
+                    'customer_repair_docu_id' => $ck->customer_repair_docu_id,
+                    'customer_repair_sub_listno' => $listno,
+                    'customer_repair_sub_remark' => $remark,
+                    'customer_repair_sub_vendor' => $vendor,
+                    'customer_repair_sub_cost' => $cost,
+                    'customer_repair_sub_file' => $filePath,
+                    'customer_repair_sub_flag' => true,
+                    'person_at' => Auth::user()->name,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+            DB::commit();
+            return redirect()->route('equipment-repair.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('equipment-repair.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            }  
+        }
+       
     }
 
     /**

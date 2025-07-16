@@ -48,7 +48,7 @@ class EquipmentTransferController extends Controller
      */
     public function store(Request $request)
     {
-         $docs_last = DB::table('equipment_transfer_hds')
+        $docs_last = DB::table('equipment_transfer_hds')
             ->where('equipment_transfer_hd_docuno', 'like', '%' . date('ym') . '%')
             ->orderBy('equipment_transfer_hd_id', 'desc')->first();
         if ($docs_last) {

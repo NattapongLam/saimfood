@@ -77,7 +77,7 @@
                                         <ul class="sub-menu" aria-expanded="true">
                                             <li><a href="#" key="t-starter-page">แผนการซ่อมลูกค้า</a></li>
                                             <li><a href="{{route('equipment-transfer.index')}}" key="t-starter-page">ใบโอนย้ายอุปกรณ์</a></li>
-                                            <li><a href="#" key="t-starter-page">ใบแจ้งซ่อมลูกค้า</a></li>
+                                            <li><a href="{{route('equipment-repair.index')}}" key="t-starter-page">ใบแจ้งซ่อมลูกค้า</a></li>
                                         </ul>
                                         @endcan
                                     </li>

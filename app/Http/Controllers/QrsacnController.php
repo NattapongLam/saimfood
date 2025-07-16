@@ -31,11 +31,33 @@ class QrsacnController extends Controller
     {
         $hd = DB::table('equipment_transfer_hds')
         ->leftjoin('equipment_transfer_dts','equipment_transfer_hds.equipment_transfer_hd_id','=','equipment_transfer_dts.equipment_transfer_hd_id')
-        ->leftjoin('equipment','equipment.equipment_id','=','equipment_transfer_dts.equipment_id')
-        ->select('equipment_transfer_dts.*','equipment_transfer_hds.equipment_transfer_hd_date','equipment_transfer_hds.customer_address','equipment.equipment_pic1','equipment_transfer_hds.equipment_transfer_hd_docuno')
-        ->where('equipment_transfer_hds.equipment_transfer_hd_docuno',$id)
-        ->where('equipment_transfer_dts.equipment_transfer_dt_flag',true)
+        ->leftjoin('equipment','equipment.equipment_id','=','equipment_transfer_dts.equipment_id')        
+        ->select(
+            'equipment_transfer_dts.*',
+            'equipment_transfer_hds.equipment_transfer_hd_date',
+            'equipment_transfer_hds.customer_address',
+            'equipment.equipment_pic1',
+            'equipment_transfer_hds.equipment_transfer_hd_docuno'
+        )
+        ->where('equipment_transfer_hds.equipment_transfer_hd_docuno', $id)
+        ->where('equipment_transfer_dts.equipment_transfer_dt_flag', true)
         ->get();
-        return view('qr-customer-transfer',compact('hd'));
+        // สร้างตัวแปรเก็บข้อมูล cases ต่อแต่ละ equipment_transfer_dt_id
+        $hd = $hd->map(function($item) {
+            // ดึงข้อมูล case 1 แถวล่าสุด โดยเรียงตาม ID หรือวันที่ล่าสุด เช่น สมมติมี column updated_at
+            $case = DB::table('customer_repair_docus')
+                ->leftjoin('customer_repair_statuses','customer_repair_docus.customer_repair_status_id','=','customer_repair_statuses.customer_repair_status_id')
+                ->where('transfer_id', $item->equipment_transfer_dt_id)
+                ->orderByDesc('customer_repair_docu_id')  // หรือเปลี่ยนเป็น orderByDesc('updated_at') หรือวันที่ที่เหมาะสม
+                ->first();
+
+            // เพิ่มข้อมูล case เข้าไปใน item
+            $item->case = $case;
+
+            return $item;
+        });
+
+        return view('qr-customer-transfer', compact('hd'));
+
     }
 }

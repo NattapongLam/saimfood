@@ -41,17 +41,24 @@
                                 </li>
                             </ul>           
                             <div class="mt-3 hstack gap-2">
-                            @if ($item->equipment_transfer_status_id == 1)
+                            @if ($item->equipment_transfer_status_id == 1 || $item->equipment_transfer_status_id == 5)
                                 <span class="badge rounded-1 badge-soft-warning">รอจัดส่ง</span>
                             @elseif($item->equipment_transfer_status_id == 2)
                                 <span class="badge rounded-1 badge-soft-success">จัดส่งเรียบร้อย</span>
-                            @elseif($item->equipment_transfer_status_id == 3)
+                            @elseif($item->equipment_transfer_status_id == 4)
                                 <span class="badge rounded-1 badge-soft-danger">แจ้งซ่อม</span>
                             @endif
                             </div>
+                            @if ($item->equipment_transfer_status_id == 4)
+                                <div class="mt-4 hstack gap-2">
+                                    <a href="#"><h6>เลขที่แจ้งซ่อม : {{$item->case->customer_repair_docu_docuno}} (สถานะ : {{$item->case->customer_repair_status_name}})</h6></a>
+                                </div>
+                            @else
                             <div class="mt-4 hstack gap-2">
                                 <a href="{{ route('customer-repair.show', $item->equipment_transfer_dt_id) }}" class="btn btn-primary w-100">แจ้งซ่อม</a>
-                            </div>                  
+                            </div>
+                            @endif
+                                             
                         </div>
                     </div>
                 </div>

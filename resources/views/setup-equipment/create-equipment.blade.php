@@ -55,13 +55,21 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-6">
-                                         <div class="form-group">
+                                    <div class="col-6">
+                                        <div class="form-group">
                                             <label class="form-label">
                                                 Serial Number
                                             </label>
                                             <input class="form-control" type="text" name="serial_number">
-                                         </div>
+                                        </div>
+                                    </div> 
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                มูลค่า
+                                            </label>
+                                             <input type="number" class="form-control" name="equipment_cost" id="equipment_cost" min="0" step="0.01">
+                                        </div>
                                     </div> 
                                     </div>
                                     <br>

@@ -38,6 +38,8 @@
                             @endif       
                         </div>
                         <h5><strong>เอกสารแจ้งซ่อม</strong></h5>
+                        <form class="custom-validation" action="{{ route('customer-repair.store') }}" method="POST" enctype="multipart/form-data" validate>
+                        @csrf   
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -49,6 +51,7 @@
                                 <div class="form-group">
                                     <label class="form-label">เลขที่จัดส่ง</label>
                                     <input class="form-control" name="equipment_transfer_hd_docuno" type="text" value="{{$hd->equipment_transfer_hd_docuno}}" readonly>
+                                    <input type="hidden" name="equipment_transfer_dt_id" value="{{$dt->equipment_transfer_dt_id}}">
                                 </div>
                             </div>                            
                         </div>
@@ -89,13 +92,13 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="form-label">ผู้ติดต่อ</label>
-                                    <input class="form-control" name="contact_person" type="text" value="{{$hd->contact_person}}">
+                                    <input class="form-control" name="contact_person" type="text" value="{{$hd->contact_person}}" required>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="form-label">เบอร์โทร</label>
-                                    <input class="form-control" name="contact_tel" type="text" value="{{$hd->contact_tel}}">
+                                    <input class="form-control" name="contact_tel" type="text" value="{{$hd->contact_tel}}" required>
                                 </div>
                             </div>
                         </div> 
@@ -104,7 +107,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="form-label">รายละเอียดอาการเสีย</label>
-                                    <textarea class="form-control" name="customer_case" rows="10"></textarea>
+                                    <textarea class="form-control" name="customer_repair_docu_case" rows="10" required></textarea>
                                 </div>
                             </div>
                         </div>  
@@ -115,7 +118,8 @@
                                     บันทึก
                                 </button>
                             </div>
-                        </div>                    
+                        </div>
+                    </form>                   
                     </div>
                 </div>
             </div>           
