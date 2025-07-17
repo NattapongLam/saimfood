@@ -35,6 +35,15 @@ return new class extends Migration
             $table->string('person_result')->nullable();
             $table->string('result_remark')->nullable();
             $table->string('person_note')->nullable();
+            $table->string('approved_at')->nullable();
+            $table->date('approved_date')->nullable();
+            $table->string('approved_remark')->nullable();
+            $table->string('result_at')->nullable();
+            $table->date('result_date')->nullable();
+            $table->string('result_note')->nullable();
+            $table->string('delivery_at')->nullable();
+            $table->date('delivery_date')->nullable();
+            $table->string('delivery_address')->nullable();
             $table->timestamps();
         });
     }

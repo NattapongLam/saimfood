@@ -273,8 +273,377 @@
                                             บันทึก
                                         </button>
                                     </div>
-                                </div>                         
-                            @endif                          
+                                </div>
+                            @elseif ($case->customer_repair_status_id == 3)
+                             <h5>รายละเอียดรับงานซ่อม ({{$case->person_at}} {{\Carbon\Carbon::parse($case->person_datetime)->format('d/M/y')}})</h5>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ความเห็นช่าง</label>
+                                            <input class="form-control" value="{{$case->person_result}}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่จะดำเนินการเสร็จ</label>
+                                            <input class="form-control"  type="date"  value="{{$case->person_date}}" readonly>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                 <br>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">เพิ่มเติม</label>
+                                            <input class="form-control" type="text" value="{{$case->result_remark}}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">หมายเหตุ</label>
+                                            <input class="form-control"  type="text"  value="{{$case->person_note}}" readonly>
+                                        </div>
+                                    </div>
+                                </div>                               
+                                <br>
+                                <h5>รายละเอียดอนุมัติ ({{$case->approved_at}} {{\Carbon\Carbon::parse($case->approved_date)->format('d/M/y')}})</h5>                             
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">เพิ่มเติม</label>
+                                            <textarea class="form-control" name="approved_remark" readonly>{{$case->approved_remark}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <h5>บันทึกผลการดำเนินการ</h5>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">เพิ่มเติม</label>
+                                            <textarea class="form-control" name="result_note"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row"> 
+                                    <div class="col-12" style="text-align: right;">
+                                        <a href="javascript:void(0);" class="btn btn-secondary" id="addRowBtn">เพิ่มรายการ</a>
+                                    </div>
+                                    <table class="table table-striped mb-0 text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>รายละเอียด</th>
+                                                <th>ชื่อร้าน</th> 
+                                                <th>ค่าใช้จ่าย</th>                                                         
+                                                <th>แนบไฟล์</th>                                                        
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        @if ($sub)
+                                        <tbody>
+                                            @foreach ($sub as $item)
+                                                <tr>
+                                                        <td>
+                                                            {{$item->customer_repair_sub_listno}}
+                                                            <input type="hidden" name="customer_repair_sub_listno[]" value="{{$item->customer_repair_sub_listno}}">
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" name="customer_repair_sub_remark[]" value="{{$item->customer_repair_sub_remark}}">                                                
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" name="customer_repair_sub_vendor[]" value="{{$item->customer_repair_sub_vendor}}">                                             
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" name="customer_repair_sub_cost[]" value="{{$item->customer_repair_sub_cost}}"> 
+                                                        </td>
+                                                        <td>
+                                                            @if (isset($item->customer_repair_sub_file) && $item->customer_repair_sub_file)
+                                                                <a href="{{ asset('/'.$item->customer_repair_sub_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                            @endif
+                                                            <input type="file" name="customer_repair_sub_file[]" class="form-control"/>                               
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" name="customer_repair_sub_id[]" value="{{$item->customer_repair_sub_id}}">
+                                                            <div class="square-switch">
+                                                                @if($item->customer_repair_sub_flag == 1)
+                                                                <input type="checkbox" id="square-switch1" switch="none" name="customer_repair_sub_flag[]" value="true" checked/>
+                                                                @else
+                                                                <input type="checkbox" id="square-switch1" switch="none" name="customer_repair_sub_flag[]" />
+                                                                @endif
+                                                                <label for="square-switch1" data-on-label="On" data-off-label="Off"></label>
+                                                            </div>
+                                                        </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        @endif 
+                                        <tbody id="tableBody"></tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="d-flex flex-wrap gap-2 justify-content">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light" >
+                                            บันทึก
+                                        </button>
+                                    </div>
+                                </div> 
+                            @elseif ($case->customer_repair_status_id == 6)   
+                            <h5>รายละเอียดรับงานซ่อม ({{$case->person_at}} {{\Carbon\Carbon::parse($case->person_datetime)->format('d/M/y')}})</h5>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ความเห็นช่าง</label>
+                                            <input class="form-control" value="{{$case->person_result}}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่จะดำเนินการเสร็จ</label>
+                                            <input class="form-control"  type="date"  value="{{$case->person_date}}" readonly>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                 <br>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">เพิ่มเติม</label>
+                                            <input class="form-control" type="text" value="{{$case->result_remark}}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">หมายเหตุ</label>
+                                            <input class="form-control"  type="text"  value="{{$case->person_note}}" readonly>
+                                        </div>
+                                    </div>
+                                </div>                               
+                                <br>
+                                <h5>รายละเอียดอนุมัติ ({{$case->approved_at}} {{\Carbon\Carbon::parse($case->approved_date)->format('d/M/y')}})</h5>                             
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">เพิ่มเติม</label>
+                                            <textarea class="form-control" name="approved_remark" readonly>{{$case->approved_remark}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <h5>บันทึกผลการดำเนินการ</h5>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">เพิ่มเติม</label>
+                                            <textarea class="form-control" name="result_note">{{$case->result_note}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row"> 
+                                    <div class="col-12" style="text-align: right;">
+                                        <a href="javascript:void(0);" class="btn btn-secondary" id="addRowBtn">เพิ่มรายการ</a>
+                                    </div>
+                                    <table class="table table-striped mb-0 text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>รายละเอียด</th>
+                                                <th>ชื่อร้าน</th> 
+                                                <th>ค่าใช้จ่าย</th>                                                         
+                                                <th>แนบไฟล์</th>                                                        
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        @if ($sub)
+                                        <tbody>
+                                            @foreach ($sub as $item)
+                                                <tr>
+                                                        <td>
+                                                            {{$item->customer_repair_sub_listno}}
+                                                            <input type="hidden" name="customer_repair_sub_listno[]" value="{{$item->customer_repair_sub_listno}}">
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" name="customer_repair_sub_remark[]" value="{{$item->customer_repair_sub_remark}}">                                                
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" name="customer_repair_sub_vendor[]" value="{{$item->customer_repair_sub_vendor}}">                                             
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" name="customer_repair_sub_cost[]" value="{{$item->customer_repair_sub_cost}}"> 
+                                                        </td>
+                                                        <td>
+                                                            @if (isset($item->customer_repair_sub_file) && $item->customer_repair_sub_file)
+                                                                <a href="{{ asset('/'.$item->customer_repair_sub_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                            @endif
+                                                            <input type="file" name="customer_repair_sub_file[]" class="form-control"/>                               
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" name="customer_repair_sub_id[]" value="{{$item->customer_repair_sub_id}}">
+                                                            <div class="square-switch">
+                                                                @if($item->customer_repair_sub_flag == 1)
+                                                                <input type="checkbox" id="square-switch1" switch="none" name="customer_repair_sub_flag[]" value="true" checked/>
+                                                                @else
+                                                                <input type="checkbox" id="square-switch1" switch="none" name="customer_repair_sub_flag[]" />
+                                                                @endif
+                                                                <label for="square-switch1" data-on-label="On" data-off-label="Off"></label>
+                                                            </div>
+                                                        </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        @endif 
+                                        <tbody id="tableBody"></tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <h5>บันทึกจัดส่ง</h5>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่จัดส่ง</label>
+                                            <input class="form-control" type="date" name="delivery_date">
+                                        </div>
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="form-group">
+                                            <label class="form-label">ที่อยู่จัดส่ง</label>
+                                            <input class="form-control" type="text" name="delivery_address">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="d-flex flex-wrap gap-2 justify-content">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light" >
+                                            บันทึก
+                                        </button>
+                                    </div>
+                                </div> 
+                            @elseif ($case->customer_repair_status_id == 7)     
+                                <h5>รายละเอียดรับงานซ่อม ({{$case->person_at}} {{\Carbon\Carbon::parse($case->person_datetime)->format('d/M/y')}})</h5>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ความเห็นช่าง</label>
+                                            <input class="form-control" value="{{$case->person_result}}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่จะดำเนินการเสร็จ</label>
+                                            <input class="form-control"  type="date"  value="{{$case->person_date}}" readonly>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                 <br>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">เพิ่มเติม</label>
+                                            <input class="form-control" type="text" value="{{$case->result_remark}}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">หมายเหตุ</label>
+                                            <input class="form-control"  type="text"  value="{{$case->person_note}}" readonly>
+                                        </div>
+                                    </div>
+                                </div>                               
+                                <br>
+                                <h5>รายละเอียดอนุมัติ ({{$case->approved_at}} {{\Carbon\Carbon::parse($case->approved_date)->format('d/M/y')}})</h5>                             
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">เพิ่มเติม</label>
+                                            <textarea class="form-control" name="approved_remark" readonly>{{$case->approved_remark}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <h5>บันทึกผลการดำเนินการ</h5>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">เพิ่มเติม</label>
+                                            <textarea class="form-control" name="result_note" readonly>{{$case->result_note}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row"> 
+                                    <table class="table table-striped mb-0 text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>รายละเอียด</th>
+                                                <th>ชื่อร้าน</th> 
+                                                <th>ค่าใช้จ่าย</th>                                                         
+                                                <th>แนบไฟล์</th>                                                        
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        @if ($sub)
+                                        <tbody>
+                                            @foreach ($sub as $item)
+                                                <tr>
+                                                        <td>
+                                                            {{$item->customer_repair_sub_listno}}
+                                                            <input type="hidden" name="customer_repair_sub_listno[]" value="{{$item->customer_repair_sub_listno}}">
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" readonly name="customer_repair_sub_remark[]" value="{{$item->customer_repair_sub_remark}}">                                                
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" readonly name="customer_repair_sub_vendor[]" value="{{$item->customer_repair_sub_vendor}}">                                             
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" readonly name="customer_repair_sub_cost[]" value="{{$item->customer_repair_sub_cost}}"> 
+                                                        </td>
+                                                        <td>
+                                                            @if (isset($item->customer_repair_sub_file) && $item->customer_repair_sub_file)
+                                                                <a href="{{ asset('/'.$item->customer_repair_sub_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                            @endif
+                                                            <input type="file" readonly name="customer_repair_sub_file[]" class="form-control"/>                               
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" name="customer_repair_sub_id[]" value="{{$item->customer_repair_sub_id}}">
+                                                            <div class="square-switch">
+                                                                @if($item->customer_repair_sub_flag == 1)
+                                                                <input type="checkbox" readonly id="square-switch1" switch="none" name="customer_repair_sub_flag[]" value="true" checked/>
+                                                                @else
+                                                                <input type="checkbox" readonly id="square-switch1" switch="none" name="customer_repair_sub_flag[]" />
+                                                                @endif
+                                                                <label for="square-switch1" data-on-label="On" data-off-label="Off"></label>
+                                                            </div>
+                                                        </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        @endif 
+                                        <tbody id="tableBody"></tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <h5>บันทึกจัดส่ง</h5>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่จัดส่ง</label>
+                                            <input class="form-control" type="date" name="delivery_date" value="{{$case->delivery_date}}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="form-group">
+                                            <label class="form-label">ที่อยู่จัดส่ง</label>
+                                            <input class="form-control" type="text" name="delivery_address" value="{{$case->delivery_address}}" readonly>
+                                        </div>
+                                    </div>
+                                </div>                       
+                            @endif                                                
                             </form>
                         </div>
                       

@@ -203,6 +203,163 @@ class EquipmentRepairController extends Controller
                 dd($message);
                 return redirect()->route('equipment-repair.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
             }  
+        }elseif($ck->customer_repair_status_id == 3){
+            $data = [
+                'customer_repair_status_id' => 6,
+                'result_at' => Auth::user()->name,
+                'result_date'=> now(),
+                'result_note' => $request->result_note,
+                'updated_at' => now(),
+            ];
+             try {
+            DB::beginTransaction();
+            CustomerRepairDocu::where('customer_repair_docu_id',$id)->update($data);
+            DB::table('equipment_transfer_dts')
+            ->where('equipment_transfer_dt_id',$ck->transfer_id)
+            ->update([
+                'equipment_transfer_status_id' => 1
+            ]);
+            DB::table('equipment')
+            ->where('equipment_id',$ck->equipment_id)
+            ->update([
+                'equipment_status_id' => 2,
+            ]);
+            $listnos = $request->customer_repair_sub_listno ?? [];
+            $ids = $request->customer_repair_sub_id ?? [];
+            foreach ($listnos as $key => $listno) {
+                $docdtId = $ids[$key] ?? null;
+                $costRaw = $request->customer_repair_sub_cost[$key] ?? 0;
+                $remark = $request->customer_repair_sub_remark[$key] ?? null;
+                $vendor = $request->customer_repair_sub_vendor[$key] ?? "-";
+                $flag = $request->customer_repair_sub_flag[$key] ?? false;
+                $flag = $flag == 'on' || $flag == 'true' ? true : false;
+                if ($costRaw === null || $remark === null || $vendor === null) {
+                    continue; // หรือแจ้งเตือนว่าข้อมูลไม่ครบ
+                }
+                $cost = str_replace(',', '', $costRaw);
+                $filePath = null;
+                if ($request->hasFile('customer_repair_sub_file') && isset($request->file('customer_repair_sub_file')[$key])) {
+                    $file = $request->file('customer_repair_sub_file')[$key];
+                    if ($file && $file->isValid()) {
+                        $filename = "ET_FILE_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $file->getClientOriginalExtension();
+                        $file->storeAs('equipment_repair_img', $filename, 'public');
+                        $filePath = 'storage/equipment_repair_img/' . $filename;
+                    }
+                }
+                if ($docdtId) {
+                    CustomerRepairSub::where('customer_repair_sub_id', $docdtId)
+                    ->update([
+                        'customer_repair_sub_listno' => $listno,
+                        'customer_repair_sub_remark' => $remark,
+                        'customer_repair_sub_vendor' => $vendor,
+                        'customer_repair_sub_cost' => $cost,
+                        'customer_repair_sub_file' => $filePath,
+                        'customer_repair_sub_flag' => $flag,
+                        'person_at' => Auth::user()->name,
+                        'updated_at' => now()
+                    ]);
+                }else{
+                    CustomerRepairSub::create([
+                        'customer_repair_docu_id' => $ck->customer_repair_docu_id,
+                        'customer_repair_sub_listno' => $listno,
+                        'customer_repair_sub_remark' => $remark,
+                        'customer_repair_sub_vendor' => $vendor,
+                        'customer_repair_sub_cost' => $cost,
+                        'customer_repair_sub_file' => $filePath,
+                        'customer_repair_sub_flag' => true,
+                        'person_at' => Auth::user()->name,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+                }              
+            }
+            DB::commit();
+            return redirect()->route('equipment-repair.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('equipment-repair.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            }  
+        }elseif($ck->customer_repair_status_id == 6){
+            $data = [
+                'customer_repair_status_id' => 7,
+                'delivery_at' => Auth::user()->name,
+                'delivery_date'=> $request->delivery_date,
+                'result_note' => $request->result_note,
+                'updated_at' => now(),
+                'delivery_address' => $request->delivery_address
+            ];
+             try {
+            DB::beginTransaction();
+            CustomerRepairDocu::where('customer_repair_docu_id',$id)->update($data);
+            DB::table('equipment_transfer_dts')
+            ->where('equipment_transfer_dt_id',$ck->transfer_id)
+            ->update([
+                'equipment_transfer_status_id' => 2
+            ]);
+            DB::table('equipment')
+            ->where('equipment_id',$ck->equipment_id)
+            ->update([
+                'equipment_status_id' => 3,
+            ]);
+            $listnos = $request->customer_repair_sub_listno ?? [];
+            $ids = $request->customer_repair_sub_id ?? [];
+            foreach ($listnos as $key => $listno) {
+                $docdtId = $ids[$key] ?? null;
+                $costRaw = $request->customer_repair_sub_cost[$key] ?? 0;
+                $remark = $request->customer_repair_sub_remark[$key] ?? null;
+                $vendor = $request->customer_repair_sub_vendor[$key] ?? "-";
+                $flag = $request->customer_repair_sub_flag[$key] ?? false;
+                $flag = $flag == 'on' || $flag == 'true' ? true : false;
+                if ($costRaw === null || $remark === null || $vendor === null) {
+                    continue; // หรือแจ้งเตือนว่าข้อมูลไม่ครบ
+                }
+                $cost = str_replace(',', '', $costRaw);
+                $filePath = null;
+                if ($request->hasFile('customer_repair_sub_file') && isset($request->file('customer_repair_sub_file')[$key])) {
+                    $file = $request->file('customer_repair_sub_file')[$key];
+                    if ($file && $file->isValid()) {
+                        $filename = "ET_FILE_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $file->getClientOriginalExtension();
+                        $file->storeAs('equipment_repair_img', $filename, 'public');
+                        $filePath = 'storage/equipment_repair_img/' . $filename;
+                    }
+                }
+                if ($docdtId) {
+                    CustomerRepairSub::where('customer_repair_sub_id', $docdtId)
+                    ->update([
+                        'customer_repair_sub_listno' => $listno,
+                        'customer_repair_sub_remark' => $remark,
+                        'customer_repair_sub_vendor' => $vendor,
+                        'customer_repair_sub_cost' => $cost,
+                        'customer_repair_sub_file' => $filePath,
+                        'customer_repair_sub_flag' => $flag,
+                        'person_at' => Auth::user()->name,
+                        'updated_at' => now()
+                    ]);
+                }else{
+                    CustomerRepairSub::create([
+                        'customer_repair_docu_id' => $ck->customer_repair_docu_id,
+                        'customer_repair_sub_listno' => $listno,
+                        'customer_repair_sub_remark' => $remark,
+                        'customer_repair_sub_vendor' => $vendor,
+                        'customer_repair_sub_cost' => $cost,
+                        'customer_repair_sub_file' => $filePath,
+                        'customer_repair_sub_flag' => true,
+                        'person_at' => Auth::user()->name,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+                }              
+            }
+            DB::commit();
+            return redirect()->route('equipment-repair.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('equipment-repair.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            } 
         }      
     }
 
