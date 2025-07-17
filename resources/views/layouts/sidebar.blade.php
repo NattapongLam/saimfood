@@ -92,7 +92,7 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
                                     <li><a href="{{url('/report-calendar-pm')}}" key="t-starter-page">ปฏิทิน PM</a></li>
-                                    <li><a href="{{url('/report-machine')}}" key="t-starter-page">ภายในองค์กร</a></li>
+                                    <li><a href="{{url('/report-machine')}}" key="t-starter-page">ภาพรวม</a></li>
                                 </ul>
                             </li>
                             
