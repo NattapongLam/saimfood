@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Machine;
+use App\Models\MachineGroup;
 use Illuminate\Http\Request;
 use App\Models\MachinePlaningDt;
 use App\Models\MachinePlaningHd;
@@ -41,10 +42,10 @@ class MachinePlaningDocuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $hd = Machine::where('machine_flag',true)->get();
-        return view('docu-machine.create-machineplaning-docu',compact('hd'));
+        $group = MachineGroup::where('machinegroup_flag',true)->get();
+        return view('docu-machine.create-machineplaning-docu',compact('group'));
     }
 
     /**
@@ -71,7 +72,7 @@ class MachinePlaningDocuController extends Controller
         try 
         {
             DB::beginTransaction();
-            $hd = MachinePlaningdocuHd::create($data);
+            $hd = MachinePlaningdocuHd::create($data);            
             foreach ($request->machine_code as $key => $value){
                 MachinePlaningdocuDt::insert([
                     'machine_planingdocu_hd_id' => $hd->machine_planingdocu_hd_id,
@@ -214,5 +215,44 @@ class MachinePlaningDocuController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+    }
+    public function getMachinesByGroup(Request $request)
+    {
+        $machines = Machine::where('machinegroup_id', $request->machinegroup_id)->get();
+        return response()->json($machines);
+    }
+
+    public function CalendarPm(Request $request)
+    {
+        $hd = MachinePlaningdocuHd::leftjoin('machine_planingdocu_dts','machine_planingdocu_hds.machine_planingdocu_hd_id','=','machine_planingdocu_dts.machine_planingdocu_hd_id')
+            ->leftjoin('machines','machine_planingdocu_dts.machine_code','=','machines.machine_code')
+            ->where('machine_planingdocu_hds.machine_planingdocu_hd_flag', true)
+            ->where('machine_planingdocu_dts.machine_planingdocu_dt_flag', true)
+            ->get();
+
+        $events = $hd->map(function($item) {
+            // ตรวจสอบสถานะ plan / action
+            $plan = $item->machine_planingdocu_dt_plan ?? false;
+            $action = $item->machine_planingdocu_dt_action ?? false;
+
+            // กำหนดสี
+            $color = match (true) {
+                $plan && $action => '#28a745', // เขียว
+                $plan && !$action => '#ffc107', // เหลือง
+                !$plan && $action => '#17a2b8', // ฟ้า
+                default => '#dc3545' // แดง
+            };
+
+            return [
+                'title' => $item->machine_code . '/' . $item->machine_name,
+                'start' => $item->machine_planingdocu_dt_date,
+                'description' => $item->machine_planingdocu_dt_note,
+                'id' => $item->machine_planingdocu_dt_id,
+                'color' => $color
+            ];
+        });
+
+        return view('docu-machine.list-machineplaning-calendar')
+            ->with('events', $events->toJson());
     }
 }

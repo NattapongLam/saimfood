@@ -64,7 +64,7 @@
                                 <ul class="sub-menu" aria-expanded="true">
                                     <li>
                                         <a href="javascript: void(0);" class="has-arrow" key="t-starter-page">ภายในองค์กร</a>
-                                        <ul class="sub-menu" aria-expanded="true">
+                                        <ul class="sub-menu" aria-expanded="true">                                          
                                             <li><a href="{{route('machine-planing-docus.index')}}" key="t-starter-page">แผนการซ่อมบำรุง</a></li>
                                             <li><a href="{{route('machine-checksheet-docus.index')}}" key="t-starter-page">ตรวจเช็คประจำวัน</a></li>
                                             <li><a href="{{route('machine-create-docus.index')}}" key="t-starter-page">ใบสร้างงาน</a></li>
@@ -91,6 +91,7 @@
                                     <span key="t-starter-page">รายงานซ่อมบำรุง</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="{{url('/report-calendar-pm')}}" key="t-starter-page">ปฏิทิน PM</a></li>
                                     <li><a href="{{url('/report-machine')}}" key="t-starter-page">ภายในองค์กร</a></li>
                                 </ul>
                             </li>
