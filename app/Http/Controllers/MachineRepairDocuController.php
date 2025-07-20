@@ -87,7 +87,8 @@ class MachineRepairDocuController extends Controller
             'machine_repair_dochd_docuno' => $docs,
             'machine_repair_dochd_docunum' => $docs_number,
             'machine_repair_dochd_duedate' => $request->machine_repair_dochd_duedate,
-            'docutype' => "R"
+            'docutype' => "R",
+            'machine_repair_dochd_part' => $request->machine_repair_dochd_part
         ]; 
         try 
         {
@@ -160,6 +161,7 @@ class MachineRepairDocuController extends Controller
                     'accepting_date' =>  Carbon::now(),
                     'accepting_note' => $request->accepting_note,
                     'accepting_duedate' => $request->accepting_duedate,
+                    'machine_repair_dochd_part' => $request->machine_repair_dochd_part
                 ]);
                 $listnos = $request->machine_repair_docdt_listno ?? [];
                 $ids = $request->machine_repair_docdt_id ?? [];
@@ -423,5 +425,26 @@ class MachineRepairDocuController extends Controller
             dd($message);
             return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
         } 
+    }
+    public function getHistory(Request $request)
+    {
+        $machine_code = $request->machine_code;
+        $history = MachineRepairDochd::leftjoin('machine_repair_statuses','machine_repair_dochds.machine_repair_status_id','=','machine_repair_statuses.machine_repair_status_id')
+        ->where('machine_repair_dochds.docutype', 'R')
+        ->where('machine_repair_dochds.machine_code',$machine_code)
+        ->whereNotIn('machine_repair_dochds.machine_repair_status_id',[7,6])
+        ->select('machine_repair_dochds.*','machine_repair_statuses.machine_repair_status_name')
+        ->get()
+        ->map(function($row) {
+            return [
+                'status' => $row->machine_repair_status_name,
+                'date' => \Carbon\Carbon::parse($row->machine_repair_dochd_date)->format('d/m/Y'),
+                'doc_no' => $row->machine_repair_dochd_docuno,
+                'type' => $row->machine_repair_dochd_type,
+                'problem' => $row->machine_repair_dochd_case,
+                'reporter' => $row->person_at,
+            ];
+        });
+        return response()->json($history);
     }
 }

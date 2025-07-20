@@ -55,6 +55,7 @@ return new class extends Migration
             $table->string('safety_pic1')->nullable();
             $table->string('safety_pic2')->nullable();
             $table->string('safety_ppe')->nullable();
+            $table->string('machine_repair_dochd_part')->nullable();
             $table->timestamps();
         });
     }

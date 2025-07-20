@@ -45,7 +45,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class="form-label">เครื่องจักร</label>
-                                            <select class="select2 form-select" name="machine_code" required>
+                                            <select class="select2 form-select" name="machine_code" id="machine_code" required>
                                                 <option value="">กรุณาเลือก</option>
                                                 @foreach ($machine as $item)
                                                 <option value="{{$item->machine_code}}">{{$item->machine_code}} / {{$item->machine_name}}</option>
@@ -63,10 +63,18 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="form-label">วันที่ต้องการเสร็จ</label>
-                                        <input class="form-control" type="date" name="machine_repair_dochd_duedate" value="{{ date('Y-m-d') }}" required>
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่ต้องการเสร็จ</label>
+                                            <input class="form-control" type="date" name="machine_repair_dochd_duedate" value="{{ date('Y-m-d') }}" required>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ชิ้นส่วน</label>
+                                            <input class="form-control" type="type" name="machine_repair_dochd_part">
+                                        </div>
+                                    </div>
+                                </div>                             
                                 <br>
                                 <div class="row">
                                     <div class="form-group">
@@ -90,6 +98,30 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5><strong>งานแจ้งซ่อมค้าง</strong></h5>
+                <div class="row">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>สถานะ</th>
+                                <th>วันที่</th>
+                                <th>เลขที่</th>
+                                <th>ประเภท</th>
+                                <th>ปัญหา</th>
+                                <th>ผู้แจ้งซ่อม</th>               
+                            </tr>
+                        </thead>
+                        <tbody id="history_table_body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
 @endsection
 @section('script')
 <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
@@ -99,6 +131,39 @@ $(document).ready(function () {
         placeholder: "เลือกเครื่องจักร",
         allowClear: true,
         width: '100%'
+    });
+});
+$(document).ready(function() {
+    $('#machine_code').change(function() {
+        var machineCode = $(this).val();
+        if (machineCode !== '') {
+            $.ajax({
+                url: '{{ route("machine.history") }}', // เส้นทาง API
+                method: 'GET',
+                data: { machine_code: machineCode },
+                success: function(response) {
+                    let rows = '';
+                    if (response.length > 0) {
+                        response.forEach(function(item) {
+                            rows += `
+                                <tr>
+                                    <td>${item.status}</td>
+                                    <td>${item.date}</td>
+                                    <td>${item.doc_no}</td>
+                                    <td>${item.type}</td>
+                                    <td>${item.problem}</td>
+                                    <td>${item.reporter}</td>
+                                </tr>`;
+                        });
+                    } else {
+                        rows = `<tr><td colspan="6" class="text-center">ไม่พบข้อมูล</td></tr>`;
+                    }
+                    $('#history_table_body').html(rows);
+                }
+            });
+        } else {
+            $('#history_table_body').html('');
+        }
     });
 });
 </script>

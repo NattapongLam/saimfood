@@ -72,8 +72,16 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="form-label">วันที่ต้องการเสร็จ</label>
-                                        <input class="form-control" type="date" name="machine_repair_dochd_duedate" value="{{$hd->machine_repair_dochd_duedate}}" required>
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่ต้องการเสร็จ</label>
+                                            <input class="form-control" type="date" name="machine_repair_dochd_duedate" value="{{$hd->machine_repair_dochd_duedate}}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ชิ้นส่วน</label>
+                                            <input class="form-control" type="type" name="machine_repair_dochd_part" value="{{$hd->machine_repair_dochd_part}}">
+                                        </div>
                                     </div>
                                 </div>
                                 <br>
@@ -244,6 +252,12 @@
                             @elseif($hd->machine_repair_status_id == 3)
                             <h5>รายละเอียดการรับงานซ่อม  ผู้รับงานซ่อม : {{$hd->accepting_at}} วันที่ : {{$hd->accepting_date}}</h5>
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                         <label class="form-label">วันที่คาดว่าจะซ่อมเสร็จ</label>
+                                         <input class="form-control" type="date" name="accepting_duedate" value="{{$hd->accepting_duedate}}" readonly>
+                                    </div>
+                                </div>
                                 <div class="row"> 
                                     <div class="form-group">
                                         <label class="form-label">หมายเหตุรับงานซ่อม</label>
@@ -400,6 +414,12 @@
                             @elseif($hd->machine_repair_status_id == 4)
                             <h5>รายละเอียดการรับงานซ่อม  ผู้รับงานซ่อม : {{$hd->accepting_at}} วันที่ : {{$hd->accepting_date}}</h5>
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                         <label class="form-label">วันที่คาดว่าจะซ่อมเสร็จ</label>
+                                         <input class="form-control" type="date" name="accepting_duedate" value="{{$hd->accepting_duedate}}" readonly>
+                                    </div>
+                                </div>
                                 <div class="row"> 
                                     <div class="form-group">
                                         <label class="form-label">หมายเหตุรับงานซ่อม</label>
@@ -509,6 +529,12 @@
                             @elseif($hd->machine_repair_status_id == 5)
                                <h5>รายละเอียดการรับงานซ่อม  ผู้รับงานซ่อม : {{$hd->accepting_at}} วันที่ : {{$hd->accepting_date}}</h5>
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                         <label class="form-label">วันที่คาดว่าจะซ่อมเสร็จ</label>
+                                         <input class="form-control" type="date" name="accepting_duedate" value="{{$hd->accepting_duedate}}" readonly>
+                                    </div>
+                                </div>
                                 <div class="row"> 
                                     <div class="form-group">
                                         <label class="form-label">หมายเหตุรับงานซ่อม</label>
@@ -627,6 +653,12 @@
                             @elseif($hd->machine_repair_status_id == 6)
                                   <h5>รายละเอียดการรับงานซ่อม  ผู้รับงานซ่อม : {{$hd->accepting_at}} วันที่ : {{$hd->accepting_date}}</h5>
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                         <label class="form-label">วันที่คาดว่าจะซ่อมเสร็จ</label>
+                                         <input class="form-control" type="date" name="accepting_duedate" value="{{$hd->accepting_duedate}}" readonly>
+                                    </div>
+                                </div>
                                 <div class="row"> 
                                     <div class="form-group">
                                         <label class="form-label">หมายเหตุรับงานซ่อม</label>

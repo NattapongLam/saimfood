@@ -64,11 +64,19 @@
                                 <ul class="sub-menu" aria-expanded="true">
                                     <li>
                                         <a href="javascript: void(0);" class="has-arrow" key="t-starter-page">ภายในองค์กร</a>
-                                        <ul class="sub-menu" aria-expanded="true">                                          
+                                        <ul class="sub-menu" aria-expanded="true">   
+                                            @can('setup-machineplaning')                                       
                                             <li><a href="{{route('machine-planing-docus.index')}}" key="t-starter-page">แผนการซ่อมบำรุง</a></li>
+                                            @endcan
+                                            @can('setup-machinechecksheet')
                                             <li><a href="{{route('machine-checksheet-docus.index')}}" key="t-starter-page">ตรวจเช็คประจำวัน</a></li>
+                                            @endcan
+                                            @can('docu-machine-repair')
                                             <li><a href="{{route('machine-create-docus.index')}}" key="t-starter-page">ใบสร้างงาน</a></li>
+                                            @endcan
+                                            @can('docu-machine-create')
                                             <li><a href="{{route('machine-repair-docus.index')}}" key="t-starter-page">ใบแจ้งซ่อม</a></li>
+                                            @endcan
                                         </ul>
                                     </li>
                                     <li>
