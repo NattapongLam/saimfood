@@ -47,7 +47,6 @@
                                         <ul class="sub-menu" aria-expanded="true">
                                             <li><a href="{{route('customers.index')}}" key="t-starter-page">ลูกค้า</a></li>
                                             <li><a href="{{route('equipments.index')}}" key="t-starter-page">อุปกรณ์ลูกค้า</a></li>
-                                            <li><a href="#" key="t-starter-page">ตั้งค่าตรวจเช็คตามแผน</a></li>
                                         </ul>
                                         @endcan  
                                     </li>                            
@@ -78,19 +77,30 @@
                                             <li><a href="{{route('machine-repair-docus.index')}}" key="t-starter-page">ใบแจ้งซ่อม</a></li>
                                             @endcan
                                         </ul>
-                                    </li>
+                                    </li>                                  
                                     <li>
                                         @can('setup-equipment')
                                         <a href="javascript: void(0);" class="has-arrow" key="t-starter-page">ลูกค้า</a>
                                         <ul class="sub-menu" aria-expanded="true">
-                                            <li><a href="#" key="t-starter-page">แผนการซ่อมลูกค้า</a></li>
                                             <li><a href="{{route('equipment-transfer.index')}}" key="t-starter-page">ใบโอนย้ายอุปกรณ์</a></li>
                                             <li><a href="{{route('equipment-repair.index')}}" key="t-starter-page">ใบแจ้งซ่อมลูกค้า</a></li>
                                         </ul>
                                         @endcan
                                     </li>
+                                   
                                 </ul>
                             </li>
+                            @can('docu-equipment-request')
+                            <li>                               
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-detail"></i>
+                                    <span key="t-starter-page">ทีมขาย</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="{{route('equipment-request.index')}}" key="t-starter-page">ใบร้องขออุปกรณ์</a></li>
+                                </ul>
+                            </li>
+                            @endcan
                             @endrole
                             <li class="menu-title" key="t-pages">Report</li>
                             <li>

@@ -54,7 +54,8 @@
                                                     </td>
                                                     <td>
                                                         <img src="{{ asset($item->equipment_pic1 ?? 'images/no-image.png') }}" alt="Machine Image" class="rounded-circle avatar-xl"><br>
-                                                        {{$item->equipment_code}} {{$item->equipment_name}} 
+                                                        {{$item->equipment_code}} {{$item->equipment_name}}<br>
+                                                        ยี่ห้อ : {{$item->equipment_brand}}
                                                     </td>
                                                     <td>
                                                         {{$item->equipmente_date}}

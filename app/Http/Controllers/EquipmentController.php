@@ -46,7 +46,7 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'equipmente_date' => 'required',
             'equipment_code' => 'required',
             'equipment_name' => 'required',
@@ -64,7 +64,8 @@ class EquipmentController extends Controller
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now(),
             'equipment_status_id' => 1,
-            'equipment_cost' => $request->equipment_cost
+            'equipment_cost' => $request->equipment_cost,
+            'equipment_brand' => $request->equipment_brand
         ];
         if ($request->hasFile('equipment_pic1') && $request->file('equipment_pic1')->isValid()) {
             $filename = "EQ_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('equipment_pic1')->getClientOriginalExtension();
@@ -152,7 +153,8 @@ class EquipmentController extends Controller
             'equipment_flag' =>  $flag,           
             'person_at' => Auth::user()->name,
             'updated_at'=> Carbon::now(),
-            'equipment_cost' => $request->equipment_cost
+            'equipment_cost' => $request->equipment_cost,
+            'equipment_brand' => $request->equipment_brand
         ];
         if ($request->hasFile('equipment_pic1') && $request->file('equipment_pic1')->isValid()) {
             $filename = "EQ_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('equipment_pic1')->getClientOriginalExtension();

@@ -64,14 +64,14 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label class="form-label">ชื่ออุปกรณ์</label>
+                                                <label class="form-label">วันที่หมดประกัน</label>
                                                 <input class="form-control" name="insurance_date" type="date" value="{{$hd->insurance_date}}" required>
                                             </div>
                                         </div>
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-6">
+                                    <div class="col-4">
                                          <div class="form-group">
                                             <label class="form-label">
                                                 Serial Number
@@ -79,7 +79,15 @@
                                             <input class="form-control" type="text" name="serial_number" value="{{$hd->serial_number}}">
                                          </div>
                                     </div>
-                                     <div class="col-6">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                               ยี่ห้อ
+                                            </label>
+                                            <input class="form-control" type="text" name="equipment_brand" value="{{$hd->equipment_brand}}">
+                                        </div>
+                                    </div>
+                                     <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">
                                                 มูลค่า

@@ -113,6 +113,7 @@
                                                     </td>
                                                     <td>
                                                         {{$item->machine_repair_dochd_case}}<br>
+                                                        ชิ้นส่วน : {{$item->machine_repair_dochd_part}}<br>
                                                         (ที่ตั้ง : {{$item->machine_repair_dochd_location}})
                                                     </td>
                                                     <td>      
@@ -133,7 +134,9 @@
                                                         @elseif ($item->machine_repair_status_id == 1 || $item->machine_repair_status_id == 9)
                                                             <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> รับงานซ่อม</a>
                                                         @elseif ($item->machine_repair_status_id == 2)
-                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อนุมัติซ่อม</a>
+                                                            @if (auth()->user()->username == "444444444")
+                                                                <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อนุมัติซ่อม</a>                                                               
+                                                            @endif                                                           
                                                         @elseif ($item->machine_repair_status_id == 3)
                                                             <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> บันทึกผลการซ่อม</a>
                                                         @elseif ($item->machine_repair_status_id == 4)

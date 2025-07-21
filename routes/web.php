@@ -48,6 +48,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:setup-machine']
     ],function(){
         Route::resource('/machines' , App\Http\Controllers\MachineController::class);
+        Route::get('/report-machine' , [App\Http\Controllers\MachineReportController::class , 'ReportMachine']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:setup-machineplaning']
@@ -93,8 +94,12 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/machine-create-docus' , App\Http\Controllers\MachineCreateDocuController::class);
         Route::post('/confirmDelMachineCreateHd' , [App\Http\Controllers\MachineCreateDocuController::class , 'confirmDelMachineCreateHd']);
         Route::post('/confirmDelMachineCreateDt' , [App\Http\Controllers\MachineCreateDocuController::class , 'confirmDelMachineCreateDt']);
-        Route::put('/machine-create-docus/{id}/safety-update', [App\Http\Controllers\MachineCreateDocuController::class, 'updateSafety'])->name('machine-create-docus.safety-update');
-        Route::get('/report-machine' , [App\Http\Controllers\MachineReportController::class , 'ReportMachine']);
+        Route::put('/machine-create-docus/{id}/safety-update', [App\Http\Controllers\MachineCreateDocuController::class, 'updateSafety'])->name('machine-create-docus.safety-update');       
+    });
+     Route::group([
+        'middleware' =>  ['auth','permission:docu-equipment-request']
+    ],function(){
+        Route::resource('/equipment-request' , App\Http\Controllers\EquipmentRequestController::class);
     });
 });
 //QrCodeScan

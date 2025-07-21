@@ -21,7 +21,7 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'setup-machineplaning']);
         // Permission::create(['name' => 'setup-machinechecksheet']);
         // Permission::create(['name' => 'setup-equipment']);
-        // Permission::create(['name' => 'setup-equipmentplaning']);
+        // Permission::create(['name' => 'docu-equipment-request']);
         // Permission::create(['name' => 'docu-machine-repair']);
         // Permission::create(['name' => 'docu-machine-create']);
     }
