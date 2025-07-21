@@ -130,8 +130,16 @@
                                                     <td>
                                                         @if($item->machine_repair_status_id == 6)
                                                             <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-primary btn-sm">รายละเอียด</a>
-                                                        @elseif ($item->machine_repair_status_id <> 7 || $item->machine_repair_status_id <> 8)
-                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>                                
+                                                        @elseif ($item->machine_repair_status_id == 1 || $item->machine_repair_status_id == 9)
+                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> รับงานซ่อม</a>
+                                                        @elseif ($item->machine_repair_status_id == 2)
+                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อนุมัติซ่อม</a>
+                                                        @elseif ($item->machine_repair_status_id == 3)
+                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> บันทึกผลการซ่อม</a>
+                                                        @elseif ($item->machine_repair_status_id == 4)
+                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> ตรวจสอบงานซ่อม</a>
+                                                        @elseif ($item->machine_repair_status_id == 5)
+                                                            <a href="{{ route('machine-repair-docus.edit', $item->machine_repair_dochd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> ปิดงานซ่อม</a>                                                      
                                                         @endif                                                      
                                                     </td>
                                                     <td>

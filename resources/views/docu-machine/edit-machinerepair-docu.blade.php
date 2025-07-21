@@ -666,7 +666,76 @@
                                     </div>
                                 </div>
                                 <br>
+                                @if (auth()->user()->username == "670902251" || auth()->user()->username == "admin")
                                 <div class="row"> 
+                                     <div class="col-12" style="text-align: right;">
+                                                <a href="javascript:void(0);" class="btn btn-secondary" id="addRowBtn">เพิ่มรายการ</a>
+                                            </div>
+                                            <table class="table table-striped mb-0 text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>รายละเอียด</th>
+                                                        <th>ค่าใช้จ่าย</th>
+                                                        <th>หมายเหตุ</th>
+                                                        <th>ชื่อร้าน</th>   
+                                                        <th>แนบไฟล์</th>                                                        
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($hd->details as $key => $item)
+                                                        <tr>
+                                                            <td>
+                                                                {{$item->machine_repair_docdt_listno}}
+                                                                <input type="hidden" name="machine_repair_docdt_listno[]" value="{{$item->machine_repair_docdt_listno}}">
+                                                            </td>
+                                                            <td>                              
+                                                                <input class="form-control" name="machine_repair_docdt_remark[]" value="{{$item->machine_repair_docdt_remark}}">
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_cost[]" value="{{number_format($item->machine_repair_docdt_cost,2)}}">                                                              
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_note[]" value="{{$item->machine_repair_docdt_note}}">                                    
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_vendor[]" value="{{$item->machine_repair_docdt_vendor}}">                                    
+                                                            </td>
+                                                            <td>
+                                                                @if (isset($item->machine_repair_docdt_file) && $item->machine_repair_docdt_file)
+                                                                    <a href="{{ asset('/'.$item->machine_repair_docdt_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                                @endif   
+                                                                <input type="file" name="machine_repair_docdt_file[]" class="form-control"/>                           
+                                                            </td>
+                                                            <td>
+                                                                <input type="hidden" name="machine_repair_docdt_id[]" value="{{$item->machine_repair_docdt_id}}">
+                                                                <div class="square-switch">
+                                                                    @if($item->machine_repair_docdt_flag == 1)
+                                                                    <input type="checkbox" id="square-switch1" switch="none" name="machine_repair_docdt_flag[]" value="true" checked/>
+                                                                    @else
+                                                                    <input type="checkbox" id="square-switch1" switch="none" name="machine_repair_docdt_flag[]" />
+                                                                    @endif
+                                                                    <label for="square-switch1" data-on-label="On" data-off-label="Off"></label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach   
+                                                </tbody>
+                                                <tbody id="tableBody">
+                                                </tbody>
+                                            </table>
+                                </div>
+                                 <br>
+                                        <div class="form-group">
+                                            <div class="d-flex flex-wrap gap-2 justify-content">
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light" >
+                                                    บันทึก
+                                                </button>
+                                            </div>
+                                        </div>
+                                @else
+                                    <div class="row"> 
                                     <h5>เพิ่มเติม</h5>
                                     <table class="table table-striped table-bordered mb-0 text-center">
                                                     <thead>
@@ -697,6 +766,7 @@
                                                     </tbody>
                                     </table>
                                 </div>
+                                @endif                         
                                 </div>
                                 <h5>รายละเอียดอนุมัติซ่อม  ผู้อนุมัติซ่อม : {{$hd->approval_at}} วันที่ : {{$hd->approval_date}}</h5>
                                 <div class="card-body">              
