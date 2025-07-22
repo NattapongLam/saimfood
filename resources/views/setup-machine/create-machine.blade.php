@@ -187,7 +187,7 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-body">
                 <table id="DataTableList" class="table table-bordered dt-responsive nowrap w-100 table-sm">
                     <thead>
@@ -232,7 +232,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection

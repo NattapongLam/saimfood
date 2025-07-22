@@ -24,7 +24,8 @@ class MachineController extends Controller
      */
     public function index()
     {
-        //
+        $machine = Machine::leftjoin('machine_groups','machines.machinegroup_id','=','machine_groups.machinegroup_id')->get();
+        return view('setup-machine.list-machine',compact('machine'));
     }
 
     /**
@@ -35,8 +36,8 @@ class MachineController extends Controller
     public function create()
     {
         $machinegroup = MachineGroup::where('machinegroup_flag',true)->get();
-        $machine = Machine::leftjoin('machine_groups','machines.machinegroup_id','=','machine_groups.machinegroup_id')->get();
-        return view('setup-machine.create-machine',compact('machinegroup','machine'));
+        //$machine = Machine::leftjoin('machine_groups','machines.machinegroup_id','=','machine_groups.machinegroup_id')->get();
+        return view('setup-machine.create-machine',compact('machinegroup'));
     }
 
     /**

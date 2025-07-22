@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('recheck_date')->nullable();
             $table->string('recheck_remark')->nullable();
             $table->string('recheck_file')->nullable();
+            $table->BigInteger('equipment_request_docu_id');
             $table->timestamps();
         });
     }

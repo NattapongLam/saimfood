@@ -24,29 +24,57 @@
                             <div class="card-body">
                                 <form class="custom-validation" action="{{ route('equipment-transfer.store') }}" method="POST" enctype="multipart/form-data" validate>
                                 @csrf 
-                                <div class="row"> 
-                                    <div class="col-3">
+                                <div class="row">
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <label class="form-label">วันที่</label>
-                                            <input class="form-control" type="date" name="equipment_transfer_hd_date" value="{{ date('Y-m-d') }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="form-group">
-                                            <label class="form-label">ลูกค้า</label>
-                                            <select class="select2 form-select" name="customer_id" id="customer_id" required>
+                                            <label class="form-label">ใบร้องขอ</label>
+                                            <select class="select2 form-select" name="equipment_request_docu_id" id="equipment_request_docu_id" required>
                                                 <option value=""></option>
-                                                @foreach ($cust as $item)
-                                                    <option value="{{$item->customer_id}}" 
-                                                        data-fullname="{{ $item->customer_name }}" 
-                                                        data-address="{{ $item->customer_address }}"
-                                                        data-contact="{{ $item->contact_person }}"
-                                                        data-tel="{{ $item->contact_tel }}"
+                                                @foreach ($docu as $item)
+                                                    <option value="{{$item->equipment_request_docu_id}}"
+                                                    data-fullname="{{ $item->customer_fullname }}" 
+                                                    data-address="{{ $item->customer_address }}"
+                                                    data-contact="{{ $item->contact_person }}"
+                                                    data-tel="{{ $item->contact_tel }}"
+                                                    data-cust="{{ $item->customer_id }}"
+                                                    data-duedate="{{ $item->equipment_request_docu_duedate }}"
+                                                    data-remark="{{ $item->equipment_request_docu_remark }}"
+                                                    data-note="{{ $item->approved_remark }}"
                                                     >
-                                                        {{$item->customer_code}} / {{$item->customer_name}} จังหวัด : {{$item->customer_province}} สาขา : {{$item->branch_number}}
+                                                    เลขที่ : {{$item->equipment_request_docu_docuno}} ลูกค้า : {{$item->customer_fullname}} ผู้ร้อง : {{$item->person_at}} ผู้อนุมัติ : {{$item->approved_at}} จำนวนเครื่อง : {{$item->equipment_request_doc_qty}}
                                                     </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">รายละเอียด</label>
+                                            <textarea class="form-control" name="equipment_request_docu_remark" id="equipment_request_docu_remark" readonly></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">หมายเหนุอนุมัติ</label>
+                                            <textarea class="form-control" name="approved_remark" id="approved_remark" readonly></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row"> 
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่</label>
+                                            <input class="form-control" type="date" name="equipment_transfer_hd_date" value="{{ date('Y-m-d') }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่ต้องการจัดส่ง</label>
+                                            <input class="form-control" type="date" name="equipment_request_docu_duedate" id="equipment_request_docu_duedate" required>
                                         </div>
                                     </div>
                                 </div>
@@ -75,6 +103,7 @@
                                         <label class="form-label">ที่อยู่จัดส่ง</label>
                                         <textarea class="form-control" name="customer_address" id="customer_address" required></textarea>
                                         <input class="form-control" name="customer_fullname" id="customer_fullname" type="hidden" required>
+                                        <input class="form-control" name="customer_id" id="customer_id" type="hidden" required>
                                     </div>
                                 </div>
                                 <br>
@@ -144,18 +173,22 @@
 <script>
 $(document).ready(function () {
     $('.select2').select2({
-        placeholder: "เลือกลูกค้า",
+        placeholder: "เลือกใบร้องขอ",
         allowClear: true,
         width: '100%'
     });
 });
 $(document).ready(function () {
-    $('#customer_id').on('change', function () {
+    $('#equipment_request_docu_id').on('change', function () {
         var selected = $(this).find('option:selected');
         $('#customer_fullname').val(selected.data('fullname') || '');
         $('#customer_address').val(selected.data('address') || '');
         $('#contact_person').val(selected.data('contact') || '');
         $('#contact_tel').val(selected.data('tel') || '');
+        $('#customer_id').val(selected.data('cust') || '');
+        $('#equipment_request_docu_duedate').val(selected.data('duedate') || '');
+        $('#equipment_request_docu_remark').val(selected.data('remark') || '');
+        $('#approved_remark').val(selected.data('note') || '');
     });
 });
 $(document).ready(function() {

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\EquipmentTransferHd;
+use App\Models\EquipmentRequestDocu;
 use Illuminate\Support\Facades\Auth;
 
 class EquipmentTransferController extends Controller
@@ -24,7 +25,10 @@ class EquipmentTransferController extends Controller
      */
     public function index()
     {
-        $hd = EquipmentTransferHd::leftjoin('equipment_transfer_statuses','equipment_transfer_hds.equipment_transfer_status_id','=','equipment_transfer_statuses.equipment_transfer_status_id')->get();
+        $hd = EquipmentTransferHd::leftjoin('equipment_transfer_statuses','equipment_transfer_hds.equipment_transfer_status_id','=','equipment_transfer_statuses.equipment_transfer_status_id')
+        ->leftjoin('equipment_request_docus','equipment_transfer_hds.equipment_request_docu_id','=','equipment_request_docus.equipment_request_docu_id')
+        ->select('equipment_transfer_hds.*','equipment_transfer_statuses.equipment_transfer_status_name','equipment_request_docus.equipment_request_docu_docuno')
+        ->get();
         return view('docu-equipment.list-equipmenttransfer',compact('hd'));
     }
 
@@ -35,9 +39,9 @@ class EquipmentTransferController extends Controller
      */
     public function create()
     {
-        $cust = Customer::where('customer_flag',true)->get();
+        $docu = EquipmentRequestDocu::where('equipment_request_status_id',3)->get();
         $equi = Equipment::where('equipment_flag',true)->where('equipment_status_id',1)->get();
-        return view('docu-equipment.create-equipmenttransfer',compact('cust','equi'));
+        return view('docu-equipment.create-equipmenttransfer',compact('equi','docu'));
     }
 
     /**
@@ -65,6 +69,8 @@ class EquipmentTransferController extends Controller
             'contact_tel' => 'required',
             'customer_address' => 'required',
             'equipment_id' => 'required',
+            'equipment_request_docu_id' => 'required',
+            'equipment_request_docu_duedate' => 'required',
         ]);
         $data = [
             'equipment_transfer_status_id' => 1,
@@ -80,6 +86,10 @@ class EquipmentTransferController extends Controller
             'equipment_transfer_hd_docuno' => $docs,
             'equipment_transfer_hd_docunum' => $docs_number,
             'equipment_transfer_hd_remark' => $request->equipment_transfer_hd_remark,
+            'equipment_request_docu_id' => $request->equipment_request_docu_id,
+            'equipment_request_docu_duedate' => $request->equipment_request_docu_duedate,
+            'equipment_request_docu_remark' => $request->equipment_request_docu_remark,
+            'approved_remark' => $request->approved_remark
         ]; 
         try {
             DB::beginTransaction();
@@ -90,7 +100,7 @@ class EquipmentTransferController extends Controller
                 $equipment_names = array_values($request->equipment_name);
                 $serial_numbers = array_values($request->serial_number ?? []);
                 $remarks = array_values($request->equipment_transfer_dt_remark ?? []);
-               foreach ($equipment_ids as $index => $equipment_id) {
+                foreach ($equipment_ids as $index => $equipment_id) {
                     DB::table('equipment_transfer_dts')->insert([
                         'equipment_transfer_hd_id' => $hd->equipment_transfer_hd_id,
                         'equipment_transfer_dt_listno' => $index + 1,
@@ -115,6 +125,10 @@ class EquipmentTransferController extends Controller
                     ]);
                 }
             }
+            EquipmentRequestDocu::where('equipment_request_docu_id',$request->equipment_request_docu_id)
+            ->update([
+                'equipment_request_status_id' => 6
+            ]);
             DB::commit();
             return redirect()->route('equipment-transfer.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
@@ -196,6 +210,43 @@ class EquipmentTransferController extends Controller
                 return redirect()->route('equipment-transfer.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
             }   
         }
+        elseif($ck->equipment_transfer_status_id == 2){
+             $data = [           
+                'receive_at' => Auth::user()->name,
+                'receive_date'=> Carbon::now(),
+                'receive_remark'=> $request->recheck_remark,
+                'equipment_transfer_status_id' => 6,
+            ]; 
+            if ($request->hasFile('receive_file') && $request->file('receive_file')->isValid()) {
+                $filename = "ETS_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('receive_file')->getClientOriginalExtension();
+                $request->file('receive_file')->storeAs('equipment_transfer_img', $filename, 'public');
+                $data['receive_file'] = 'storage/equipment_transfer_img/' . $filename;
+            }
+            try {
+                DB::beginTransaction();
+                EquipmentTransferHd::where('equipment_transfer_hd_id',$id)->update($data);
+                foreach ($request->equipment_transfer_dt_id as $key => $value) {
+                    $dt = DB::table('equipment_transfer_dts')->where('equipment_transfer_dt_id',$value)->first();
+                    DB::table('equipment_transfer_dts')
+                    ->where('equipment_transfer_dt_id',$value)
+                    ->update([
+                        'equipment_transfer_status_id' => 6,
+                    ]);
+                    DB::table('equipment')
+                    ->where('equipment_id',$dt->equipment_id)
+                    ->update([
+                        'equipment_status_id' => 1,
+                    ]);
+                }
+                DB::commit();
+                return redirect()->route('equipment-transfer.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('equipment-transfer.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            } 
+        }
     }
 
     /**
@@ -207,5 +258,51 @@ class EquipmentTransferController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function confirmDelEquipmentTransfer(Request $request)
+    {
+        $id = $request->refid;
+        $hd = EquipmentTransferHd::find($id);
+        try 
+        {
+            DB::beginTransaction();
+            EquipmentTransferHd::where('equipment_transfer_hd_id',$id)->update([
+                'equipment_transfer_status_id' => 3,
+                'person_at' => Auth::user()->name,
+                'updated_at'=> Carbon::now(),
+            ]);
+            $dt = DB::table('equipment_transfer_dts')->where('equipment_transfer_hd_id',$id)->get();
+            foreach ($dt as $key => $value) {
+                DB::table('equipment_transfer_dts')
+                ->where('equipment_transfer_dt_id',$value->equipment_transfer_dt_id)
+                ->update([
+                    'equipment_transfer_status_id' => 3,
+                    'person_at' => Auth::user()->name,
+                    'updated_at'=> Carbon::now(),
+                ]);
+                DB::table('equipment')
+                ->where('equipment_id',$value->equipment_id)
+                ->update([
+                    'equipment_status_id' => 1,
+                ]);
+            }
+            EquipmentRequestDocu::where('equipment_request_docu_id',$hd->equipment_request_docu_id)
+            ->update([
+                'equipment_request_status_id' => 3
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+            return redirect()->route('equipment-request.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

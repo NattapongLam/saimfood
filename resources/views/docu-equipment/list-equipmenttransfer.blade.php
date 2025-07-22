@@ -34,6 +34,7 @@
                                                 <th>สถานะ</th>
                                                 <th>วันที่</th>
                                                 <th>เลขที่</th>
+                                                <th>วันที่ต้องการส่ง</th>
                                                 <th>ลูกค้า</th>
                                                 <th>ผู้ติดต่อ</th>
                                                 <th>ผู้บันทึก</th>
@@ -46,10 +47,22 @@
                                             @foreach ($hd as $item)
                                                 <tr>
                                                     <td>
-                                                        <strong>{{$item->equipment_transfer_status_name}}</strong>
+                                                        @if ($item->equipment_transfer_status_id == 1)
+                                                            <span class="badge bg-warning">{{$item->equipment_transfer_status_name}}</span>
+                                                        @elseif($item->equipment_transfer_status_id == 3)
+                                                            <span class="badge bg-danger">{{$item->equipment_transfer_status_name}}</span>
+                                                        @elseif($item->equipment_transfer_status_id == 2)
+                                                            <span class="badge bg-success">{{$item->equipment_transfer_status_name}}</span>
+                                                        @elseif($item->equipment_transfer_status_id == 6)
+                                                            <span class="badge bg-primary">{{$item->equipment_transfer_status_name}}</span>
+                                                        @endif
                                                     </td>
                                                     <td>{{$item->equipment_transfer_hd_date}}</td>
-                                                    <td>{{$item->equipment_transfer_hd_docuno}}</td>
+                                                    <td>
+                                                        {{$item->equipment_transfer_hd_docuno}}<br>
+                                                        (อ้างอิง : {{$item->equipment_request_docu_docuno}})
+                                                    </td>
+                                                    <td>{{$item->equipment_request_docu_duedate}}</td>
                                                     <td>{{$item->customer_fullname}}</td>
                                                     <td>{{$item->contact_person}} {{$item->contact_tel}}</td>
                                                     <td>{{$item->person_at}}</td>
@@ -57,14 +70,18 @@
                                                     <td>
                                                         @if ($item->equipment_transfer_status_id == 1)
                                                             <a href="{{ route('equipment-transfer.edit', $item->equipment_transfer_hd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>
-                                                        @else
-                                                            @if ($item->recheck_file)
-                                                                <a href="{{ asset($item->recheck_file) }}" target="_blank" class="text-dark"><i class="bx bx-file-blank"></i></a>
-                                                            @endif
-                                                        @endif                                                       
+                                                        @elseif ($item->equipment_transfer_status_id == 2)
+                                                           <a href="{{ route('equipment-transfer.edit', $item->equipment_transfer_hd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> รับเครื่องกลับ</a>
+                                                        @endif    
+                                                        <br>
+                                                        @if ($item->recheck_file)
+                                                            <a href="{{ asset($item->recheck_file) }}" target="_blank" class="text-dark"><i class="bx bx-file-blank"></i></a>
+                                                        @endif                                                   
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('equipment-transfer.show', $item->equipment_transfer_hd_id) }}"class="btn btn-info btn-sm"><i class="bx bx-task"></i> เอกสาร</a>
+                                                        @if ($item->equipment_transfer_status_id <> 3)
+                                                            <a href="{{ route('equipment-transfer.show', $item->equipment_transfer_hd_id) }}"class="btn btn-info btn-sm"><i class="bx bx-task"></i> เอกสาร</a>
+                                                        @endif     
                                                     </td>
                                                 </tr>  
                                             @endforeach

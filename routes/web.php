@@ -76,6 +76,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
     ],function(){
         Route::resource('/equipments' , App\Http\Controllers\EquipmentController::class);
         Route::resource('/equipment-transfer' , App\Http\Controllers\EquipmentTransferController::class);
+        Route::post('/confirmDelEquipmentTransfer' , [App\Http\Controllers\EquipmentTransferController::class , 'confirmDelEquipmentTransfer']);
         Route::resource('/customers' , App\Http\Controllers\CustomerController::class);
         Route::resource('/equipment-repair' , App\Http\Controllers\EquipmentRepairController::class);
     });
@@ -100,6 +101,8 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:docu-equipment-request']
     ],function(){
         Route::resource('/equipment-request' , App\Http\Controllers\EquipmentRequestController::class);
+        Route::put('/equipment-request/{id}/approved', [App\Http\Controllers\EquipmentRequestController::class, 'updateApproved'])->name('equipment-request.approved');
+        Route::post('/confirmDelEquipmentRequest' , [App\Http\Controllers\EquipmentRequestController::class , 'confirmDelEquipmentRequest']);
     });
 });
 //QrCodeScan

@@ -38,7 +38,8 @@
                                             <th>วันที่ต้องการส่ง</th>
                                             <th>จำนวนเครื่อง</th>
                                             <th>รายละเอียด</th>
-                                            <th>ผู้บันทึก</th>
+                                            <th>ผู้ร้องขอ</th>
+                                            <th>ผู้อนุมัติ</th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -46,15 +47,26 @@
                                     <tbody>
                                        @foreach ($hd as $item)
                                            <tr>
-                                                <td>{{$item->equipment_request_status_name}}</td>
+                                                <td>
+                                                    @if ($item->equipment_request_status_id == 1 || $item->equipment_request_status_id == 5)
+                                                        <span class="badge bg-warning">{{$item->equipment_request_status_name}}</span>
+                                                    @elseif($item->equipment_request_status_id == 2 || $item->equipment_request_status_id == 4)
+                                                        <span class="badge bg-danger">{{$item->equipment_request_status_name}}</span>
+                                                    @elseif($item->equipment_request_status_id == 3)
+                                                        <span class="badge bg-primary">{{$item->equipment_request_status_name}}</span>
+                                                    @elseif($item->equipment_request_status_id == 6)
+                                                        <span class="badge bg-success">{{$item->equipment_request_status_name}}</span>
+                                                    @endif                                                  
+                                                </td>
                                                 <td>{{$item->equipment_request_docu_docuno}}</td>
                                                 <td>{{$item->customer_fullname}}</td>
                                                 <td>{{$item->equipment_request_docu_duedate}}</td>
                                                 <td>{{$item->equipment_request_doc_qty}}</td>
                                                 <td>{{$item->equipment_request_docu_remark}}</td>
                                                 <td>{{$item->person_at}}</td>
+                                                <td>{{$item->approved_at}}</td>
                                                 <td>
-                                                    @if ($item->equipment_request_status_id == 1)
+                                                    @if ($item->equipment_request_status_id == 1 || $item->equipment_request_status_id == 5)
                                                         <a href="{{ route('equipment-request.edit', $item->equipment_request_docu_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> แก้ไข</a>
                                                     @endif
                                                 </td>

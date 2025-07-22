@@ -19,7 +19,7 @@
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                 <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ใบโอนย้ายอุปกรณ์ลูกค้า</h5>
                             <div class="page-title-right">   
-                                 <a href="javascript:void(0)" class="btn btn-danger" onclick="confirmDel('{{ $hd->equipment_transfer_hd_id }}')"><i class="fas fa-trash"></i></a>                  
+                                 <a href="javascript:void(0)" class="btn btn-danger" onclick="confirmDel('{{ $hd->equipment_transfer_hd_id }}')"><i class="fas fa-trash"></i> ยกเลิก</a>                  
                             </div>
                             </div>
                             <div class="card-body">
@@ -134,8 +134,43 @@
                                         </button>
                                     </div>
                                 </div>    
-                                @else
-                                    
+                                @elseif ($hd->equipment_transfer_status_id == 2)
+                                    <h5 style="color: red"><strong>รับเครื่องกลับ</strong></h5>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <div class="form-label">หมายเหตุ</div>
+                                                <textarea class="form-control" name="receive_remark"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                                <div class="card ">
+                                                    <div class="card-body img-resize">
+                                                        <div class="favorite-icon">
+                                                            <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                                                        </div>
+                                                        <img src="" class="img-fluid receive_file" alt=""  width="50%" class="mb-3">
+                                                        <h5 class="fs-17 mb-2"><a href="#" class="text-dark">เอกสารส่งคืนของลูกค้า</a></h5>                                   
+                                                    <div class="mt-4 hstack gap-2">
+                                                    <div class="input-group">
+                                                    <input type="file" class="form-control" id="inputGroupFile01"  name="receive_file" onchange="prevFile(this,'receive_file')" accept="image/*">
+                                                    <label class="input-group-text" for="inputGroupFile01">Upload</label>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <div class="d-flex flex-wrap gap-2 justify-content">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light" >
+                                                บันทึก
+                                            </button>
+                                        </div>
+                                    </div>
                                 @endif                               
                                 </form>
                             </div>
@@ -159,6 +194,64 @@ function prevFile(input, elm) {
 
                 reader.readAsDataURL(input.files[0]);
             }
+}
+confirmDel = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelEquipmentTransfer') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
 }
 </script>
 @endsection

@@ -41,6 +41,7 @@ class QrsacnController extends Controller
         )
         ->where('equipment_transfer_hds.equipment_transfer_hd_docuno', $id)
         ->where('equipment_transfer_dts.equipment_transfer_dt_flag', true)
+        ->whereNotIn('equipment_transfer_hds.equipment_transfer_status_id',[6,3])
         ->get();
         // สร้างตัวแปรเก็บข้อมูล cases ต่อแต่ละ equipment_transfer_dt_id
         $hd = $hd->map(function($item) {
