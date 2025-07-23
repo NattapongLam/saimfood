@@ -44,6 +44,9 @@ return new class extends Migration
             $table->string('delivery_at')->nullable();
             $table->date('delivery_date')->nullable();
             $table->string('delivery_address')->nullable();
+            $table->BigInteger('change_equipment_id');
+            $table->string('change_equipment_code');
+            $table->string('change_equipment_name');
             $table->timestamps();
         });
     }

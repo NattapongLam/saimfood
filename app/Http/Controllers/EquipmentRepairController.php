@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipment;
 use Illuminate\Http\Request;
 use App\Models\CustomerRepairSub;
 use App\Models\CustomerRepairDocu;
@@ -72,7 +73,8 @@ class EquipmentRepairController extends Controller
         ->find($id);
         $sub = CustomerRepairSub::where('customer_repair_docu_id',$id)->where('customer_repair_sub_flag',true)->get();
         $sta = CustomerRepairStatus::whereIn('customer_repair_status_id',[3,4,5])->get();
-        return view('docu-equipment.edit-equipmentrepair',compact('case','sub','sta'));
+        $equi = Equipment::where('equipment_flag',true)->where('equipment_status_id',1)->get();
+        return view('docu-equipment.edit-equipmentrepair',compact('case','sub','sta','equi'));
     }
 
     /**
@@ -204,12 +206,35 @@ class EquipmentRepairController extends Controller
                 return redirect()->route('equipment-repair.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
             }  
         }elseif($ck->customer_repair_status_id == 3){
+            if($ck->person_result == "เปลี่ยนเครื่องใหม่")
+            {
+                $equi = Equipment::find($request->change_equipment_id);
+                $change_id = $equi->equipment_id;
+                $change_code = $equi->equipment_code;
+                $change_name = $equi->equipment_name;
+                DB::table('equipment_transfer_dts')
+                ->where('equipment_transfer_dt_id',$ck->transfer_id)
+                ->update([
+                    'equipment_transfer_status_id' => 1,
+                    'equipment_id' => $change_id,
+                    'equipment_code' => $change_code,
+                    'equipment_name' => $change_name,
+                ]);
+            }
+            else{
+                $change_id = 0;
+                $change_code = "-";
+                $change_name = "-";
+            }
             $data = [
                 'customer_repair_status_id' => 6,
                 'result_at' => Auth::user()->name,
                 'result_date'=> now(),
                 'result_note' => $request->result_note,
                 'updated_at' => now(),
+                'change_equipment_id' => $change_id,
+                'change_equipment_code' => $change_code,
+                'change_equipment_name' => $change_name,
             ];
              try {
             DB::beginTransaction();

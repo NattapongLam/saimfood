@@ -306,7 +306,7 @@
                                     </div>
                                 </div>                               
                                 <br>
-                                <h5>รายละเอียดอนุมัติ ({{$case->approved_at}} {{\Carbon\Carbon::parse($case->approved_date)->format('d/M/y')}})</h5>                             
+                                <h5>รายละเอียดอนุมัติ ({{$case->approved_at}} {{\Carbon\Carbon::parse($case->approved_date)->format('d/M/y')}})</h5>                                             
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
@@ -317,6 +317,22 @@
                                 </div>
                                 <br>
                                 <h5>บันทึกผลการดำเนินการ</h5>
+                                @if ($case->person_result == "เปลี่ยนเครื่องใหม่")
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">อุปกรณ์ที่เปลี่ยน</label>
+                                            <select class="select2 form-select" name="change_equipment_id">
+                                                <option value=""></option>
+                                                @foreach ($equi as $item)
+                                                    <option value="{{$item->equipment_id}}">รหัส : {{$item->equipment_code}} ชื่อ : {{$item->equipment_name}} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>    
+                                @endif             
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
@@ -693,6 +709,13 @@ document.getElementById('tableBody').addEventListener('click', function (e) {
         e.target.closest('tr').remove();
         updateRowNumbers(); // อัปเดตลำดับหลังจากลบ
     }
+});
+$(document).ready(function () {
+    $('.select2').select2({
+        placeholder: "เลือกอุปกรณ์",
+        allowClear: true,
+        width: '100%'
+    });
 });
 </script>
 @endsection
