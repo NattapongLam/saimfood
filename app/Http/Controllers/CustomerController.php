@@ -21,7 +21,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $cust = Customer::get();
+        $cust = Customer::leftJoin('tg_employee_list', function($join) {
+            $join->on(DB::raw("customers.salecode COLLATE Thai_CI_AS"), '=', DB::raw("tg_employee_list.PersonCode COLLATE Thai_CI_AS"));
+        })->get();
         return view('setup-customer.list-customer',compact('cust'));
     }
 
@@ -33,7 +35,8 @@ class CustomerController extends Controller
     public function create()
     {
         $prov = DB::table('tg_province_list')->get();
-        return view('setup-customer.create-customer',compact('prov'));
+        $sale = DB::table('tg_employee_list')->where('Cmb2ID',3)->get();
+        return view('setup-customer.create-customer',compact('prov','sale'));
     }
 
     /**
@@ -71,6 +74,7 @@ class CustomerController extends Controller
             'branch_type' => $request->branch_type,
             'branch_name' => $request->branch_name,
             'branch_number' => $request->branch_number,
+            'salecode' => $request->salecode
         ];
         try {
             DB::beginTransaction();
@@ -107,7 +111,8 @@ class CustomerController extends Controller
         $hd = Customer::where('customer_id',$id)->first();
         $prov = DB::table('tg_province_list')->get();
         $province = DB::table('tg_province_list')->where('province_name',$hd->customer_province)->first();
-        return view('setup-customer.edit-customer',compact('hd','prov','province'));
+        $sale = DB::table('tg_employee_list')->where('Cmb2ID',3)->get();
+        return view('setup-customer.edit-customer',compact('hd','prov','province','sale'));
     }
 
     /**
@@ -149,6 +154,7 @@ class CustomerController extends Controller
             'branch_type' => $request->branch_type,
             'branch_name' => $request->branch_name,
             'branch_number' => $request->branch_number,
+            'salecode' => $request->salecode
         ];
         try {
             DB::beginTransaction();

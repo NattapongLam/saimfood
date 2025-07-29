@@ -75,16 +75,27 @@
                                 </div>
                                 <br>
                                 <div class="row"> 
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">ผู้ติดต่อ</label>
                                             <input class="form-control" name="contact_person" required>
                                         </div>                                       
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">เบอร์โทร</label>
                                             <input class="form-control" name="contact_tel" required>
+                                        </div>                                       
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="form-label">พนักงานขาย</label>
+                                            <select class="form-select" name="salecode">
+                                                <option value="">กรุณาเลือก</option>
+                                                @foreach ($sale as $item)
+                                                    <option value="{{$item->PersonCode}}">{{$item->personfullname}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>                                       
                                     </div>
                                 </div>

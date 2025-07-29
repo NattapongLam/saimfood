@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('branch_type')->nullable();
             $table->string('branch_name')->nullable();
             $table->string('branch_number')->nullable();
+            $table->string('salecode')->nullable();
             $table->timestamps();
             $table->unique(['customer_code', 'customer_flag'], 'uq_customer_code_flag');
         });
