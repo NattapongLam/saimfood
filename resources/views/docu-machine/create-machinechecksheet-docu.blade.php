@@ -63,7 +63,7 @@
                                 <br>
                                 <div class="row">
                                     <div style="overflow-x: auto;">
-                                        <table class="table table-bordered nowrap w-100 text-center" id="detailTable">
+                                        <table class="table table-bordered nowrap w-100" id="detailTable">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
