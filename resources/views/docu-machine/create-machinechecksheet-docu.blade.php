@@ -3,6 +3,55 @@
 <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" />
 <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
+<style>
+    /* ✅ ป้องกัน checkbox ซ้อนคอลัมน์ */
+    #detailTable td,
+    #detailTable th {
+        background-color: #fff !important;
+        position: relative;
+        z-index: 1;
+    }
+
+    #detailTable td:nth-child(2) {
+        z-index: 3; /* คอลัมน์ "รายละเอียด" */
+    }
+
+    #detailTable td input[type="checkbox"] {
+        position: relative;
+        z-index: 10;
+        transform: scale(1.2);
+    }
+
+    .dataTables_scrollBody {
+        overflow-x: auto !important;
+        background: white;
+        z-index: 1;
+    }
+
+    .dataTables_wrapper {
+        overflow-x: auto;
+        position: relative;
+    }
+
+    table.dataTable td {
+        vertical-align: middle;
+        overflow: visible;
+    }
+
+    th, td {
+        white-space: nowrap;
+    }
+    #detailTable th, #detailTable td {
+    white-space: nowrap;
+    vertical-align: middle;
+    }
+
+    @media (max-width: 768px) {
+        #detailTable {
+            font-size: 12px;
+        }
+    }
+</style>
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -62,9 +111,9 @@
                                 </div>
                                 <br>
                                 <div class="row">
-                                    <div style="overflow-x: auto;">
-                                        <table class="table table-bordered nowrap w-100" id="detailTable">
-                                                <thead>
+                                  <div class="table-responsive">
+                                    <table class="table table-bordered table-sm nowrap text-center w-100" id="detailTable">
+                                        <thead class="thead-light">
                                                     <tr>
                                                         <th>#</th>
                                                         <th>รายละเอียด</th>
@@ -110,10 +159,10 @@ $(document).ready(function () {
         ordering: false,
         searching: false,
         info: false,
-        fixedColumns: { leftColumns: 2 },
+        autoWidth: false, // ปิด
         columns: [
             { title: "#" },
-            { title: "รายละเอียด" },
+            { title: "รายละเอียด", className: 'text-start align-middle'  },
             ...Array.from({ length: 31 }, (_, i) => ({ title: String(i + 1).padStart(2, '0') }))
         ]
     });
