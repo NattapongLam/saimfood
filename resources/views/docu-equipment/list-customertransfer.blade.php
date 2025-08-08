@@ -30,9 +30,31 @@
                         <div class="card-body">
                             <div class="row">
                                 <table id="DataTableList" class="table table-bordered dt-responsive nowrap w-100 text-center table-sm">
-                                    <thead>                                       
+                                    <thead>   
+                                        <tr>
+                                            <th>สถานะ</th>
+                                            <th>ลูกค้า</th>
+                                            <th>ที่อยู่</th>
+                                            <th>ผู้ติดต่อ</th>
+                                            <th>อุปกรณ์</th>
+                                            <th></th>
+                                        </tr>                                    
                                     </thead>
                                     <tbody>
+                                        @foreach ($hd as $item)
+                                            <tr>
+                                                <td>{{$item->customer_transfer_status_name}}</td>
+                                                <td>{{$item->customer_fullname}}</td>
+                                                <td>{{$item->customer_address}}</td>
+                                                <td>{{$item->contact_person}} {{$item->contact_tel}}</td>
+                                                <td>{{$item->equipment_code}} {{$item->equipment_name}} ({{$item->req_customer_fullname}})</td>
+                                                <td>
+                                                    @if ($item->customer_transfer_status_id == 1)
+                                                        <a href="{{ route('customer-transfer.edit', $item->customer_transfer_docu_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>
+                                                    @endif                                                    
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

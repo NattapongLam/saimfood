@@ -39,7 +39,7 @@ class ScheduleController extends Controller
                     $token = "7838547321:AAGz1IcWdMs3aCCSlYwKRdBkm45V7C-yJrA";  // Telegram Bot Token
                     $chatId = "-4871539820"; // Chat ID
 
-                    $message = "📢 แจ้งเตือนแผนซ่อมบำรุง : " . $value->machine_code . " " . $value->machine_name . "\n"
+                    $message = "📢 แจ้งเตือนแผนซ่อมบำรุงอีก 3 วัน : " . $value->machine_code . " " . $value->machine_name . "\n"
                         . "🔹 รายละเอียด  : " . $value->machine_planingdocu_dt_note . "\n"
                         . "📅 วันที่ : " . $planDate->format("d-m-Y") . "\n"
                         . "คลิก : https://app.siamfood-beverage.com/report-calendar-pm";
@@ -51,7 +51,7 @@ class ScheduleController extends Controller
                     $token = "7838547321:AAGz1IcWdMs3aCCSlYwKRdBkm45V7C-yJrA";  // Telegram Bot Token
                     $chatId = "-4871539820"; // Chat ID
 
-                    $message = "📢 แจ้งเตือนแผนซ่อมบำรุง : " . $value->machine_code . " " . $value->machine_name . "\n"
+                    $message = "📢 แจ้งเตือนแผนซ่อมบำรุงอีก 1 วัน : " . $value->machine_code . " " . $value->machine_name . "\n"
                         . "🔹 รายละเอียด  : " . $value->machine_planingdocu_dt_note . "\n"
                         . "📅 วันที่ : " . $planDate->format("d-m-Y") . "\n"
                         . "คลิก : https://app.siamfood-beverage.com/report-calendar-pm";
