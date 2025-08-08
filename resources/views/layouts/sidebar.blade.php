@@ -98,6 +98,7 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
                                     <li><a href="{{route('equipment-request.index')}}" key="t-starter-page">ใบร้องขออุปกรณ์</a></li>
+                                    <li><a href="{{route('customer-transfer.index')}}" key="t-starter-page">ใบขอย้ายอุปกรณ์ลูกค้า</a></li>
                                 </ul>
                             </li>
                             @endcan

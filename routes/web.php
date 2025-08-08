@@ -103,9 +103,19 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/equipment-request' , App\Http\Controllers\EquipmentRequestController::class);
         Route::put('/equipment-request/{id}/approved', [App\Http\Controllers\EquipmentRequestController::class, 'updateApproved'])->name('equipment-request.approved');
         Route::post('/confirmDelEquipmentRequest' , [App\Http\Controllers\EquipmentRequestController::class , 'confirmDelEquipmentRequest']);
+         Route::resource('/customer-transfer' , App\Http\Controllers\CustomerTransfer::class);
     });
 });
 //QrCodeScan
 Route::get('/machine-qrcode/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanMachine']);
 Route::get('/customer-transfer/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanCustomerTransfer']);
 Route::resource('/customer-repair' , App\Http\Controllers\CustomerRepairController::class);
+
+
+Route::get('/run-machineplaning/{token}', function ($token) {
+    if ($token !== env('SCHEDULE_TOKEN')) {
+        abort(403, 'Unauthorized');
+    }
+    app(\App\Http\Controllers\ScheduleController::class)->machineplaning_run();
+    return 'OK';
+});
