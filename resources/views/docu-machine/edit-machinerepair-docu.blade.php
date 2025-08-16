@@ -223,6 +223,7 @@
                                     </table>         
                                 </div>                                                           
                             </div>
+                            @if (auth()->user()->username == "444444444")
                             <h5>รายละเอียดอนุมัติซ่อม</h5>
                             <div class="card-body">
                                 <div class="row"> 
@@ -249,6 +250,7 @@
                                     </div>
                                 </div>
                              </div>
+                            @endif                          
                             @elseif($hd->machine_repair_status_id == 3)
                             <h5>รายละเอียดการรับงานซ่อม  ผู้รับงานซ่อม : {{$hd->accepting_at}} วันที่ : {{$hd->accepting_date}}</h5>
                             <div class="card-body">

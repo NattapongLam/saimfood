@@ -119,3 +119,10 @@ Route::get('/run-machineplaning/{token}', function ($token) {
     app(\App\Http\Controllers\ScheduleController::class)->machineplaning_run();
     return 'OK';
 });
+Route::get('/run-machinerepair/{token}', function ($token) {
+    if ($token !== env('SCHEDULE_TOKEN')) {
+        abort(403, 'Unauthorized');
+    }
+    app(\App\Http\Controllers\ScheduleController::class)->machinerepair_run();
+    return 'OK';
+});

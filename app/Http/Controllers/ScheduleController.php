@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\MachinePlaningdocuHd;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -59,6 +60,20 @@ class ScheduleController extends Controller
                     $this->notifyTelegram($message, $token, $chatId);
                 }
             }
+        }
+    }
+    public function machinerepair_run()
+    {
+        $hd = DB::table('machine_repair_dochds')->where('machine_repair_status_id',2)->get();
+        foreach ($hd as $key => $value) {
+            $mc = DB::table('machines')->where('machine_code',$value->machine_code)->first();
+            $token = "7838547321:AAGz1IcWdMs3aCCSlYwKRdBkm45V7C-yJrA";  // Telegram Bot Token
+            $chatId = "-4871539820"; // Chat ID
+            $message = "📢 แจ้งเตือนใบแจ้งซ่อมรออนุมัติเลขที่ : " . $value->machine_repair_dochd_docuno . "เครื่อง ".$value->machine_code . "/". $mc->machine_name . "\n"
+                        . "🔹 รายละเอียด  : " . $value->machine_repair_dochd_case . "(". $value->machine_repair_dochd_type .")". "\n"
+                        . "📅 วันที่รับงานซ่อม : " . $value->accepting_date ." โดย " . $value->accepting_at . " (" . $value->accepting_note . ")". "\n"
+                        . "คลิก : https://app.siamfood-beverage.com/machine-repair-docus/".$value->machine_repair_dochd_id."/edit";
+            $this->notifyTelegram($message, $token, $chatId);
         }
     }
 
