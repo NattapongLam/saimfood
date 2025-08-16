@@ -117,7 +117,7 @@
                                             <select class="form-select" name="salecode">
                                                 <option value="">กรุณาเลือก</option>
                                                 @foreach ($sale as $item)
-                                                    <option value="{{$item->PersonCode}}" {{ $item->PersonCode == $hd->salecode ? 'selected' : '' }}>
+                                                    <option value="{{$item->personcode}}" {{ $item->personcode == $hd->salecode ? 'selected' : '' }}>
                                                         {{$item->personfullname}}
                                                     </option>
                                                 @endforeach

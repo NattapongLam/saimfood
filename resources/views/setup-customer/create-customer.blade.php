@@ -93,7 +93,7 @@
                                             <select class="form-select" name="salecode">
                                                 <option value="">กรุณาเลือก</option>
                                                 @foreach ($sale as $item)
-                                                    <option value="{{$item->PersonCode}}">{{$item->personfullname}}</option>
+                                                    <option value="{{$item->personcode}}">{{$item->personfullname}}</option>
                                                 @endforeach
                                             </select>
                                         </div>                                       
