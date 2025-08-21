@@ -23,8 +23,9 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form class="custom-validation" action="{{ route('customer-transfer.store') }}" method="POST" enctype="multipart/form-data" validate>
+                            <form class="custom-validation" action="{{ route('customer-transfer.update',$hd->customer_transfer_docu_id) }}" method="POST" enctype="multipart/form-data" validate>
                             @csrf 
+                            @method('PUT') 
                             <div class="row">                              
                                 <div class="col-12">
                                     <div class="form-group">

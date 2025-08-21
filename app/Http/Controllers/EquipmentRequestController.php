@@ -9,12 +9,25 @@ use Illuminate\Support\Facades\DB;
 use App\Models\EquipmentRequestDocu;
 use Illuminate\Support\Facades\Auth;
 use App\Models\EquipmentRequestStatus;
+use Illuminate\Support\Facades\Http;
 
 class EquipmentRequestController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    private function notifyTelegram($message, $token, $chatId)
+    {
+        $queryData = [
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'HTML'
+        ];
+        $url = "https://api.telegram.org/bot{$token}/sendMessage";
+        $response = file_get_contents($url . "?" . http_build_query($queryData));
+        return json_decode($response);
     }
     /**
      * Display a listing of the resource.
@@ -87,6 +100,17 @@ class EquipmentRequestController extends Controller
         try {
             DB::beginTransaction();
             EquipmentRequestDocu::create($data);
+            $token = "8218557050:AAF0MyGrfcML02FnKfldCnAozKlwtow1pX4";  // 🔹 ใส่ Token ที่ได้จาก BotFather
+            $chatId = "-4827861264";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
+            $message = "📢 ใบร้องขออุปกรณ์เลขที่ : " . $docs  ."\n"
+                . "🔹 ลูกค้า  : ". $request->customer_fullname . "\n"
+                . "🔹 รายละเอียด  : ". $request->equipment_request_docu_remark . " จำนวน : " . $request->equipment_request_doc_qty . "\n"
+                . "📅 วันที่ร้องขอ : " . date("d-m-Y",strtotime(Carbon::now())) . "\n"
+                . "📅 วันที่ต้องการให้จัดส่ง : " . date("d-m-Y",strtotime($request->equipment_request_docu_duedate)). "\n"
+                . "👤 ผู้แจ้ง : " . Auth::user()->name . "\n"
+                . "คลิก : " . "https://app.siamfood-beverage.com/equipment-request" . "\n";
+            // เรียกใช้ฟังก์ชัน notifyTelegram() ภายใน Controller
+            $this->notifyTelegram($message, $token, $chatId);  
             DB::commit();
             return redirect()->route('equipment-request.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
@@ -190,6 +214,20 @@ class EquipmentRequestController extends Controller
         {
             DB::beginTransaction();
             EquipmentRequestDocu::where('equipment_request_docu_id',$id)->update($data);
+            $hd = EquipmentRequestDocu::find($id);
+            $sat = EquipmentRequestStatus::find($hd->equipment_request_status_id);
+            $token = "8218557050:AAF0MyGrfcML02FnKfldCnAozKlwtow1pX4";  // 🔹 ใส่ Token ที่ได้จาก BotFather
+            $chatId = "-4827861264";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
+            $message = "📢 ใบร้องขออุปกรณ์เลขที่ : " . $hd->equipment_request_docu_docuno  ."\n"
+                . "🔹 ลูกค้า  : ". $hd->customer_fullname . "\n"
+                . "🔹 รายละเอียด  : ". $hd->equipment_request_docu_remark . " จำนวน : " . $hd->equipment_request_doc_qty . "\n"
+                . "📅 ". $sat->equipment_request_status_name. "วันที่ : " . date("d-m-Y",strtotime(Carbon::now())) . "\n"
+                . "📅 วันที่ต้องการให้จัดส่ง : " . date("d-m-Y",strtotime($request->equipment_request_docu_duedate)). "\n"
+                . "👤 ผู้". $sat->equipment_request_status_name. " : " . Auth::user()->name . "\n"
+                . "🔹 หมายเหตุ  : ". $request->approved_remark . "\n"
+                . "คลิก : " . "https://app.siamfood-beverage.com/equipment-request" . "\n";
+            // เรียกใช้ฟังก์ชัน notifyTelegram() ภายใน Controller
+            $this->notifyTelegram($message, $token, $chatId);  
             DB::commit();
             return redirect()->route('equipment-request.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {

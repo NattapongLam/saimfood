@@ -6,8 +6,11 @@ use Carbon\Carbon;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\EquipmentTransferDt;
+use App\Models\EquipmentTransferHd;
 use App\Models\CustomerTransferDocu;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use App\Models\CustomerTransferStatus;
 
 class CustomerTransfer extends Controller
@@ -15,6 +18,17 @@ class CustomerTransfer extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+    private function notifyTelegram($message, $token, $chatId)
+    {
+        $queryData = [
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'HTML'
+        ];
+        $url = "https://api.telegram.org/bot{$token}/sendMessage";
+        $response = file_get_contents($url . "?" . http_build_query($queryData));
+        return json_decode($response);
     }
     /**
      * Display a listing of the resource.
@@ -83,7 +97,20 @@ class CustomerTransfer extends Controller
         try 
         {
             DB::beginTransaction();
-            CustomerTransferDocu::create($data);   
+            CustomerTransferDocu::create($data);  
+            $equi = EquipmentTransferDt::find($request->equipment_transfer_dt_id);
+            $cust = EquipmentTransferHd::find($equi->equipment_transfer_hd_id);
+            $token = "8218557050:AAF0MyGrfcML02FnKfldCnAozKlwtow1pX4";  // 🔹 ใส่ Token ที่ได้จาก BotFather
+            $chatId = "-4827861264";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
+            $message = "📢 ใบขอย้ายอุปกรณ์ลูกค้า"."\n"
+                . "🔹 ลูกค้าปลายทาง  : ". $request->customer_fullname . "\n"
+                . "🔹 รายละเอียด  : ". $request->person_remark . "\n"
+                . "🔹 อุปกรณ์ที่ย้าย  : ". $equi->equipment_code." " .$equi->equipment_name . " (" . $cust->customer_fullname .")"."\n"
+                . "📅 วันที่ร้องขอ : " . date("d-m-Y",strtotime(Carbon::now())) . "\n"
+                . "👤 ผู้แจ้ง : " . Auth::user()->name . "\n"
+                . "คลิก : " . "https://app.siamfood-beverage.com/customer-transfer" . "\n";
+            // เรียกใช้ฟังก์ชัน notifyTelegram() ภายใน Controller
+            $this->notifyTelegram($message, $token, $chatId); 
             DB::commit();
             return redirect()->route('customer-transfer.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
@@ -161,7 +188,22 @@ class CustomerTransfer extends Controller
         try 
         {
             DB::beginTransaction();
-            CustomerTransferDocu::where('customer_transfer_docu_id',$id)->update($data);   
+            CustomerTransferDocu::where('customer_transfer_docu_id',$id)->update($data);
+            $equi = EquipmentTransferDt::find($request->equipment_transfer_dt_id);
+            $cust = EquipmentTransferHd::find($equi->equipment_transfer_hd_id);
+            $sat = CustomerTransferStatus::find($request->customer_transfer_status_id);
+            $token = "8218557050:AAF0MyGrfcML02FnKfldCnAozKlwtow1pX4";  // 🔹 ใส่ Token ที่ได้จาก BotFather
+            $chatId = "-4827861264";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
+            $message = "📢 ใบขอย้ายอุปกรณ์ลูกค้า"."\n"
+                . "🔹 ลูกค้าปลายทาง  : ". $request->customer_fullname . "\n"
+                . "🔹 รายละเอียด  : ". $request->person_remark . "\n"
+                . "🔹 อุปกรณ์ที่ย้าย  : ". $equi->equipment_code." " .$equi->equipment_name . " (" . $cust->customer_fullname .")"."\n"
+                . "📅 วันที่" .$sat->customer_transfer_status_name." : " . date("d-m-Y",strtotime(Carbon::now())) . "\n"
+                . "👤 ผู้".$sat->customer_transfer_status_name. " : " . Auth::user()->name . "\n"
+                . "🔹 หมายเหตุ  : ". $request->approved_remark . "\n"
+                . "คลิก : " . "https://app.siamfood-beverage.com/customer-transfer" . "\n";
+            // เรียกใช้ฟังก์ชัน notifyTelegram() ภายใน Controller
+            $this->notifyTelegram($message, $token, $chatId);    
             DB::commit();
             return redirect()->route('customer-transfer.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
