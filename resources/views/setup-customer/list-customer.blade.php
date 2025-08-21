@@ -38,7 +38,6 @@
                                                 <th>จังหวัด</th>
                                                 <th>ผู้ติดต่อ</th>
                                                 <th>เบอร์ติดต่อ</th>
-                                                <th>พนักงานขาย</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -58,7 +57,6 @@
                                                     <td>{{$item->customer_province}}</td>
                                                     <td>{{$item->contact_person}}</td>
                                                     <td>{{$item->contact_tel}}</td>
-                                                    <td>{{$item->personfullname}}</td>
                                                     <td>
                                                          <a href="{{ route('customers.edit', $item->customer_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> แก้ไข</a>
                                                     </td>

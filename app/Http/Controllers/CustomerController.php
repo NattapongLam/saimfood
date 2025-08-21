@@ -21,9 +21,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $cust = Customer::leftJoin('tg_employee_list', function($join) {
-            $join->on(DB::raw("customers.salecode COLLATE Thai_CI_AS"), '=', DB::raw("tg_employee_list.PersonCode COLLATE Thai_CI_AS"));
-        })->get();
+        $cust = Customer::get();
         return view('setup-customer.list-customer',compact('cust'));
     }
 
