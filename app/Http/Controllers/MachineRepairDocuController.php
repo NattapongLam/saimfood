@@ -107,9 +107,10 @@ class MachineRepairDocuController extends Controller
         {
             DB::beginTransaction();
             MachineRepairDochd::create($data);
+            $mc = Machine::where('machine_code',$request->machine_code)->first();
             $token = "7838547321:AAGz1IcWdMs3aCCSlYwKRdBkm45V7C-yJrA";  // 🔹 ใส่ Token ที่ได้จาก BotFather
             $chatId = "-4871539820";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
-            $message = "📢 แจ้งซ่อมเลขที่ : " . $docs  ."\n"
+            $message = "📢 แจ้งซ่อมเลขที่ : " . $docs . " เครื่อง : " .  $mc->machine_code ."/". $mc->machine_name  ."\n"
                 . "🔹 ชิ้นส่วน  : ". $request->machine_repair_dochd_part . "\n"
                 . "🔹 รายละเอียด  : ". $request->machine_repair_dochd_case . "\n"
                 . "📅 วันที่แจ้ง : " . date("d-m-Y",strtotime($request->machine_repair_dochd_date)) . "\n"
@@ -233,9 +234,10 @@ class MachineRepairDocuController extends Controller
                     }
                 }
                 DB::commit();
+                $mc = Machine::where('machine_code',$ck->machine_code)->first();
                 $token = "7838547321:AAGz1IcWdMs3aCCSlYwKRdBkm45V7C-yJrA";  // 🔹 ใส่ Token ที่ได้จาก BotFather
                 $chatId = "-4871539820";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
-                $message = "📢 รับงานซ่อมเลขที่ : " . $ck->machine_repair_dochd_docuno  ."\n"
+                $message = "📢 รับงานซ่อมเลขที่ : " . $ck->machine_repair_dochd_docuno . " เครื่อง : " .  $mc->machine_code ."/". $mc->machine_name  ."\n"
                     . "🔹 ชิ้นส่วน  : ". $ck->machine_repair_dochd_part . "\n"
                     . "🔹 รายละเอียด  : ". $ck->machine_repair_dochd_case . "\n"
                     . "📅 วันที่จะซ่อมเสร็จ : " . date("d-m-Y",strtotime($request->accepting_duedate)). "\n"
@@ -262,10 +264,11 @@ class MachineRepairDocuController extends Controller
                     'approval_note' => $request->approval_note
                 ]);
                 DB::commit();
+                $mc = Machine::where('machine_code',$ck->machine_code)->first();
                 $sta = MachineRepairStatus::where('machine_repair_status_id',$request->machine_repair_status_id)->first();
                 $token = "7838547321:AAGz1IcWdMs3aCCSlYwKRdBkm45V7C-yJrA";  // 🔹 ใส่ Token ที่ได้จาก BotFather
                 $chatId = "-4871539820";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
-                $message = "📢 ".$sta->machine_repair_status_name. "เลขที่ : " . $ck->machine_repair_dochd_docuno  ."\n"
+                $message = "📢 ".$sta->machine_repair_status_name. "เลขที่ : " . $ck->machine_repair_dochd_docuno . " เครื่อง : " .  $mc->machine_code ."/". $mc->machine_name  ."\n"
                     . "🔹 ชิ้นส่วน  : ". $ck->machine_repair_dochd_part . "\n"
                     . "🔹 รายละเอียด  : ". $ck->machine_repair_dochd_case . "\n"
                     . "🔹 หมายเหตุ  : ". $request->approval_note . "\n"
@@ -358,9 +361,10 @@ class MachineRepairDocuController extends Controller
                     }
                 }
                 DB::commit();
+                $mc = Machine::where('machine_code',$ck->machine_code)->first();
                 $token = "7838547321:AAGz1IcWdMs3aCCSlYwKRdBkm45V7C-yJrA";  // 🔹 ใส่ Token ที่ได้จาก BotFather
                 $chatId = "-4871539820";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
-                $message = "📢 ผลการซ่อมเลขที่ : " . $ck->machine_repair_dochd_docuno  ."\n"
+                $message = "📢 ผลการซ่อมเลขที่ : " . $ck->machine_repair_dochd_docuno . " เครื่อง : " .  $mc->machine_code ."/". $mc->machine_name  ."\n"
                     . "🔹 ชิ้นส่วน  : ". $ck->machine_repair_dochd_part . "\n"
                     . "🔹 อาการ  : ". $ck->machine_repair_dochd_case . "\n"
                     . "🔹 รายละเอียดการซ่อม  : ".  $request->repairer_note . "\n"
@@ -387,9 +391,10 @@ class MachineRepairDocuController extends Controller
                     'inspector_note' => $request->inspector_note
                 ]);
                 DB::commit();
+                $mc = Machine::where('machine_code',$ck->machine_code)->first();
                 $token = "7838547321:AAGz1IcWdMs3aCCSlYwKRdBkm45V7C-yJrA";  // 🔹 ใส่ Token ที่ได้จาก BotFather
                 $chatId = "-4871539820";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
-                $message = "📢 ตรวจสอบงานซ่อมเลขที่ : " . $ck->machine_repair_dochd_docuno  ."\n"
+                $message = "📢 ตรวจสอบงานซ่อมเลขที่ : " . $ck->machine_repair_dochd_docuno . " เครื่อง : " .  $mc->machine_code ."/". $mc->machine_name  ."\n"
                     . "🔹 ชิ้นส่วน  : ". $ck->machine_repair_dochd_part . "\n"
                     . "🔹 อาการ  : ". $ck->machine_repair_dochd_case . "\n"
                     . "🔹 รายละเอียดการซ่อม  : ".  $ck->repairer_note . "\n"
@@ -416,9 +421,10 @@ class MachineRepairDocuController extends Controller
                     'closing_note' => $request->closing_note
                 ]);
                 DB::commit();
+                $mc = Machine::where('machine_code',$ck->machine_code)->first();
                 $token = "7838547321:AAGz1IcWdMs3aCCSlYwKRdBkm45V7C-yJrA";  // 🔹 ใส่ Token ที่ได้จาก BotFather
                 $chatId = "-4871539820";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
-                $message = "📢 ปิดงานซ่อมเลขที่ : " . $ck->machine_repair_dochd_docuno  ."\n"
+                $message = "📢 ปิดงานซ่อมเลขที่ : " . $ck->machine_repair_dochd_docuno  . " เครื่อง : " .  $mc->machine_code ."/". $mc->machine_name  ."\n"
                     . "🔹 ชิ้นส่วน  : ". $ck->machine_repair_dochd_part . "\n"
                     . "🔹 อาการ  : ". $ck->machine_repair_dochd_case . "\n"
                     . "🔹 รายละเอียดการซ่อม  : ".  $ck->repairer_note . "\n"
