@@ -50,7 +50,9 @@
                                                 <td>{{$item->equipment_code}} {{$item->equipment_name}} ({{$item->req_customer_fullname}})</td>
                                                 <td>
                                                     @if ($item->customer_transfer_status_id == 1)
-                                                        <a href="{{ route('customer-transfer.edit', $item->customer_transfer_docu_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>
+                                                        <a href="{{ route('customer-transfer.edit', $item->customer_transfer_docu_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อนุมัติ</a>
+                                                    @elseif($item->customer_transfer_status_id == 2)
+                                                        <a href="{{ route('customer-transfer.show', $item->customer_transfer_docu_id) }}"class="btn btn-primary btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>
                                                     @endif                                                    
                                                 </td>
                                             </tr>

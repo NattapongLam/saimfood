@@ -36,9 +36,17 @@ class EquipmentRequestController extends Controller
      */
     public function index()
     {
-        $hd = EquipmentRequestDocu::leftjoin('equipment_request_statuses','equipment_request_docus.equipment_request_status_id','=','equipment_request_statuses.equipment_request_status_id')
-        ->select('equipment_request_docus.*','equipment_request_statuses.equipment_request_status_name')
-        ->get();
+        $user = Auth::user();
+        if ($user->hasAnyRole(['superadmin', 'admin'])) {
+            $hd = EquipmentRequestDocu::leftjoin('equipment_request_statuses','equipment_request_docus.equipment_request_status_id','=','equipment_request_statuses.equipment_request_status_id')
+                    ->select('equipment_request_docus.*','equipment_request_statuses.equipment_request_status_name')
+                    ->get();
+        } else {
+            $hd = EquipmentRequestDocu::leftjoin('equipment_request_statuses','equipment_request_docus.equipment_request_status_id','=','equipment_request_statuses.equipment_request_status_id')
+                    ->where('equipment_request_docus.person_at',$user->name)
+                    ->select('equipment_request_docus.*','equipment_request_statuses.equipment_request_status_name')
+                    ->get();
+        }   
         return view('docu-equipment.list-equipmentrequest',compact('hd'));
     }
 
@@ -49,7 +57,14 @@ class EquipmentRequestController extends Controller
      */
     public function create()
     {
-        $cust = Customer::where('customer_flag',true)->get();
+        $user = Auth::user();
+        if ($user->hasAnyRole(['superadmin', 'admin'])) {
+            $cust = Customer::where('customer_flag',true)->get();
+        } else {
+            $cust = Customer::where('customer_flag',true)
+            ->where('salecode',$user->username)
+            ->get();
+        }       
         return view('docu-equipment.create-equipmentrequest',compact('cust'));
     }
 
