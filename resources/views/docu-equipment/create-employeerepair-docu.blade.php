@@ -92,7 +92,9 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="form-label">ผู้ติดต่อ</label>
-                                    <input class="form-control" name="contact_person" type="text" value="{{auth()->user()->name}}" required>
+                                    <input class="form-control" name="contact_person" type="text"
+                                        value="{{ auth()->check() ? auth()->user()->name : old('contact_person') }}"
+                                        required>
                                 </div>
                             </div>
                             <div class="col-6">
