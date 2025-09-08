@@ -108,6 +108,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
 });
 //QrCodeScan
 Route::get('/machine-qrcode/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanMachine']);
+Route::get('/equipment-qrcode/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanEquipment']);
 Route::get('/customer-transfer/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanCustomerTransfer']);
 Route::resource('/customer-repair' , App\Http\Controllers\CustomerRepairController::class);
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Equipment;
 use Illuminate\Http\Request;
 use App\Models\CustomerRepairDocu;
 use Illuminate\Support\Facades\DB;
@@ -72,16 +73,18 @@ class CustomerRepairController extends Controller
         ];
         try {
             DB::beginTransaction();
-            DB::table('equipment_transfer_dts')
-            ->where('equipment_transfer_dt_id',$request->equipment_transfer_dt_id)
-            ->update([
-                'equipment_transfer_status_id' => 4
-            ]);
+            if($request->equipment_transfer_dt_id <> 0){
+                DB::table('equipment_transfer_dts')
+                ->where('equipment_transfer_dt_id',$request->equipment_transfer_dt_id)
+                ->update([
+                    'equipment_transfer_status_id' => 4
+                ]);
+            }
             DB::table('equipment')
-            ->where('equipment_id',$request->equipment_id)
-            ->update([
-                'equipment_status_id' => 4,
-            ]);
+                ->where('equipment_id',$request->equipment_id)
+                ->update([
+                    'equipment_status_id' => 4,
+                ]);   
             CustomerRepairDocu::create($data);
             DB::commit();
             return redirect()->back()->with('success', 'บันทึกข้อมูลเรียบร้อย');
@@ -114,7 +117,8 @@ class CustomerRepairController extends Controller
      */
     public function edit($id)
     {
-        //
+        $hd = Equipment::find($id);
+        return view('docu-equipment.create-employeerepair-docu',compact('hd'));
     }
 
     /**

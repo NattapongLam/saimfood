@@ -22,6 +22,22 @@
                         </div>
                             </div>
                             <div class="card-body">
+                                <div class="form-group mt-4">
+                                    <div class="text-center" id="print-area" style="text-align: center; padding-top: 5px;">
+                                        <div style="display: inline-block;">
+                                            {!! QrCode::encoding('UTF-8')->size(200)->generate(url('equipment-qrcode/'.$hd->equipment_code)) !!}
+                                            <p style="margin-top: 10px; font-size: 18px; font-weight: bold;">
+                                                {{ $hd->equipment_code }}/{{ $hd->equipment_name }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mt-3">
+                                        <button type="button" class="btn btn-outline-primary" onclick="printQR()">
+                                            <i class="mdi mdi-printer"></i> พิมพ์ QR Code
+                                        </button>
+                                    </div>
+                                </div>
                                 <form class="custom-validation" action="{{ route('equipments.update',$hd->equipment_id) }}" method="POST" enctype="multipart/form-data" validate>
                                 @csrf   
                                 @method('PUT')  
@@ -202,6 +218,55 @@ function prevFile(input, elm) {
 
                 reader.readAsDataURL(input.files[0]);
             }
+}
+function printQR() {
+    const printContents = document.getElementById('print-area').innerHTML;
+    const win = window.open('', '', 'height=700,width=500'); // ขนาดหน้าต่างพิมพ์ใกล้เคียง A5
+
+    win.document.write(`
+        <html>
+        <head>
+            <title>พิมพ์ QR Code</title>
+            <style>
+                @page {
+                    size: A5 portrait;
+                    margin: 10mm;
+                }
+                body {
+                    margin: 0;
+                    padding: 20px;
+                    font-family: Tahoma, sans-serif;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    box-sizing: border-box;
+                }
+                #print-area {
+                    text-align: center;
+                    width: 100%;
+                }
+                svg {
+                    width: 250px !important;   /* ขยายขนาด QR Code */
+                    height: 250px !important;
+                }
+                p {
+                    margin-top: 15px;
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+            </style>
+        </head>
+        <body>
+            <div id="print-area">${printContents}</div>
+        </body>
+        </html>
+    `);
+
+    win.document.close();
+    win.focus();
+    win.print();
+    win.close();
 }
 </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Machine;
+use App\Models\Equipment;
 use Illuminate\Http\Request;
 use App\Models\MachineRepairDochd;
 use Illuminate\Support\Facades\DB;
@@ -60,5 +61,17 @@ class QrsacnController extends Controller
 
         return view('qr-customer-transfer', compact('hd'));
 
+    }
+     
+    public function QrcodeScanEquipment($id)
+    {
+        $mc = Equipment::leftjoin('equipment_statuses','equipment.equipment_status_id','=','equipment_statuses.equipment_status_id')
+        ->where('equipment.equipment_code',$id)
+        ->first();
+        $hd = DB::table('customer_repair_docus')
+        ->leftjoin('customer_repair_statuses','customer_repair_docus.customer_repair_status_id','=','customer_repair_statuses.customer_repair_status_id')
+        ->where('customer_repair_docus.equipment_id',$mc->equipment_id)
+        ->get();
+        return view('qr-equipment-all',compact('mc','hd'));
     }
 }

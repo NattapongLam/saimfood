@@ -278,11 +278,16 @@ class CustomerTransfer extends Controller
                 $data['receive_img'] = 'storage/customer_transfer_img/' . $filename;
             }
             try {
+                $equi = EquipmentTransferDt::find($request->equipment_transfer_dt_id);
                 DB::beginTransaction();
                 CustomerTransferDocu::where('customer_transfer_docu_id',$id)->update($data);
                 EquipmentTransferDt::where('equipment_transfer_dt_id',$request->equipment_transfer_dt_id)
                 ->update([
                     'equipment_transfer_hd_id' => $request->equipment_transfer_hd_id
+                ]);
+                Equipment::where('equipment_code',$equi->equipment_code)->update([
+                    'equipment_refdocuno' => $request->equipment_transfer_hd_docuno,
+                    'equipment_location' => $request->customer_address,
                 ]);
                 DB::commit();
                 return redirect()->route('customer-transfer.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
