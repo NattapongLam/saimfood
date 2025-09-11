@@ -7,6 +7,7 @@ use App\Models\Equipment;
 use Illuminate\Http\Request;
 use App\Models\CustomerRepairDocu;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class CustomerRepairController extends Controller
 {
@@ -15,6 +16,17 @@ class CustomerRepairController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private function notifyTelegram($message, $token, $chatId)
+    {
+        $queryData = [
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'HTML'
+        ];
+        $url = "https://api.telegram.org/bot{$token}/sendMessage";
+        $response = file_get_contents($url . "?" . http_build_query($queryData));
+        return json_decode($response);
+    }
     public function index()
     {
         //
@@ -86,6 +98,16 @@ class CustomerRepairController extends Controller
                     'equipment_status_id' => 4,
                 ]);   
             CustomerRepairDocu::create($data);
+            $token = "8218557050:AAF0MyGrfcML02FnKfldCnAozKlwtow1pX4";  // 🔹 ใส่ Token ที่ได้จาก BotFather
+            $chatId = "-4827861264";            // 🔹 ใส่ Chat ID ของกลุ่มหรือผู้ใช้
+            $message = "📢 ลูกค้าแจ้งซ่อมเลขที่ : " . $docs ."\n"
+                . "🔹 ลูกค้า  : ". $request->customer_fullname . "\n"
+                . "🔹 ที่อยู่  : ". $request->customer_address . "\n"
+                . "🔹 อาการ  : ". $request->customer_repair_docu_case . " (" . $request->equipment_name.")"."\n"
+                . "📅 วันที่แจ้ง : " . date("d-m-Y",strtotime(Carbon::now())) . "\n"
+                . "คลิก : " . "https://app.siamfood-beverage.com/equipment-repair" . "\n";
+            // เรียกใช้ฟังก์ชัน notifyTelegram() ภายใน Controller
+            $this->notifyTelegram($message, $token, $chatId);
             DB::commit();
             return redirect()->back()->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {

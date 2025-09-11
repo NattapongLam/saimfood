@@ -6,7 +6,7 @@
             วันที่ : {{ \Carbon\Carbon::parse($hd->equipment_transfer_hd_date)->translatedFormat('j F Y') }}<hr>
             <div class="text-center" style="text-align: center; padding-top: 5px;">
                 <div style="display: inline-block;">
-                    {!! QrCode::encoding('UTF-8')->size(110)->generate(url('customer-transfer/'.$hd->equipment_transfer_hd_docuno)) !!}                                                      
+                    {!! QrCode::encoding('UTF-8')->size(110)->generate(url('customer-transfers/'.$hd->equipment_transfer_hd_docuno)) !!}                                                      
                 </div>
                 <p style="margin-top: 10px; font-size: 14px; font-weight: bold;">
                     สแกนแจ้งซ่อม
