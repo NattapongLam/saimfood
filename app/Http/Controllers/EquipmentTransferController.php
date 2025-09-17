@@ -91,11 +91,9 @@ class EquipmentTransferController extends Controller
             'equipment_request_docu_remark' => $request->equipment_request_docu_remark,
             'approved_remark' => $request->approved_remark
         ]; 
-        dd($data);
         try {
             DB::beginTransaction();
             $hd = EquipmentTransferHd::create($data);
-            dd($request->has('equipment_id'));
             if ($request->has('equipment_id')) {
                 $equipment_ids = array_values($request->equipment_id);
                 $equipment_codes = array_values($request->equipment_code);
