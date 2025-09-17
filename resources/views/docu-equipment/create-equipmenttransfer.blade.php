@@ -113,9 +113,11 @@
                                         <textarea class="form-control" name="equipment_transfer_hd_remark"></textarea>
                                     </div>
                                 </div>
-                                <br>
+                                <br>                                
                                 <div class="row">
-                                    <table id="DataTableList" class="table table-bordered dt-responsive  nowrap w-100">
+                                    <h5>อุปกรณ์พร้อมใช้</h5>
+                                    {{-- <input type="text" id="equipmentSearch" class="form-control mb-2" placeholder="ค้นหา..."> --}}
+                                    <table id="equipmentTable" class="table table-bordered dt-responsive  nowrap w-100 text-center">
                                         <thead>
                                             <tr>
                                                 <th>เลือก</th>
@@ -224,6 +226,17 @@ $(document).ready(function () {
         // toggle enable/disable input fields in the same row
         row.find('input[name^="equipment_"]').prop('disabled', !this.checked);
     });
+});
+$(document).ready(function () {
+    var table = $('#equipmentTable').DataTable({
+        "paging": false,   // ไม่ต้องแบ่งหน้า
+        "info": false,     // ซ่อนข้อความ "Showing x of y"
+    });
+
+    // ใช้ input ของเราเอง
+    // $('#equipmentSearch').on('keyup', function () {
+    //     table.search(this.value).draw();
+    // });
 });
 </script>
 @endsection
