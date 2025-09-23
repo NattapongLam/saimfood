@@ -49,7 +49,7 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                  <div class="card mini-stats-wid">
+                <div class="card mini-stats-wid">
                                             <div class="card-body">
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1">
@@ -58,11 +58,14 @@
                                                     </div>
 
                                                     <div class="flex-shrink-0 align-self-center">
-                                                        <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
-                                                            <span class="avatar-title">
-                                                                <i class="bx bx-copy-alt font-size-24"></i>
-                                                            </span>
-                                                        </div>
+                                                        <a href="{{url('/report-machine-createall')}}" target="_blank">
+                                                            <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                                                <span class="avatar-title">
+                                                                    <i class="bx bx-copy-alt font-size-24"></i>
+                                                                </span>
+                                                            </div>
+                                                        </a>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,11 +81,13 @@
                                                     </div>
 
                                                     <div class="flex-shrink-0 align-self-center">
+                                                        <a href="{{url('/report-machine-repairall')}}" target="_blank">
                                                         <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
                                                             <span class="avatar-title">
                                                                 <i class="bx bx-copy-alt font-size-24"></i>
                                                             </span>
                                                         </div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,11 +103,13 @@
                                                     </div>
 
                                                     <div class="flex-shrink-0 align-self-center">
+                                                        <a href="{{url('/report-machine-urgentall')}}" target="_blank">
                                                         <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                             <span class="avatar-title rounded-circle bg-primary">
                                                                 <i class="bx bx-purchase-tag-alt font-size-24"></i>
                                                             </span>
                                                         </div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,11 +125,13 @@
                                                     </div>
 
                                                     <div class="flex-shrink-0 align-self-center">
+                                                        <a href="{{url('/report-machine-normalall')}}" target="_blank">
                                                         <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                             <span class="avatar-title rounded-circle bg-primary">
                                                                 <i class="bx bx-purchase-tag-alt font-size-24"></i>
                                                             </span>
                                                         </div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>

@@ -49,6 +49,10 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
     ],function(){
         Route::resource('/machines' , App\Http\Controllers\MachineController::class);
         Route::get('/report-machine' , [App\Http\Controllers\MachineReportController::class , 'ReportMachine']);
+        Route::get('/report-machine-createall' , [App\Http\Controllers\MachineReportController::class , 'ReportMachineCreate']);
+        Route::get('/report-machine-repairall' , [App\Http\Controllers\MachineReportController::class , 'ReportMachineRepair']);
+        Route::get('/report-machine-urgentall' , [App\Http\Controllers\MachineReportController::class , 'ReportMachineUrgent']);
+        Route::get('/report-machine-normalall' , [App\Http\Controllers\MachineReportController::class , 'ReportMachineNormal']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:setup-machineplaning']

@@ -23,7 +23,6 @@ class MachineReportController extends Controller
 
         // Query หลัก
         $hd = MachineRepairDochd::whereBetween('machine_repair_dochd_date', [$datestart, $dateend]);
-
         // สำเนา query ไปใช้งานในแต่ละเงื่อนไข
         $hd1 = (clone $hd)->where('docutype', 'C')->count(); // งานแจ้งซ่อม
         $hd2 = (clone $hd)->where('docutype', 'R')->count(); // งานร้องขอ
@@ -34,7 +33,6 @@ class MachineReportController extends Controller
         $hd7 = (clone $hd)->whereIn('machine_repair_status_id', [3, 4, 5])->count();
         $hd8 = (clone $hd)->whereIn('machine_repair_status_id', [6])->count();
         $hd9 = (clone $hd)->whereIn('machine_repair_status_id', [7, 8])->count();
-
         // ✅ รวมค่าใช้จ่ายรายเดือน โดยใช้ Query Builder เพื่อประสิทธิภาพ
         $cost = DB::table('machine_repair_dochds as hd')
             ->join('machine_repair_docdts as dt', 'hd.machine_repair_dochd_id', '=', 'dt.machine_repair_dochd_id')
@@ -137,6 +135,66 @@ class MachineReportController extends Controller
             'dateend', 'datestart',
             'hd1', 'hd2', 'hd3', 'hd4', 'hd5', 'hd6', 'hd7', 'hd8', 'hd9', 'cost', 'totalCost', 'mc','gpCost','totalSum','empQty','cost1','cost2','cost3','cost4','pendingJobs'
         ));
+    }
+
+    public function ReportMachineCreate(Request $request)
+    {
+        $hd = MachineRepairDochd::leftJoin('machine_repair_statuses','machine_repair_statuses.machine_repair_status_id','=','machine_repair_dochds.machine_repair_status_id')
+        ->where('machine_repair_dochds.docutype', 'C')
+        ->select(
+            'machine_repair_dochds.*',
+            'machine_repair_statuses.machine_repair_status_name',
+            DB::raw('(SELECT SUM(d.machine_repair_docdt_cost) 
+                    FROM machine_repair_docdts d 
+                    WHERE d.machine_repair_dochd_id = machine_repair_dochds.machine_repair_dochd_id) as total_cost')
+        )
+        ->get();
+        return view('report-machine.report-machine-createall', compact('hd'));
+    }
+
+    public function ReportMachineRepair(Request $request)
+    {
+        $hd = MachineRepairDochd::leftJoin('machine_repair_statuses','machine_repair_statuses.machine_repair_status_id','=','machine_repair_dochds.machine_repair_status_id')
+        ->where('machine_repair_dochds.docutype', 'R')
+        ->select(
+            'machine_repair_dochds.*',
+            'machine_repair_statuses.machine_repair_status_name',
+            DB::raw('(SELECT SUM(d.machine_repair_docdt_cost) 
+                    FROM machine_repair_docdts d 
+                    WHERE d.machine_repair_dochd_id = machine_repair_dochds.machine_repair_dochd_id) as total_cost')
+        )
+        ->get();
+        return view('report-machine.report-machine-repairall', compact('hd'));
+    }
+
+    public function ReportMachineUrgent(Request $request)
+    {
+        $hd = MachineRepairDochd::leftJoin('machine_repair_statuses','machine_repair_statuses.machine_repair_status_id','=','machine_repair_dochds.machine_repair_status_id')
+        ->where('machine_repair_dochds.machine_repair_dochd_type', 'ด่วน')
+        ->select(
+            'machine_repair_dochds.*',
+            'machine_repair_statuses.machine_repair_status_name',
+            DB::raw('(SELECT SUM(d.machine_repair_docdt_cost) 
+                    FROM machine_repair_docdts d 
+                    WHERE d.machine_repair_dochd_id = machine_repair_dochds.machine_repair_dochd_id) as total_cost')
+        )
+        ->get();
+        return view('report-machine.report-machine-urgentall', compact('hd'));
+    }
+
+    public function ReportMachineNormal(Request $request)
+    {
+        $hd = MachineRepairDochd::leftJoin('machine_repair_statuses','machine_repair_statuses.machine_repair_status_id','=','machine_repair_dochds.machine_repair_status_id')
+        ->where('machine_repair_dochds.machine_repair_dochd_type', 'ปกติ')
+        ->select(
+            'machine_repair_dochds.*',
+            'machine_repair_statuses.machine_repair_status_name',
+            DB::raw('(SELECT SUM(d.machine_repair_docdt_cost) 
+                    FROM machine_repair_docdts d 
+                    WHERE d.machine_repair_dochd_id = machine_repair_dochds.machine_repair_dochd_id) as total_cost')
+        )
+        ->get();
+        return view('report-machine.report-machine-normalall', compact('hd'));
     }
 }
 
