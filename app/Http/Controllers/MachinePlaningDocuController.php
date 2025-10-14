@@ -105,7 +105,14 @@ class MachinePlaningDocuController extends Controller
      */
     public function show($id)
     {
-        //
+        $dt = MachinePlaningdocuDt::where('machine_planingdocu_dt_id',$id)->first();
+        $mc = Machine::where('machine_flag',true)->get();
+        $planhd = MachinePlaningHd::where('machine_code',$dt->machine_code)->where('machine_planing_hd_flag',true)->first();
+        if($planhd == null){
+            return redirect()->route('machine-planing-docus.index')->with('error', 'เครื่องจักรยังไม่ได้ตั้งค่าตรวจเช็คตามแผน');
+        }
+        $plandt = MachinePlaningDt::where('machine_planing_hd_id',$planhd->machine_planing_hd_id)->where('machine_planing_dt_flag',true)->get();
+        return view('docu-machine.review-machineplaning-docu',compact('dt','mc','plandt'));
     }
 
     /**
@@ -254,5 +261,26 @@ class MachinePlaningDocuController extends Controller
 
         return view('docu-machine.list-machineplaning-calendar')
             ->with('events', $events->toJson());
+    }
+
+    public function updateReview(Request $request, $id)
+    {
+        $data = [
+            'review_remark' => $request->review_remark,
+            'review_at' => Auth::user()->name,
+            'review_date' => Carbon::now(),
+        ];
+        try
+        {
+            DB::beginTransaction();
+            MachinePlaningdocuDt::where('machine_planingdocu_dt_id',$id)->update($data);
+            DB::commit();
+            return redirect()->route('machine-repair-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+        } catch (\Exception $e) {
+            DB::rollback();
+            $message = $e->getMessage();
+            dd($message);
+            return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+        } 
     }
 }

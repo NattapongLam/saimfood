@@ -129,11 +129,15 @@ class MachineReportController extends Controller
             ->where('machine_repair_dochd_type', 'ปกติ')
             ->selectRaw("SUM(dt.machine_repair_docdt_cost) as total_cost")
             ->value('total_cost');
-        $pendingJobs = (clone $hd)->whereIn('machine_repair_status_id', [1, 2, 9])->get();
+        $pendingJobs1 = (clone $hd)->whereIn('machine_repair_status_id', [1, 2, 9])->get();
+        $pendingJobs2 = (clone $hd)->whereIn('machine_repair_status_id', [3, 4, 5])->get();
+        $pendingJobs3 = (clone $hd)->whereIn('machine_repair_status_id', [6])->get();
         // ส่งค่าไปยัง view
         return view('report-machine.report-machineall', compact(
             'dateend', 'datestart',
-            'hd1', 'hd2', 'hd3', 'hd4', 'hd5', 'hd6', 'hd7', 'hd8', 'hd9', 'cost', 'totalCost', 'mc','gpCost','totalSum','empQty','cost1','cost2','cost3','cost4','pendingJobs'
+            'hd1', 'hd2', 'hd3', 'hd4', 'hd5', 'hd6', 'hd7', 'hd8', 'hd9', 'cost', 
+            'totalCost', 'mc','gpCost','totalSum','empQty','cost1','cost2','cost3','cost4',
+            'pendingJobs1','pendingJobs2','pendingJobs3'
         ));
     }
 

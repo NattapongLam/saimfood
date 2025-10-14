@@ -22,15 +22,29 @@
                         </div>
                           <div class="row">
                             @foreach ($hd as $item)
-                            <div class="col-xl-6 col-sm-12">
-                                <div class="card">
+                             <div class="col-xl-6 col-sm-12">
+                                <div class="card border border-primary">
                                     <div class="card-body">
-                                        <div class="d-flex">
-                                            
-
+                                        <div class="d-flex">                                            
                                             <div class="flex-grow-1 overflow-hidden">
-                                                <h6>{{$item->machine_repair_dochd_docuno}} ({{$item->person_at}})</h6>
-                                                <h5 class="text-truncate font-size-15"><a href="javascript: void(0);" class="text-dark">{{$item->machine_code}}</a></h5>
+                                                <div class="card-header bg-transparent border-primary">
+                                                    <ul class="list-inline mb-0">
+                                                        <li class="list-inline-item me-3">
+                                                            <span class="badge bg-success">{{$item->machine_repair_status_name}}</span>
+                                                        </li>
+                                                        <li class="list-inline-item me-3">
+                                                            <i class= "bx bx-comment-dots me-1"></i> {{$item->machine_repair_dochd_type}}
+                                                        </li>
+                                                        <li class="list-inline-item me-3">
+                                                            <strong> วันที่ร้องขอ : </strong><i class= "bx bx-calendar me-1"></i> {{$item->machine_repair_dochd_date}}
+                                                            <strong> วันที่ต้องการเสร็จ : </strong><i class= "bx bx-calendar me-1"></i> {{$item->accepting_duedate}}
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                    <br>
+                                                    <h6>{{$item->machine_repair_dochd_docuno}} ({{$item->person_at}})</h6>
+                                                    <h5 class="text-truncate font-size-15"><a href="javascript: void(0);" class="text-dark">{{$item->machine_code}}</a></h5>
+                                                </div>
                                                 <p class="text-muted mb-4"><strong> รายละเอียด : </strong>{{$item->machine_repair_dochd_case}}</p>
                                                 <p class="text-muted mb-4"><strong> สถานที่ : </strong>{{$item->machine_repair_dochd_location}}</p>
                                                 @if ($item->repairer_note)
@@ -82,24 +96,28 @@
                                                 </p>
                                                 <p class="text-muted mb-4"><strong> มูลค่า : </strong>
                                                      {{$item->total_cost}}
-                                                </p>    
+                                                </p>                                                
                                             </div>
                                         </div>
                                     </div>
                                     <div class="px-4 py-3 border-top">
-                                        <ul class="list-inline mb-0">
-                                            <li class="list-inline-item me-3">
-                                                <span class="badge bg-success">{{$item->machine_repair_status_name}}</span>
-                                            </li>
-                                            <li class="list-inline-item me-3">
-                                                <i class= "bx bx-comment-dots me-1"></i> {{$item->machine_repair_dochd_type}}
-                                            </li>
-                                            <li class="list-inline-item me-3">
-                                                <strong> วันที่ร้องขอ : </strong><i class= "bx bx-calendar me-1"></i> {{$item->machine_repair_dochd_date}}<br>
-                                                <strong> วันที่ต้องการเสร็จ : </strong><i class= "bx bx-calendar me-1"></i> {{$item->accepting_duedate}}
-                                            </li>
-                                            
-                                        </ul>
+                                       <h6><strong>ความคิดเห็น จป.</strong></h6>  
+                                                <p class="text-muted mb-4"><strong>{{$item->safety_note}}</strong></p> 
+                                                <p class="text-muted mb-4"><strong> พื้นที่ : </strong>
+                                                     {{$item->safety_type}}
+                                                </p>
+                                                <p class="text-muted mb-4"><strong> อุปกรณ์ : </strong>
+                                                     {{$item->safety_ppe}}
+                                                </p>
+                                                <p class="text-muted mb-4"><strong> ลงชื่อ : </strong>
+                                                     {{$item->safety_at}} วันที่ : {{$item->safety_date}}
+                                                </p>
+                                                @if (isset($item->safety_pic1) && $item->safety_pic1)
+                                                    <a href="{{ asset('/'.$item->safety_pic1) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                @endif     
+                                                @if (isset($item->safety_pic) && $item->safety_pic)
+                                                    <a href="{{ asset('/'.$item->safety_pic) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                @endif   
                                     </div>
                                 </div>
                             </div>

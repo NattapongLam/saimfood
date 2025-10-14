@@ -64,6 +64,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/confirmDelMachinePlaningDocuDt' , [App\Http\Controllers\MachinePlaningDocuController::class , 'confirmDelMachinePlaningDocuDt']);
         Route::get('/api/machines-by-group', [App\Http\Controllers\MachinePlaningDocuController::class, 'getMachinesByGroup']);
         Route::get('/report-calendar-pm' , [App\Http\Controllers\MachinePlaningDocuController::class , 'CalendarPm']);
+        Route::put('/machine-planing-docus/{id}/review-update', [App\Http\Controllers\MachinePlaningDocuController::class, 'updateReview'])->name('machine-planing-docus.review-update');
     });
     Route::group([
         'middleware' =>  ['auth','permission:setup-machinechecksheet']

@@ -59,6 +59,7 @@
                                                 <th>Action</th>
                                                 <th></th>
                                                 <th></th>
+                                                <th>ตรวจสอบงาน</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -93,6 +94,11 @@
                                                         @if($item->machine_planingdocu_dt_action == 0)
                                                             <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->machine_planingdocu_dt_id }}')"><i class="fas fa-trash"></i></a>   
                                                         @endif      
+                                                    </td>
+                                                    <td>
+                                                        @if($item->machine_planingdocu_dt_action == 1)
+                                                            <a href="{{ route('machine-planing-docus.show', $item->machine_planingdocu_dt_id) }}"class="btn btn-primary btn-sm"><i class="bx bx-edit-alt"></i> บันทึก</a>
+                                                        @endif 
                                                     </td>
                                                 </tr>
                                             @endforeach

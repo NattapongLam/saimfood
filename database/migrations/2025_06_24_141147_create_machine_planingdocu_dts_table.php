@@ -25,6 +25,9 @@ return new class extends Migration
             $table->boolean('machine_planingdocu_dt_action'); 
             $table->string('person_at');
             $table->string('action_at')->nullable();
+            $table->string('review_at')->nullable();
+            $table->date('review_date')->nullable();
+            $table->string('review_remark')->nullable();
             $table->timestamps();
             $table->unique(['machine_code', 'machine_planingdocu_hd_id','machine_planingdocu_dt_flag'], 'uq_machine_code_flag');
         });

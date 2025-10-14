@@ -16,4 +16,8 @@ class MachineChecksheetDocuHd extends Model
     {
         return $this->hasMany(MachineChecksheetDocuDt::class, 'machine_checksheet_docu_hd_id', 'machine_checksheet_docu_hd_id');
     }
+    public function employees()
+    {
+        return $this->hasMany(MachineChecksheetDocuEmp::class, 'machine_checksheet_docu_hd_id', 'machine_checksheet_docu_hd_id');
+    }
 }

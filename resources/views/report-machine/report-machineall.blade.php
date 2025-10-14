@@ -155,7 +155,7 @@
                                         <div class="table-responsive mt-4">
                                             <table class="table align-middle table-nowrap">
                                                 <tbody>
-                                                   <tr data-bs-toggle="modal" data-bs-target="#pendingModal" style="cursor: pointer;">
+                                                   <tr data-bs-toggle="modal" data-bs-target="#pendingModal1" style="cursor: pointer;">
                                                         <td style="width: 30%">
                                                             <p class="mb-0">งานรอดำเนินการ</p>
                                                         </td>
@@ -163,7 +163,7 @@
                                                             <h5 class="mb-0">{{$hd6}}</h5>
                                                         </td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr data-bs-toggle="modal" data-bs-target="#pendingModal2" style="cursor: pointer;">
                                                         <td>
                                                             <p class="mb-0">กำลังดำเนินการ</p>
                                                         </td>
@@ -171,7 +171,7 @@
                                                             <h5 class="mb-0">{{$hd7}}</h5>
                                                         </td>                                                      
                                                     </tr>
-                                                    <tr>
+                                                    <tr data-bs-toggle="modal" data-bs-target="#pendingModal3" style="cursor: pointer;">
                                                         <td>
                                                             <p class="mb-0">ปิดงานเรียบร้อย</p>
                                                         </td>
@@ -314,7 +314,7 @@
              </div>
         </div>
 <!-- Popup Modal -->
-<div class="modal fade" id="pendingModal" tabindex="-1" aria-labelledby="pendingModalLabel" aria-hidden="true">
+<div class="modal fade" id="pendingModal1" tabindex="-1" aria-labelledby="pendingModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg"> <!-- modal-lg: ขนาดใหญ่ -->
     <div class="modal-content">
       <div class="modal-header">
@@ -334,7 +334,87 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($pendingJobs as $job)
+                @foreach ($pendingJobs1 as $job)
+                    <tr>
+                        <td>{{ $job->machine_repair_dochd_date }}</td>
+                        <td>{{ $job->machine_repair_dochd_docuno }}</td>
+                        <td>{{ $job->person_at }}</td>
+                        <td>{{ $job->machine_code }}</td>
+                        <td>{{ $job->machine_repair_dochd_type }}</td>
+                        <td>{{ $job->machine_repair_dochd_case }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Popup Modal -->
+<div class="modal fade" id="pendingModal2" tabindex="-1" aria-labelledby="pendingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"> <!-- modal-lg: ขนาดใหญ่ -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pendingModalLabel">รายละเอียดงานรอดำเนินการ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="ปิด"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>วันที่</th>
+                    <th>เลขที่</th>
+                    <th>ผู้แจ้ง</th>
+                    <th>เครื่อง</th>
+                    <th>ประเภท</th>
+                    <th>อาการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($pendingJobs2 as $job)
+                    <tr>
+                        <td>{{ $job->machine_repair_dochd_date }}</td>
+                        <td>{{ $job->machine_repair_dochd_docuno }}</td>
+                        <td>{{ $job->person_at }}</td>
+                        <td>{{ $job->machine_code }}</td>
+                        <td>{{ $job->machine_repair_dochd_type }}</td>
+                        <td>{{ $job->machine_repair_dochd_case }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Popup Modal -->
+<div class="modal fade" id="pendingModal3" tabindex="-1" aria-labelledby="pendingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"> <!-- modal-lg: ขนาดใหญ่ -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pendingModalLabel">รายละเอียดงานรอดำเนินการ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="ปิด"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>วันที่</th>
+                    <th>เลขที่</th>
+                    <th>ผู้แจ้ง</th>
+                    <th>เครื่อง</th>
+                    <th>ประเภท</th>
+                    <th>อาการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($pendingJobs3 as $job)
                     <tr>
                         <td>{{ $job->machine_repair_dochd_date }}</td>
                         <td>{{ $job->machine_repair_dochd_docuno }}</td>

@@ -126,6 +126,36 @@
                                         </table>
                                     </div>
                                 </div>
+                                <hr>
+                                <h5 class="text-center"><strong>ผู้ตรวจสอบ</strong></h5>
+                           <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm nowrap text-center w-100" style="table-layout: fixed;">
+                                        <tbody>
+                                            <tr>
+                                                @for ($i = 1; $i <= 31; $i++)
+                                                    <td style="width: calc(100% / 4);">
+                                                        วันที่ : {{ str_pad($i, 2, '0', STR_PAD_LEFT) }} <br>
+                                                        <select class="form-control select2" name="emp_day[{{ $i }}]">
+                                                            <option value="">กรุณาเลือก</option>
+                                                            @foreach ($emp as $item)
+                                                                <option value="{{ $item->personcode }}">
+                                                                    {{ $item->personfullname }} ({{ $item->position }})
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    @if ($i % 4 == 0 && $i < 31)
+                                                        </tr><tr>
+                                                    @endif
+                                                @endfor
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
                                  <br>
                                     <div class="form-group">
                                         <div class="d-flex flex-wrap gap-2 justify-content">
@@ -223,5 +253,11 @@ const dateInput = document.getElementById('dateInput');
         const month = String(now.getMonth() + 1).padStart(2, '0');
         dateInput.value = `${year}-${month}-01`;
     });
+$(document).ready(function() {
+    $('.select2').select2({
+        placeholder: "กรุณาเลือก",
+        allowClear: true
+    });
+});
 </script>
 @endsection

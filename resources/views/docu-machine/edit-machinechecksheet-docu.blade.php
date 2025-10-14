@@ -129,6 +129,41 @@
         </table>
     </div>
 </div>
+       <hr>
+                                <h5 class="text-center"><strong>ผู้ตรวจสอบ</strong></h5>
+                           <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm nowrap text-center w-100" style="table-layout: fixed;">
+                                        <tbody>
+                                            @foreach($hd->employees as $index => $item)
+                                                <tr>
+                                                    @for ($i = 1; $i <= 31; $i++)
+                                                        @php
+                                                            $empField = 'emp_' . str_pad($i, 2, '0', STR_PAD_LEFT);
+                                                        @endphp
+                                                        <td style="width: calc(100% / 4);">
+                                                            วันที่ : {{ str_pad($i, 2, '0', STR_PAD_LEFT) }} <br>
+                                                            <input type="hidden" name="machine_checksheet_docu_emp_id" value="{{$item->machine_checksheet_docu_emp_id}}">
+                                                            <select class="form-control select2" name="emp_day[{{ $i }}]">
+                                                                <option value="">กรุณาเลือก</option>
+                                                                @foreach ($emp as $emps)
+                                                                    <option value="{{ $emps->personcode }}" 
+                                                                        {{ $emps->personcode == $item->$empField ? 'selected' : '' }}>
+                                                                        {{ $emps->personfullname }} ({{ $emps->position }})
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        @if ($i % 4 == 0 && $i < 31)
+                                                            </tr><tr>
+                                                        @endif
+                                                    @endfor
+                                                </tr>
+                                            @endforeach                                          
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                                 <br>
 
                                 <div class="form-group">
@@ -168,6 +203,12 @@ $(document).ready(function () {
             { targets: "_all", className: 'align-middle' }
         ]
         // ❌ ไม่ใช้ fixedColumns เพราะมีปัญหากับ checkbox ซ้อน
+    });
+});
+$(document).ready(function() {
+    $('.select2').select2({
+        placeholder: "กรุณาเลือก",
+        allowClear: true
     });
 });
 </script>
