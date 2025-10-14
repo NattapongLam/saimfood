@@ -24,18 +24,29 @@
                             <form class="custom-validation" action="{{ route('machine-repair-docus.store') }}" method="POST" enctype="multipart/form-data" validate>
                              @csrf   
                                 <div class="row"> 
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">วันที่</label>
                                             <input class="form-control" type="date" name="machine_repair_dochd_date" value="{{ date('Y-m-d') }}" required>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">ประเภท</label>
                                             <select class="form-select" name="machine_repair_dochd_type" required>
                                                 <option value="ปกติ">ปกติ</option>
                                                 <option value="ด่วน">ด่วน</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="form-label">กลุ่มเครื่องจักร</label>
+                                            <select class="form-select" id="machinegroup_id">
+                                               <option value="">กรุณาเลือก</option>
+                                               @foreach ($machinegroup as $item)
+                                                  <option value="{{$item->machinegroup_id}}">{{$item->machinegroup_name}}</option> 
+                                               @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -47,9 +58,6 @@
                                             <label class="form-label">เครื่องจักร</label>
                                             <select class="select2 form-select" name="machine_code" id="machine_code" required>
                                                 <option value="">กรุณาเลือก</option>
-                                                @foreach ($machine as $item)
-                                                <option value="{{$item->machine_code}}">{{$item->machine_code}} / {{$item->machine_name}}</option>
-                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -165,6 +173,29 @@ $(document).ready(function() {
             $('#history_table_body').html('');
         }
     });
+});
+$(document).ready(function () {
+    $('#machinegroup_id').on('change', function () {
+        let groupId = $(this).val();
+
+        $('#machine_code').empty().append('<option value="">กำลังโหลด...</option>');
+
+        if (groupId) {
+            $.getJSON(`/get-machines/${groupId}`, function (data) {
+                $('#machine_code').empty().append('<option value="">กรุณาเลือก</option>');
+                $.each(data, function (index, item) {
+                    $('#machine_code').append(
+                        `<option value="${item.machine_code}">${item.machine_code} / ${item.machine_name}</option>`
+                    );
+                });
+            });
+        } else {
+            $('#machine_code').empty().append('<option value="">กรุณาเลือก</option>');
+        }
+    });
+
+    // init select2
+    $('.select2').select2();
 });
 </script>
 @endsection

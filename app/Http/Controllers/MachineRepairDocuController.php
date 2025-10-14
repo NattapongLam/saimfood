@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Machine;
 use Illuminate\Support\Str;
+use App\Models\MachineGroup;
 use Illuminate\Http\Request;
 use App\Models\MachineRepairDocdt;
 use App\Models\MachineRepairDochd;
@@ -57,7 +58,8 @@ class MachineRepairDocuController extends Controller
     public function create()
     {
         $machine = Machine::where('machine_flag',true)->get();
-        return view('docu-machine.create-machinerepair-docu',compact('machine'));
+        $machinegroup = MachineGroup::where('machinegroup_flag',true)->get();
+        return view('docu-machine.create-machinerepair-docu',compact('machine','machinegroup'));
     }
 
     /**
@@ -616,5 +618,10 @@ class MachineRepairDocuController extends Controller
             ];
         });
         return response()->json($history);
+    }
+    public function getMachines($groupId)
+    {
+        $machines = Machine::where('machinegroup_id', $groupId)->get();
+        return response()->json($machines);
     }
 }

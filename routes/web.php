@@ -93,6 +93,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/confirmDelMachineRepairDt' , [App\Http\Controllers\MachineRepairDocuController::class , 'confirmDelMachineRepairDt']);
         Route::put('/machine-repair-docus/{id}/safety-update', [App\Http\Controllers\MachineRepairDocuController::class, 'updateSafety'])->name('machine-repair-docus.safety-update');
         Route::get('/machine/history', [App\Http\Controllers\MachineRepairDocuController::class, 'getHistory'])->name('machine.history');
+        Route::get('/get-machines/{groupId}', [App\Http\Controllers\MachineRepairDocuController::class, 'getMachines']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:docu-machine-create']

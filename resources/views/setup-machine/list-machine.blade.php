@@ -32,6 +32,7 @@
                     <thead>
                         <tr>
                             <th>สถานะ</th>
+                            <th>Qr Code</th>
                             <th>รูปภาพ</th>
                             <th>รหัสเครื่องจักรและอุปกรณ์</th>
                             <th>ชื่อเครื่องจักรและอุปกรณ์</th>
@@ -52,6 +53,11 @@
                                 @else
                                     <span class="badge bg-danger">ไม่ใช้งาน</span>
                                 @endif                                                          
+                            </td>
+                            <td>
+                                <div style="display: inline-block;">
+                                            {!! QrCode::encoding('UTF-8')->size(100)->generate(url('machine-qrcode/'.$item->machine_code)) !!}   
+                                </div>
                             </td>
                             <td>
                                 <img src="{{ asset($item->machine_pic1 ?? 'images/no-image.png') }}" alt="Machine Image" class="rounded-circle avatar-xl">
