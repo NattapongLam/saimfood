@@ -32,6 +32,7 @@
                                         <thead>
                                             <tr>
                                                 <th>สถานะ</th>
+                                                <th>วันที่สร้าง</th>
                                                 <th>รหัสลูกค้า</th>
                                                 <th>ชื่อลูกค้า</th>
                                                 <th>สาขา</th>
@@ -51,6 +52,7 @@
                                                             <span class="badge bg-danger">ไม่ใช้งาน</span>
                                                         @endif                                                       
                                                     </td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('Y/m/d H:i') }}</td>
                                                     <td>{{$item->customer_code}}</td>
                                                     <td>{{$item->customer_name}}</td>
                                                     <td>{{$item->branch_name}}</td>

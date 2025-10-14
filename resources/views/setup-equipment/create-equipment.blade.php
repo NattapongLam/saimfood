@@ -40,16 +40,29 @@
                                     </div>
                                     <br>
                                     <div class="row"> 
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="form-group">
                                                 <label class="form-label">วันที่ซื้อ</label>
                                                 <input class="form-control" name="equipmente_date" type="date" required>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="form-group">
                                                 <label class="form-label">วันที่หมดประกัน</label>
                                                 <input class="form-control" name="insurance_date" type="date" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label">ผู้ซ่อมล่าสุด</label>
+                                                <select class="form-control select2" name="equipment_person">
+                                                    @foreach ($emp as $item)
+                                                        <option value="">กรุณาเลือก</option>
+                                                        <option value="{{ $item->personcode }}">
+                                                            {{ $item->personfullname }} ({{ $item->position }})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -190,5 +203,11 @@ function prevFile(input, elm) {
                 reader.readAsDataURL(input.files[0]);
             }
 }
+$(document).ready(function() {
+    $('.select2').select2({
+        placeholder: "กรุณาเลือก",
+        allowClear: true
+    });
+});
 </script>
 @endsection

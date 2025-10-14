@@ -35,7 +35,8 @@ class EquipmentController extends Controller
      */
     public function create()
     {
-        return view('setup-equipment.create-equipment');
+        $emp = DB::table('tg_employee_list')->get();
+        return view('setup-equipment.create-equipment',compact('emp'));
     }
 
     /**
@@ -65,7 +66,8 @@ class EquipmentController extends Controller
             'updated_at'=> Carbon::now(),
             'equipment_status_id' => 1,
             'equipment_cost' => $request->equipment_cost,
-            'equipment_brand' => $request->equipment_brand
+            'equipment_brand' => $request->equipment_brand,
+            'equipment_person' => $request->equipment_person
         ];
         if ($request->hasFile('equipment_pic1') && $request->file('equipment_pic1')->isValid()) {
             $filename = "EQ_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('equipment_pic1')->getClientOriginalExtension();
@@ -120,7 +122,8 @@ class EquipmentController extends Controller
     public function edit($id)
     {
         $hd = Equipment::where('equipment_id',$id)->first();
-        return view('setup-equipment.edit-equipment',compact('hd'));
+        $emp = DB::table('tg_employee_list')->get();
+        return view('setup-equipment.edit-equipment',compact('hd','emp'));
     }
 
     /**
@@ -154,7 +157,8 @@ class EquipmentController extends Controller
             'person_at' => Auth::user()->name,
             'updated_at'=> Carbon::now(),
             'equipment_cost' => $request->equipment_cost,
-            'equipment_brand' => $request->equipment_brand
+            'equipment_brand' => $request->equipment_brand,
+            'equipment_person' => $request->equipment_person
         ];
         if ($request->hasFile('equipment_pic1') && $request->file('equipment_pic1')->isValid()) {
             $filename = "EQ_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('equipment_pic1')->getClientOriginalExtension();
