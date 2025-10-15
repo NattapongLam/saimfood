@@ -194,24 +194,23 @@ class MachineChecksheetDocuController extends Controller
                 $data['person_at'] = Auth::user()->name;
                 MachineChecksheetDocuDt::where('machine_checksheet_docu_dt_id', $id)->update($data);
             }
-            foreach ($request->machine_checksheet_docu_emp_id as $key => $value) {
-                $data = [
-                    'updated_at' => Carbon::now(),
-                ];
-                for ($i = 1; $i <= 31; $i++) {
+            $data1 = [
+                'updated_at' => Carbon::now(),
+            ];
+            for ($i = 1; $i <= 31; $i++) {
                     $empKey  = 'emp_'  . str_pad($i, 2, '0', STR_PAD_LEFT);
                     $dateKey = 'date_' . str_pad($i, 2, '0', STR_PAD_LEFT);
 
                     $empVal = $request->emp_day[$i] ?? null;
 
                     // เก็บรหัสพนักงาน
-                    $data[$empKey] = $empVal;
+                    $data1[$empKey] = $empVal;
 
                     // ถ้าไม่เป็น null ให้บันทึกวันที่ปัจจุบัน
-                    $data[$dateKey] = $empVal ? now() : null;
-                }
-                MachineChecksheetDocuEmp::where('machine_checksheet_docu_emp_id',$value)->update($data);
+                    $data1[$dateKey] = $empVal ? now() : null;
             }
+                MachineChecksheetDocuEmp::where('machine_checksheet_docu_emp_id',$request->machine_checksheet_docu_emp_id)->update($data1);   
+                
             DB::commit();
             return redirect()->route('machine-checksheet-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
