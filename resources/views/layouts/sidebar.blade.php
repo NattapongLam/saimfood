@@ -114,6 +114,15 @@
                                     <li><a href="{{url('/report-machine')}}" key="t-starter-page">ภาพรวม</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-bar-chart-alt-2"></i>
+                                    <span key="t-starter-page">รายงานอุปกรณ์ลูกค้า</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="{{url('/report-equipment')}}" key="t-starter-page">ภาพรวม</a></li>
+                                </ul>
+                            </li>
                             
                         </ul>
                     </div>

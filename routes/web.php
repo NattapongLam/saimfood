@@ -84,6 +84,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/confirmDelEquipmentTransfer' , [App\Http\Controllers\EquipmentTransferController::class , 'confirmDelEquipmentTransfer']);
         Route::resource('/customers' , App\Http\Controllers\CustomerController::class);
         Route::resource('/equipment-repair' , App\Http\Controllers\EquipmentRepairController::class);
+        Route::get('/report-equipment' , [App\Http\Controllers\EquipmentReportController::class , 'ReportEquipment']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:docu-machine-repair']
