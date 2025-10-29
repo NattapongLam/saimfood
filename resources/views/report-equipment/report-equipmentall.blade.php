@@ -53,7 +53,8 @@
                             <th>ลูกค้า</th>
                             <th>พนักงานขาย</th>
                             <th>จำนวนเครื่อง</th>
-                            <th>มูลค่า</th>
+                            <th>มูลค่าอุปกรณ์</th>
+                            <th>มูลค่าการซ่อม</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,6 +75,7 @@
                                 </td>
                                 <td>{{$item->total_qty}}</td>
                                 <td>{{number_format($item->total_cost,2)}}</td>
+                                <td>{{number_format($item->repair_cost,2)}}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -102,11 +104,12 @@
         <table class="table table-bordered table-sm">
           <thead>
             <tr>
-              <th>วันที่</th>
-              <th>เลขที่</th>
-              <th>สถานะ</th>
-              <th>อุปกรณ์</th>
-              <th>มูลค่า</th>
+                <th>วันที่</th>
+                <th>เลขที่</th>
+                <th>สถานะ</th>
+                <th>อุปกรณ์</th>
+                <th>มูลค่าอุปกรณ์</th>
+                <th>มูลค่าการซ่อม</th>
             </tr>
           </thead>
           <tbody id="modal-detail-body">
@@ -170,7 +173,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${x.equipment_transfer_hd_docuno}</td>
                     <td>${x.equipment_transfer_status_name}</td>
                     <td>${x.equipment_name} (${x.equipment_code})</td>
-                   <td>${Number(x.equipment_cost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td>${Number(x.equipment_cost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td>${Number(x.repair_cost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                 </tr>`)
                 .join('');
 
@@ -178,62 +182,73 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-        // 🔹 ดึงข้อมูลจาก Laravel ส่งมาผ่าน Blade
-        const chartData = @json($hd1);
+    // 🔹 ดึงข้อมูลจาก Laravel ส่งมาผ่าน Blade
+    const chartData = @json($hd1);
 
-        // 🔹 สร้าง labels (ชื่อบริษัท)
-        const labels = chartData.map(x => `${x.customer_code} - ${x.customer_name}`);
+    // 🔹 สร้าง labels (ชื่อบริษัท)
+    const labels = chartData.map(x => `${x.customer_code} - ${x.customer_name}`);
 
-        // 🔹 สร้าง data (มูลค่ารวม)
-        const data = chartData.map(x => x.total_cost);
+    // 🔹 สร้าง data แยกเป็น 2 ชุด
+    const totalCostData = chartData.map(x => x.total_cost);
+    const repairCostData = chartData.map(x => x.repair_cost);
 
-        // 🔹 สร้างกราฟ Bar Chart
-        const ctx = document.getElementById('equipmentChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'มูลค่ารวม (บาท)',
-                    data: data,
+    // 🔹 สร้างกราฟ Bar Chart
+    const ctx = document.getElementById('equipmentChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'อุปกรณ์ (บาท)',
+                    data: totalCostData,
                     backgroundColor: 'rgba(54, 162, 235, 0.7)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        ticks: {
-                            autoSkip: false,
-                            maxRotation: 45,
-                            minRotation: 0
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'มูลค่า (บาท)'
-                        }
+                },
+                {
+                    label: 'ค่าซ่อม (บาท)',
+                    data: repairCostData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 45,
+                        minRotation: 0
                     }
                 },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: (ctx) =>
-                                `${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('th-TH', { minimumFractionDigits: 2 })} บาท`
-                        }
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'มูลค่า (บาท)'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) =>
+                            `${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('th-TH', { minimumFractionDigits: 2 })} บาท`
                     }
                 }
             }
-        });
+        }
     });
+});
 </script>
 @endsection

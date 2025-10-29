@@ -27,6 +27,10 @@ class EquipmentReportController extends Controller
         ->leftJoin('tg_employee_list', function($join) {
             $join->on(DB::raw('customers.salecode COLLATE Thai_CI_AS'), '=', DB::raw('tg_employee_list.personcode COLLATE Thai_CI_AS'));
         })
+        ->leftJoin('vw_customerrepair_cost', function($join) {
+            $join->on('equipment.equipment_id', '=', 'vw_customerrepair_cost.equipment_id')
+                ->on('customers.customer_id', '=', 'vw_customerrepair_cost.customer_id');
+        })
         ->whereBetween('equipment_transfer_hds.equipment_transfer_hd_date', [$datestart, $dateend])
         ->select(
             'customers.customer_code',
@@ -34,10 +38,11 @@ class EquipmentReportController extends Controller
             'customers.customer_zone',
             'tg_employee_list.personfullname',
             'customers.salecode',
+            'vw_customerrepair_cost.repair_cost',
             DB::raw('COUNT(DISTINCT equipment_transfer_dts.equipment_code) as total_qty'),
             DB::raw('SUM(equipment.equipment_cost) as total_cost')
         )
-        ->groupBy('customers.customer_code', 'customers.customer_name','customers.customer_zone','tg_employee_list.personfullname','customers.salecode')
+        ->groupBy('customers.customer_code', 'customers.customer_name','customers.customer_zone','tg_employee_list.personfullname','customers.salecode','vw_customerrepair_cost.repair_cost')
         ->orderBy('customers.customer_code')
         ->get();
         $detail = DB::table('equipment_transfer_hds')
@@ -47,6 +52,10 @@ class EquipmentReportController extends Controller
         ->leftJoin('customers', 'equipment_transfer_hds.customer_id', '=', 'customers.customer_id')
         ->leftJoin('tg_employee_list', function($join) {
             $join->on(DB::raw('customers.salecode COLLATE Thai_CI_AS'), '=', DB::raw('tg_employee_list.personcode COLLATE Thai_CI_AS'));
+        })
+        ->leftJoin('vw_customerrepair_cost', function($join) {
+            $join->on('equipment.equipment_id', '=', 'vw_customerrepair_cost.equipment_id')
+                ->on('customers.customer_id', '=', 'vw_customerrepair_cost.customer_id');
         })
         ->whereBetween('equipment_transfer_hds.equipment_transfer_hd_date', [$datestart, $dateend])
         ->select(
@@ -58,7 +67,8 @@ class EquipmentReportController extends Controller
             'equipment_transfer_dts.equipment_code',
             'equipment_transfer_dts.equipment_name',
             'equipment.equipment_cost',
-            'customers.salecode'
+            'customers.salecode',
+            'vw_customerrepair_cost.repair_cost',
         )
         ->get();
         return view('report-equipment.report-equipmentall', compact(
