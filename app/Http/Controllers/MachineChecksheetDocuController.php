@@ -45,7 +45,7 @@ class MachineChecksheetDocuController extends Controller
         $mc = MachineChecksheetHd::leftjoin('machines','machine_checksheet_hds.machine_code','=','machines.machine_code')
         ->where('machine_checksheet_hd_flag',true)
         ->get();
-        $emp = DB::table('tg_employee_list')->get();
+        $emp = DB::table('tg_employee_list')->whereIn('personcode',['630701029','651017104','650815085','641006044','680303281'])->get();
         return view('docu-machine.create-machinechecksheet-docu',compact('mc','emp'));
     }
 
@@ -93,22 +93,10 @@ class MachineChecksheetDocuController extends Controller
 
                 MachineChecksheetDocuDt::insert($data);
             }
-            // foreach ($request->emp_day as $key => $value) {
-            //     $data = [
-            //         'machine_checksheet_docu_hd_id' => $hd->machine_checksheet_docu_hd_id,
-            //         'created_at' => Carbon::now(),
-            //     ];
-            //     for ($i = 1; $i <= 31; $i++) {
-            //         $empKey  = 'emp_'  . str_pad($i, 2, '0', STR_PAD_LEFT);
-            //         $dateKey = 'date_' . str_pad($i, 2, '0', STR_PAD_LEFT);
-            //         $empVal = $request->emp_day[$i] ?? null;
-            //         // เก็บรหัสพนักงาน
-            //         $data[$empKey] = $empVal;
-            //         // ถ้าไม่เป็น null ให้บันทึกวันที่ปัจจุบัน
-            //         $data[$dateKey] = $empVal ? now() : null;
-            //     }
-            //     MachineChecksheetDocuEmp::create($data);
-            // }
+            MachineChecksheetDocuEmp::create([
+                    'machine_checksheet_docu_hd_id' => $hd->machine_checksheet_docu_hd_id,
+                    'created_at' => Carbon::now(),
+            ]);
             DB::commit();
             return redirect()->route('machine-checksheet-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
@@ -140,7 +128,7 @@ class MachineChecksheetDocuController extends Controller
     {
         $hd = MachineChecksheetDocuHd::leftjoin('machines','machine_checksheet_docu_hds.machine_code','=','machines.machine_code')        
         ->findOrFail($id);
-        $emp = DB::table('tg_employee_list')->get();
+        $emp = DB::table('tg_employee_list')->whereIn('personcode',['630701029','651017104','650815085','641006044','680303281'])->get();
         if ($hd->employees()->count() == 0) {
             try {
                 DB::beginTransaction();
