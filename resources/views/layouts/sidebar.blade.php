@@ -56,7 +56,16 @@
                             @role('superadmin|admin|user')
                             <li class="menu-title" key="t-pages">Pages</li>
                             <li>
-                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-detail"></i>
+                                    <span key="t-starter-page">งานทั่วไป</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="{{route('asset-inout.index')}}" key="t-starter-page">ใบนำทรัพย์สินออกนอกบริษัท</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bx-detail"></i>
                                     <span key="t-starter-page">ซ่อมบำรุง</span>
                                 </a>

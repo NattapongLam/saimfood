@@ -112,6 +112,10 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/confirmDelEquipmentRequest' , [App\Http\Controllers\EquipmentRequestController::class , 'confirmDelEquipmentRequest']);
         Route::resource('/customer-transfer' , App\Http\Controllers\CustomerTransfer::class);
     });
+    Route::resource('/asset-inout' , App\Http\Controllers\OtherAssetinoutForm::class);
+    Route::post('/confirmDelAssetinoutHd' , [App\Http\Controllers\OtherAssetinoutForm::class , 'confirmDelAssetinoutHd']);
+    Route::post('/confirmDelAssetinoutDt' , [App\Http\Controllers\OtherAssetinoutForm::class , 'confirmDelAssetinoutDt']);
+    Route::get('/asset-inout-print/{id}', [App\Http\Controllers\OtherAssetinoutForm::class, 'AssetinoutPrint'])->name('asset-inout.print');
 });
 //QrCodeScan
 Route::get('/machine-qrcode/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanMachine']);
