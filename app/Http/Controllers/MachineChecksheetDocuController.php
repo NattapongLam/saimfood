@@ -93,10 +93,10 @@ class MachineChecksheetDocuController extends Controller
 
                 MachineChecksheetDocuDt::insert($data);
             }
-            MachineChecksheetDocuEmp::create([
-                    'machine_checksheet_docu_hd_id' => $hd->machine_checksheet_docu_hd_id,
-                    'created_at' => Carbon::now(),
-            ]);
+            // MachineChecksheetDocuEmp::create([
+            //         'machine_checksheet_docu_hd_id' => $hd->machine_checksheet_docu_hd_id,
+            //         'created_at' => Carbon::now(),
+            // ]);
             DB::commit();
             return redirect()->route('machine-checksheet-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {

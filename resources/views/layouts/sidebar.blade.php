@@ -21,6 +21,15 @@
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bx-wrench"></i>
+                                    <span key="t-starter-page">ตั้งค่าพนักงาน</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                     <li><a href="{{route('employees.index')}}" key="t-starter-page">รายชื่อพนักงาน</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-wrench"></i>
                                     <span key="t-starter-page">ตั้งค่าเครื่องจักร</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">  

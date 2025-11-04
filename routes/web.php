@@ -116,6 +116,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
     Route::post('/confirmDelAssetinoutHd' , [App\Http\Controllers\OtherAssetinoutForm::class , 'confirmDelAssetinoutHd']);
     Route::post('/confirmDelAssetinoutDt' , [App\Http\Controllers\OtherAssetinoutForm::class , 'confirmDelAssetinoutDt']);
     Route::get('/asset-inout-print/{id}', [App\Http\Controllers\OtherAssetinoutForm::class, 'AssetinoutPrint'])->name('asset-inout.print');
+    Route::resource('/employees' , App\Http\Controllers\EmployeeList::class);
 });
 //QrCodeScan
 Route::get('/machine-qrcode/{id}' , [App\Http\Controllers\QrsacnController::class , 'QrcodeScanMachine']);

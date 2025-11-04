@@ -1,16 +1,12 @@
 @extends('layouts.main')
 @section('content')
 
-<!-- 🔹 ปุ่มพิมพ์ (เห็นเฉพาะหน้าเว็บ) -->
-<div class="text-center mb-3">
-    <button class="btn btn-primary no-print" onclick="window.print()">🖨️ พิมพ์ใบนำทรัพย์สิน</button>
-</div>
-
 <!-- 🔹 หน้ากระดาษ A4 แนวนอน แบ่งซ้าย–ขวาเป็น A5 -->
 <div class="print-page">
     <!-- ฝั่งซ้าย = ต้นฉบับ -->
     <div class="a5-page left">
         @include('others.assetinout-content', ['hd' => $hd, 'dt' => $dt])
+        <div class="copy-label">ต้นฉบับ (Original)</div>
     </div>
 
     <!-- ฝั่งขวา = สำเนา -->
@@ -20,94 +16,83 @@
     </div>
 </div>
 
+{{-- ปุ่มพิมพ์ --}}
+<div class="d-print-none mt-3 text-end">
+    <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i> พิมพ์เอกสาร</a>
+</div>
+
 @endsection
 
-@section('style')
+@section('script')
 <style>
-/* ------------------------------------------------------
-   แสดงผลหน้าเว็บ (ก่อนพิมพ์)
------------------------------------------------------- */
+/* ✅ โครงสร้างหลักให้แสดงซ้าย-ขวา */
 .print-page {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
     width: 100%;
-    margin: 0 auto;
-}
-.a5-page {
-    width: 50%;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    position: relative;
-}
-.a5-page.left {
-    border-right: 1px dashed #aaa;
-}
-.copy-label {
-    display: none; /* ซ่อนก่อนพิมพ์ */
 }
 
-/* ------------------------------------------------------
-   ส่วนสั่งพิมพ์จริง
------------------------------------------------------- */
+/* ✅ ตั้งค่าแต่ละหน้าให้ขนาดเท่า A5 (ครึ่ง A4 แนวนอน) */
+.a5-page {
+    width: 49%;
+    border: 1px solid #999;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 11pt;
+    position: relative;
+}
+
+/* ✅ ป้ายกำกับ ต้นฉบับ / สำเนา */
+.copy-label {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #555;
+}
+
+/* ✅ โหมดพิมพ์ */
 @media print {
     @page {
         size: A4 landscape;
-        margin: 0;
+        margin: 10mm;
     }
 
     body {
         margin: 0;
-        font-family: "TH Sarabun New", sans-serif;
-        font-size: 14pt;
-        -webkit-print-color-adjust: exact;
-    }
-
-   /* ซ่อนทุก element ที่มี class no-print */
-    .no-print {
-        display: none !important;
-        visibility: hidden !important;
-    }
-
-    /* หรือซ่อนปุ่มโดยตรง */
-    button.no-print {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    
-    /* ขนาดพิมพ์ A4 แนวนอน */
-    .print-page {
-        display: flex;
-        flex-direction: row;
-        width: 297mm;
-        height: 210mm;
-        margin: 0;
         padding: 0;
     }
 
-    .a5-page {
-        width: 148.5mm; /* ครึ่ง A4 */
-        height: 210mm;
-        padding: 10mm;
-        box-sizing: border-box;
-        overflow: hidden;
-        position: relative;
+    .d-print-none {
+        display: none !important;
+    }
+
+    .print-page {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         page-break-inside: avoid;
-        border: none;
     }
 
-    .a5-page.left {
-        border-right: 0.4mm dashed #000;
+    .a5-page {
+        width: 49%;
+        border: 1px solid #ccc;
+        padding: 10px;
+        box-sizing: border-box;
     }
 
-    /* แสดงข้อความ Copy เฉพาะฝั่งขวา */
-    .a5-page.right .copy-label {
-        display: block;
-        position: absolute;
-        bottom: 10mm;
-        right: 10mm;
+    table {
+        width: 100%;
+        border-collapse: collapse;
         font-size: 10pt;
-        color: #555;
+    }
+
+    th, td {
+        border: 1px solid #999;
+        padding: 4px;
     }
 }
 </style>
