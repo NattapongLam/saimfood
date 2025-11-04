@@ -96,15 +96,31 @@
                             <h5>รายละเอียดการรับงานซ่อม</h5>
                             <div class="card-body">
                                 <div class="row"> 
-                                    <div class="form-group">
-                                         <label class="form-label">วันที่คาดว่าจะซ่อมเสร็จ</label>
-                                         <input class="form-control" type="date" name="accepting_duedate" value="{{ date('Y-m-d') }}" required>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่คาดว่าจะซ่อมเสร็จ</label>
+                                            <input class="form-control" type="date" name="accepting_duedate" value="{{ date('Y-m-d') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่ - เวลารับงานซ่อม</label>
+                                            <input 
+                                                class="form-control" 
+                                                type="datetime-local" 
+                                                name="accepting_datetime" 
+                                                value="{{ date('Y-m-d\TH:i') }}" 
+                                                required
+                                            >
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row"> 
-                                    <div class="form-group">
-                                        <label class="form-label">หมายเหตุรับงานซ่อม</label>
-                                        <textarea class="form-control" name="accepting_note" required>{{$hd->accepting_note}}</textarea>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">หมายเหตุรับงานซ่อม</label>
+                                            <textarea class="form-control" name="accepting_note" required>{{$hd->accepting_note}}</textarea>
+                                        </div>
                                     </div>
                                 </div>
                                 <br>

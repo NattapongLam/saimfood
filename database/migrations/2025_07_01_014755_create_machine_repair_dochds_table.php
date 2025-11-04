@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('accepting_at')->nullable();
             $table->date('accepting_date')->nullable();
             $table->date('accepting_duedate')->nullable();
+            $table->timestamp('accepting_datetime')->nullable();
             $table->string('accepting_note')->nullable();
             $table->string('approval_at')->nullable();
             $table->date('approval_date')->nullable();

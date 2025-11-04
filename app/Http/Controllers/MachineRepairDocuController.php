@@ -188,7 +188,8 @@ class MachineRepairDocuController extends Controller
                     'accepting_date' =>  Carbon::now(),
                     'accepting_note' => $request->accepting_note,
                     'accepting_duedate' => $request->accepting_duedate,
-                    'machine_repair_dochd_part' => $request->machine_repair_dochd_part
+                    'machine_repair_dochd_part' => $request->machine_repair_dochd_part,
+                    'accepting_datetime' => $request->accepting_datetime
                 ]);
                 $listnos = $request->machine_repair_docdt_listno ?? [];
                 $ids = $request->machine_repair_docdt_id ?? [];
