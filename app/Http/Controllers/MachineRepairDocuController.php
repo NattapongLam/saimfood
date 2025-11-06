@@ -189,7 +189,7 @@ class MachineRepairDocuController extends Controller
                     'accepting_note' => $request->accepting_note,
                     'accepting_duedate' => $request->accepting_duedate,
                     'machine_repair_dochd_part' => $request->machine_repair_dochd_part,
-                    'accepting_datetime' => $request->accepting_datetime
+                    'accepting_datetime' => Carbon::parse($request->accepting_datetime)->format('Y-m-d H:i:s'),
                 ]);
                 $listnos = $request->machine_repair_docdt_listno ?? [];
                 $ids = $request->machine_repair_docdt_id ?? [];
