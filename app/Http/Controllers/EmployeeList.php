@@ -51,7 +51,14 @@ class EmployeeList extends Controller
      */
     public function show($id)
     {
-        $emp = DB::table('tg_employee_list')->where('PersonCode',$id)->first();
+        $emp = DB::table('tg_employee_list')
+        ->leftjoin('tg_province_list','tg_employee_list.CurrentProvince','=','tg_province_list.province_id')
+        ->leftjoin('tg_amphur_list','tg_employee_list.CurrentAmphur','=','tg_amphur_list.amphur_id')
+        ->leftjoin('tg_district_list','tg_employee_list.CurrentDistric','=','tg_district_list.district_id')
+        ->select('tg_employee_list.*','tg_province_list.province_name as CurrentProvinceName','tg_amphur_list.amphur_name as CurrentAmphurName',
+        'tg_district_list.district_name as CurrentDistricName')
+        ->where('personcode',$id)
+        ->first();
         return view('employees.show-employee',compact('emp'));
     }
 

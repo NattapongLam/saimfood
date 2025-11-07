@@ -856,6 +856,13 @@
                                     </div>
                             @endif                      
                             </form>
+                              <div class="row">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <div class="page-title-right">
+                                        <h6 class="my-0">F-QP-MN-001-04:Rev02:11/06/2024</h6>
+                                </div>
+                                </div>
+                            </div>
                         </div>
                 </div>
             </div>

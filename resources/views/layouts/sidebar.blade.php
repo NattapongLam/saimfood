@@ -40,7 +40,7 @@
                                                 <li><a href="{{route('machine-groups.create')}}" key="t-starter-page">กลุ่มเครื่องจักรและอุปกรณ์</a></li>
                                             @endcan
                                             @can('setup-machine')
-                                                <li><a href="{{route('machines.index')}}" key="t-starter-page">เครื่องจักรและอุปกรณ์</a></li>
+                                                <li><a href="{{route('machines.index')}}" key="t-starter-page">ใบมาตรฐานของเครื่องจักร</a></li>
                                             @endcan
                                             @can('setup-machineplaning')
                                                 <li><a href="{{route('machine-planings.index')}}" key="t-starter-page">ตั้งค่าตรวจเช็คตามแผน</a></li>

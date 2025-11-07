@@ -17,7 +17,7 @@
                         @endif       
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>เครื่องจักรและอุปกรณ์</h5>
+                                <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ใบมาตรฐานของเครื่องจักร</h5>
                             <div class="page-title-right">
                                 <h5 class="my-0 text-primary">
                                     <a href="{{route('machines.create')}}">
@@ -75,7 +75,7 @@
                         </tr>                          
                         @endforeach
                     </tbody>
-                </table>
+                </table>               
             </div>
         </div>
     </div>

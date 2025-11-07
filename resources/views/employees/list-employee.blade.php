@@ -35,13 +35,13 @@
                                         <tbody> 
                                             @foreach ($emp as $item)
                                                 <tr>
-                                                    <td>{{$item->PersonCode}}</td>
+                                                    <td>{{$item->personcode}}</td>
                                                     <td>{{$item->personfullname}}</td>
                                                     <td>{{$item->department}}</td>
                                                     <td>{{$item->position}}</td>
                                                     <td>{{$item->company}}</td>
                                                     <td>
-                                                        <a href="{{route('employees.show',$item->PersonCode)}}"
+                                                        <a href="{{route('employees.show',$item->personcode)}}"
                                                         class="btn btn-sm btn-info">
                                                         <i class="fas fa-user"></i>
                                                         </a> 
