@@ -251,4 +251,9 @@ class MachineChecksheetDocuController extends Controller
                     ->get();
         return response()->json($details);
     }
+    public function MachineChecksheetPrint($id)
+    {
+        $hd = MachineChecksheetDocuHd::leftjoin('machines','machine_checksheet_docu_hds.machine_code','=','machines.machine_code')->findOrFail($id);
+        return view('docu-machine.print-machinechecksheet-docu',compact('hd'));
+    }
 }

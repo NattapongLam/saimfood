@@ -77,6 +77,7 @@
                                                 <th>ผู้อนุมัติ</th>
                                                 <th></th>
                                                 <th></th>
+                                                <th>พิมพ์เอกสาร</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -99,6 +100,9 @@
                                                     </td>
                                                     <td>
                                                         <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->machine_checksheet_docu_hd_id }}')"><i class="fas fa-trash"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('machine-checksheet-docus.print', $item->machine_checksheet_docu_hd_id) }}"class="btn btn-info btn-sm"><i class="bx bx-task"></i> เอกสาร</a>                                                                                                          
                                                     </td>
                                                 </tr>
                                             @endforeach

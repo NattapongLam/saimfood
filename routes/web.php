@@ -75,6 +75,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/machine-checksheet-docus' , App\Http\Controllers\MachineChecksheetDocuController::class);
         Route::post('/confirmDelMachineChecksheetDocuHd' , [App\Http\Controllers\MachineChecksheetDocuController::class , 'confirmDelMachineChecksheetDocuHd']);
         Route::get('/get-machine-checkdetails/{id}', [App\Http\Controllers\MachineChecksheetDocuController::class, 'getCheckDetails']);
+        Route::get('/machine-checksheet-docus-print/{id}', [App\Http\Controllers\MachineChecksheetDocuController::class, 'MachineChecksheetPrint'])->name('machine-checksheet-docus.print');
     });
     Route::group([
         'middleware' =>  ['auth','permission:setup-equipment']
