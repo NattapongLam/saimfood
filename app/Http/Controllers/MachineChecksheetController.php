@@ -23,7 +23,7 @@ class MachineChecksheetController extends Controller
      */
     public function index()
     {
-        $hd = MachineChecksheetHd::leftjoin('machines','machine_checksheet_hds.machine_code','=','machines.machine_code')->get();
+        $hd = MachineChecksheetHd::leftjoin('machines','machine_checksheet_hds.machine_code','=','machines.machine_code')->get();       
         return view('setup-machine.list-machinechecksheet',compact('hd'));
     }
 
@@ -35,7 +35,8 @@ class MachineChecksheetController extends Controller
     public function create()
     {
         $machine = Machine::where('machine_flag',true)->get();
-        return view('setup-machine.create-machinechecksheet',compact('machine'));
+        $emp = DB::table('tg_employee_list')->get();
+        return view('setup-machine.create-machinechecksheet',compact('machine','emp'));
     }
 
     /**
@@ -58,6 +59,8 @@ class MachineChecksheetController extends Controller
             'person_at' => Auth::user()->name,
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now(),
+            'review_at1' => $request->review_at1,
+            'review_at2' => $request->review_at2
         ]; 
         try 
         {
@@ -105,7 +108,8 @@ class MachineChecksheetController extends Controller
     {
         $hd = MachineChecksheetHd::find($id);
         $machine = Machine::where('machine_flag',true)->get();
-        return view('setup-machine.edit-machinechecksheet',compact('hd','machine'));
+        $emp = DB::table('tg_employee_list')->get();
+        return view('setup-machine.edit-machinechecksheet',compact('hd','machine','emp'));
     }
 
     /**
@@ -128,6 +132,8 @@ class MachineChecksheetController extends Controller
             'machine_checksheet_hd_flag' => true,           
             'person_at' => Auth::user()->name,
             'updated_at'=> Carbon::now(),
+            'review_at1' => $request->review_at1,
+            'review_at2' => $request->review_at2
         ];
         try 
         {

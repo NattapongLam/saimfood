@@ -23,7 +23,7 @@
                                 <form class="custom-validation" action="{{ route('machine-checksheets.store') }}" method="POST" enctype="multipart/form-data" validate>
                                 @csrf      
                                 <div class="row">  
-                                    <div class="col-12">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">เครื่องจักร</label>
                                             <select class="select2 form-select" name="machine_code" required>
@@ -31,6 +31,32 @@
                                                 @foreach ($machine as $item)
                                                     <option value="{{$item->machine_code}}">
                                                         {{$item->machine_code}} / {{$item->machine_name}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="form-label">ผู้ตรวจสอบ</label>
+                                            <select class="select2 form-select" name="review_at1" required>
+                                                <option value="">กรุณาเลือก</option>
+                                                @foreach ($emp as $item)
+                                                    <option value="{{$item->personfullname}}">
+                                                        {{$item->personcode}} / {{$item->personfullname}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="form-label">ผู้ตรวจสอบ</label>
+                                            <select class="select2 form-select" name="review_at2" required>
+                                                <option value="">กรุณาเลือก</option>
+                                                @foreach ($emp as $item)
+                                                    <option value="{{$item->personfullname}}">
+                                                        {{$item->personcode}} / {{$item->personfullname}}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -81,7 +107,7 @@
 <script>
 $(document).ready(function () {
     $('.select2').select2({
-        placeholder: "เลือกเครื่องจักร",
+        placeholder: "กรุณาเลือก",
         allowClear: true,
         width: '100%'
     });

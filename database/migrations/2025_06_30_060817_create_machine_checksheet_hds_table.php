@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('machine_checksheet_hd_note')->nullable();
             $table->boolean('machine_checksheet_hd_flag')->default(true); 
             $table->string('person_at');
+            $table->string('review_at1')->nullable();
+            $table->string('review_at2')->nullable();
             $table->timestamps();
         });
     }
