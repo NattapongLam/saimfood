@@ -113,6 +113,7 @@ class ScheduleController extends Controller
             $chatId = "-4871539820"; // Chat ID
             $message = "📢 แจ้งเตือนใบแจ้งซ่อมรอตรวจสอบเลขที่ : " . $value->machine_repair_dochd_docuno . " ".$value->machine_code . "/". $machinename . "\n"
                         . "🔹 รายละเอียด  : " . $value->machine_repair_dochd_case . "(". $value->machine_repair_dochd_type .")". "\n"
+                        . "🔹 ผู้แจ้งซ่อม  : " . $value->person_at . "\n"
                         . "📅 วันที่ซ่อมเสร็จ : " . $value->repairer_date ." โดย " . $value->repairer_at . " (" . $value->repairer_note . ")". "\n"
                         . "คลิก : https://app.siamfood-beverage.com/machine-repair-docus/".$value->machine_repair_dochd_id."/edit";
             $this->notifyTelegram($message, $token, $chatId);

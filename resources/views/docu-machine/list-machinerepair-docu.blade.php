@@ -80,8 +80,43 @@
                                                             <span class="badge bg-secondary">{{$item->machine_repair_status_name}}</span>
                                                         @endif                                                      
                                                     </td>
-                                                    <td>{{$item->machine_repair_dochd_date}}</td>
-                                                    <td>{{$item->machine_repair_dochd_docuno}}</td>
+                                                    <td>
+                                                        @php
+                                                            $start = \Carbon\Carbon::parse($item->accepting_datetime);
+                                                            $end   = \Carbon\Carbon::parse($item->repairer_datetime);
+                                                            $diff = $start->diff($end);
+
+                                                            $days = $diff->d;
+                                                            $hours = $diff->h;
+                                                            $minutes = $diff->i;
+
+                                                            $result = '';
+
+                                                            if($days > 0){
+                                                                $result .= $days . ' วัน ';
+                                                            }
+
+                                                            if($hours > 0){
+                                                                $result .= $hours . ' ชั่วโมง ';
+                                                            }
+
+                                                            if($minutes > 0){
+                                                                $result .= $minutes . ' นาที';
+                                                            }
+
+                                                            $result = trim($result);
+                                                        @endphp
+                                                        <strong>
+                                                            วันที่แจ้งซ่อม : {{\Carbon\Carbon::parse($item->machine_repair_dochd_date)->format('d/m/Y')}}<br>
+                                                            วันที่รับงาน : {{\Carbon\Carbon::parse($item->accepting_datetime)->format('d/m/Y H:i')}}<br>
+                                                            วันที่ซ่อมเสร็จ: {{\Carbon\Carbon::parse($item->repairer_datetime)->format('d/m/Y H:i')}}
+                                                        </strong>                                                        
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        {{$item->machine_repair_dochd_docuno}}<br>
+                                                         <strong>ระยะเวลาซ่อม: {{ $result }}</strong> 
+                                                    </td>
                                                     <td>
                                                         <img src="{{ asset($item->machine_pic1 ?? 'images/no-image.png') }}" alt="Machine Image" class="rounded-circle avatar-xl"><br>
                                                         {{$item->machine_code}}/{{$item->machine_name}}
@@ -182,7 +217,7 @@ $(document).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "order": [[1, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
+        "order": [[2, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
         "language": {
             "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
             "zeroRecords": "ไม่พบข้อมูล",
