@@ -39,7 +39,7 @@
                                                         data-contact="{{ $item->contact_person }}"
                                                         data-tel="{{ $item->contact_tel }}"
                                                         {{ $item->customer_id == $hd->customer_id ? 'selected' : '' }}>
-                                                    {{$item->customer_code}} / {{$item->customer_name}} จังหวัด : {{$item->customer_province}} สาขา : {{$item->branch_number}}
+                                                    {{$item->customer_code}} / {{$item->customer_name}} จังหวัด : {{$item->customer_province}} สาขา : {{$item->branch_name}}
                                                 </option>
                                             @endforeach
                                         </select>

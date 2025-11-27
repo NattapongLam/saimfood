@@ -39,7 +39,10 @@ class EquipmentTransferController extends Controller
      */
     public function create()
     {
-        $docu = EquipmentRequestDocu::where('equipment_request_status_id',3)->get();
+        $docu = EquipmentRequestDocu::leftjoin('customers','equipment_request_docus.customer_id','=','customers.customer_id')
+        ->select('equipment_request_docus.*','customers.branch_name')
+        ->where('equipment_request_docus.equipment_request_status_id',3)
+        ->get();
         $equi = Equipment::where('equipment_flag',true)->where('equipment_status_id',1)->get();
         return view('docu-equipment.create-equipmenttransfer',compact('equi','docu'));
     }

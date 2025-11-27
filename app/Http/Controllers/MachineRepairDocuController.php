@@ -448,7 +448,7 @@ class MachineRepairDocuController extends Controller
                 DB::beginTransaction();
                 MachineRepairDochd::where('machine_repair_dochd_id',$id)
                 ->update([
-                    'updated_at' => Auth::user()->name,
+                    'updated_at' => Carbon::now(),
                 ]);
                 $listnos = $request->machine_repair_docdt_listno ?? [];
                 $ids = $request->machine_repair_docdt_id ?? [];

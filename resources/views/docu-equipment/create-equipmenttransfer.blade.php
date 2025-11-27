@@ -41,7 +41,7 @@
                                                     data-remark="{{ $item->equipment_request_docu_remark }}"
                                                     data-note="{{ $item->approved_remark }}"
                                                     >
-                                                    เลขที่ : {{$item->equipment_request_docu_docuno}} ลูกค้า : {{$item->customer_fullname}} ผู้ร้อง : {{$item->person_at}} ผู้อนุมัติ : {{$item->approved_at}} จำนวนเครื่อง : {{$item->equipment_request_doc_qty}}
+                                                    เลขที่ : {{$item->equipment_request_docu_docuno}} ลูกค้า : {{$item->customer_fullname}} สาขา : {{$item->branch_name}} ผู้ร้อง : {{$item->person_at}} ผู้อนุมัติ : {{$item->approved_at}} จำนวนเครื่อง : {{$item->equipment_request_doc_qty}}
                                                     </option>
                                                 @endforeach
                                             </select>
