@@ -142,7 +142,8 @@ class MachineChecksheetDocuController extends Controller
                 dd($e->getMessage());
             }
         }
-        return view('docu-machine.edit-machinechecksheet-docu',compact('hd','emp'));
+        $ck = MachineChecksheetHd::where('machine_code', $hd->machine_code)->first();
+        return view('docu-machine.edit-machinechecksheet-docu',compact('hd','emp','ck'));
     }
 
     /**
@@ -251,9 +252,49 @@ class MachineChecksheetDocuController extends Controller
                     ->get();
         return response()->json($details);
     }
+
     public function MachineChecksheetPrint($id)
     {
         $hd = MachineChecksheetDocuHd::leftjoin('machines','machine_checksheet_docu_hds.machine_code','=','machines.machine_code')->findOrFail($id);
         return view('docu-machine.print-machinechecksheet-docu',compact('hd'));
     }
+
+    public function confirmApprovedMachineChecksheetDocuHd(Request $request)
+    {
+        $id  = $request->refid;
+        $day = $request->day; // ใช้ตามค่าที่ส่งมา ไม่ดัดแปลง
+
+        try {
+            DB::beginTransaction();
+
+            $target = MachineChecksheetDocuEmp::findOrFail($id);
+
+            // ใช้ค่าตามที่ส่งมา เช่น 1, 01, 2, 02, 10, 25, 31
+            $empField  = "emp_{$day}";
+            $dateField = "date_{$day}";
+
+            $target->update([
+                $empField  => Auth::user()->name,
+                $dateField => Carbon::now(),
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'อัปเดตรายการเรียบร้อยแล้ว'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+
+            return response()->json([
+                'status'  => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+
 }

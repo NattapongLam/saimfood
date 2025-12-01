@@ -144,7 +144,7 @@
                                                         <td style="width: calc(100% / 4);">
                                                             วันที่ : {{ str_pad($i, 2, '0', STR_PAD_LEFT) }} <br>
                                                             <input type="hidden" name="machine_checksheet_docu_emp_id" value="{{$item->machine_checksheet_docu_emp_id}}">
-                                                            <select class="form-control select2" name="emp_day[{{ $i }}]">
+                                                            {{-- <select class="form-control select2" name="emp_day[{{ $i }}]">
                                                                 <option value="">กรุณาเลือก</option>
                                                                 @foreach ($emp as $emps)
                                                                     <option value="{{ $emps->personcode }}" 
@@ -152,7 +152,19 @@
                                                                         {{ $emps->personfullname }} ({{ $emps->position }})
                                                                     </option>
                                                                 @endforeach
-                                                            </select>
+                                                            </select> --}}
+                                                            @if (!empty($item->$empField))
+                                                                {{-- มีชื่อผู้อนุมัติแล้ว → ไม่ต้องแสดงปุ่ม --}}
+                                                                <span class="text-success">{{ $item->$empField }}</span>
+                                                            @else
+                                                                {{-- ยังไม่ได้อนุมัติ → แสดงปุ่ม --}}
+                                                                <a href="javascript:void(0)"
+                                                                    class="btn btn-warning btn-sm"
+                                                                    onclick="confirmApproved('{{ $item->machine_checksheet_docu_emp_id }}', '{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}')">
+                                                                    <i class="fas fa-user-check"></i>
+                                                                </a>
+                                                            @endif
+                                                                                                                    
                                                         </td>
                                                         @if ($i % 4 == 0 && $i < 31)
                                                             </tr><tr>
@@ -211,5 +223,63 @@ $(document).ready(function() {
         allowClear: true
     });
 });
+confirmApproved = (refid, day) => {
+    Swal.fire({
+        title: 'คุณแน่ใจหรือไม่ !',
+        text: `คุณต้องการยืนยันรายการนี้หรือไม่ ?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'ยืนยัน',
+        cancelButtonText: 'ยกเลิก',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false
+    }).then(function(result) {
+        if (result.value) {
+            $.ajax({
+                url: `{{ url('/confirmApprovedMachineChecksheetDocuHd') }}`,
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "refid": refid,
+                    "day": day
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data.status == true) {
+                        Swal.fire({
+                            title: 'สำเร็จ',
+                            text: 'อัปเดตรายการเรียบร้อยแล้ว',
+                            icon: 'success'
+                        }).then(function() {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'ไม่สำเร็จ',
+                            text: 'อัปเดตไม่สำเร็จ',
+                            icon: 'error'
+                        });
+                    }
+                },
+                error: function(data) {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'เกิดข้อผิดพลาดในการบันทึก',
+                        icon: 'error'
+                    });
+                }
+            });
+
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire({
+                title: 'ยกเลิก',
+                text: 'โปรดตรวจสอบข้อมูลอีกครั้ง',
+                icon: 'error'
+            });
+        }
+    });
+}
+
 </script>
 @endsection
