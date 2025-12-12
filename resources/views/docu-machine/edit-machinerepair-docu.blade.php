@@ -132,11 +132,15 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>รายละเอียด</th>
+                                                        <th>รหัสสินค้า</th>
+                                                        <th>ชื่อสินค้า</th>
+                                                        <th>หน่วยนับ</th>
+                                                        <th>จำนวน</th>
+                                                        <th>ราคาต่อหน่วย</th>
                                                         <th>ค่าใช้จ่าย</th>
                                                         <th>หมายเหตุ</th>
-                                                        <th>ชื่อร้าน</th>   
-                                                        <th>แนบไฟล์</th>                                                        
+                                                        <th>ชื่อร้าน</th>
+                                                        <th>แนบไฟล์</th>  
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -148,7 +152,19 @@
                                                                 <input type="hidden" name="machine_repair_docdt_listno[]" value="{{$item->machine_repair_docdt_listno}}">
                                                             </td>
                                                             <td>                              
+                                                                <input class="form-control" name="machine_repair_docdt_code[]" value="{{$item->machine_repair_docdt_code}}">
+                                                            </td>
+                                                            <td>                              
                                                                 <input class="form-control" name="machine_repair_docdt_remark[]" value="{{$item->machine_repair_docdt_remark}}">
+                                                            </td>
+                                                            <td>                              
+                                                                <input class="form-control" name="machine_repair_docdt_unit[]" value="{{$item->machine_repair_docdt_unit}}">
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_qty[]" value="{{number_format($item->machine_repair_docdt_qty,2)}}">                                                              
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_price[]" value="{{number_format($item->machine_repair_docdt_price,2)}}">                                                              
                                                             </td>
                                                             <td>
                                                                 <input class="form-control" name="machine_repair_docdt_cost[]" value="{{number_format($item->machine_repair_docdt_cost,2)}}">                                                              
@@ -213,7 +229,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>รายการ</th>
+                                                            <th>รหัสสินค้า</th>
+                                                            <th>ชื่อสินค้า</th>
+                                                            <th>หน่วยนับ</th>
+                                                            <th>จำนวน</th>
+                                                            <th>ราคาต่อหน่วย</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
                                                             <th>ชื่อร้าน</th>
@@ -224,7 +244,11 @@
                                                         @foreach ($hd->details->where('machine_repair_docdt_flag', true) as $key => $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
+                                                                <td>{{$item->machine_repair_docdt_code}}</td>
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
+                                                                <td>{{$item->machine_repair_docdt_unit}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_qty,2)}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_price,2)}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
                                                                 <td>{{$item->machine_repair_docdt_vendor}}</td>
@@ -289,7 +313,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>รายการ</th>
+                                                            <th>รหัสสินค้า</th>
+                                                            <th>ชื่อสินค้า</th>
+                                                            <th>หน่วยนับ</th>
+                                                            <th>จำนวน</th>
+                                                            <th>ราคาต่อหน่วย</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
                                                             <th>ชื่อร้าน</th>
@@ -300,7 +328,11 @@
                                                         @foreach ($hd->details->where('machine_repair_docdt_flag', true) as $key => $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
+                                                                <td>{{$item->machine_repair_docdt_code}}</td>
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
+                                                                <td>{{$item->machine_repair_docdt_unit}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_qty,2)}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_price,2)}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
                                                                 <td>{{$item->machine_repair_docdt_vendor}}</td>
@@ -408,7 +440,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>รายละเอียด</th>
+                                                        <th>รหัสสินค้า</th>
+                                                        <th>ชื่อสินค้า</th>
+                                                        <th>หน่วยนับ</th>
+                                                        <th>จำนวน</th>
+                                                        <th>ราคาต่อหน่วย</th>
                                                         <th>ค่าใช้จ่าย</th>
                                                         <th>หมายเหตุ</th>
                                                         <th>ชื่อร้าน</th>
@@ -450,8 +486,12 @@
                                     <table class="table table-striped table-bordered mb-0 text-center">
                                                     <thead>
                                                         <tr>
-                                                            <th>#</th>
-                                                            <th>รายการ</th>
+                                                             <th>#</th>
+                                                            <th>รหัสสินค้า</th>
+                                                            <th>ชื่อสินค้า</th>
+                                                            <th>หน่วยนับ</th>
+                                                            <th>จำนวน</th>
+                                                            <th>ราคาต่อหน่วย</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
                                                             <th>ชื่อร้าน</th>
@@ -462,7 +502,11 @@
                                                         @foreach ($hd->details->where('machine_repair_docdt_flag', true) as $key => $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
+                                                                <td>{{$item->machine_repair_docdt_code}}</td>
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
+                                                                <td>{{$item->machine_repair_docdt_unit}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_qty,2)}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_price,2)}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
                                                                 <td>{{$item->machine_repair_docdt_vendor}}</td>
@@ -566,7 +610,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>รายการ</th>
+                                                            <th>รหัสสินค้า</th>
+                                                            <th>ชื่อสินค้า</th>
+                                                            <th>หน่วยนับ</th>
+                                                            <th>จำนวน</th>
+                                                            <th>ราคาต่อหน่วย</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
                                                             <th>ชื่อร้าน</th>
@@ -577,7 +625,11 @@
                                                         @foreach ($hd->details->where('machine_repair_docdt_flag', true) as $key => $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
+                                                                <td>{{$item->machine_repair_docdt_code}}</td>
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
+                                                                <td>{{$item->machine_repair_docdt_unit}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_qty,2)}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_price,2)}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
                                                                 <td>{{$item->machine_repair_docdt_vendor}}</td>
@@ -693,11 +745,15 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>รายละเอียด</th>
+                                                        <th>รหัสสินค้า</th>
+                                                        <th>ชื่อสินค้า</th>
+                                                        <th>หน่วยนับ</th>
+                                                        <th>จำนวน</th>
+                                                        <th>ราคาต่อหน่วย</th>
                                                         <th>ค่าใช้จ่าย</th>
                                                         <th>หมายเหตุ</th>
-                                                        <th>ชื่อร้าน</th>   
-                                                        <th>แนบไฟล์</th>                                                        
+                                                        <th>ชื่อร้าน</th>
+                                                        <th>แนบไฟล์</th>  
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -709,7 +765,19 @@
                                                                 <input type="hidden" name="machine_repair_docdt_listno[]" value="{{$item->machine_repair_docdt_listno}}">
                                                             </td>
                                                             <td>                              
+                                                                <input class="form-control" name="machine_repair_docdt_code[]" value="{{$item->machine_repair_docdt_code}}">
+                                                            </td>
+                                                            <td>                              
                                                                 <input class="form-control" name="machine_repair_docdt_remark[]" value="{{$item->machine_repair_docdt_remark}}">
+                                                            </td>
+                                                            <td>                              
+                                                                <input class="form-control" name="machine_repair_docdt_unit[]" value="{{$item->machine_repair_docdt_unit}}">
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_qty[]" value="{{number_format($item->machine_repair_docdt_qty,2)}}">                                                              
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="machine_repair_docdt_price[]" value="{{number_format($item->machine_repair_docdt_price,2)}}">                                                              
                                                             </td>
                                                             <td>
                                                                 <input class="form-control" name="machine_repair_docdt_cost[]" value="{{number_format($item->machine_repair_docdt_cost,2)}}">                                                              
@@ -759,18 +827,26 @@
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>รายการ</th>
+                                                            <th>รหัสสินค้า</th>
+                                                            <th>ชื่อสินค้า</th>
+                                                            <th>หน่วยนับ</th>
+                                                            <th>จำนวน</th>
+                                                            <th>ราคาต่อหน่วย</th>
                                                             <th>ค่าใช้จ่าย</th>
                                                             <th>หมายเหตุ</th>
                                                             <th>ชื่อร้าน</th>
-                                                            <th>แนบไฟล์</th>  
+                                                            <th>แนบไฟล์</th>   
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($hd->details->where('machine_repair_docdt_flag', true) as $key => $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
+                                                                <td>{{$item->machine_repair_docdt_code}}</td>
                                                                 <td>{{$item->machine_repair_docdt_remark}}</td>
+                                                                <td>{{$item->machine_repair_docdt_unit}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_qty,2)}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_price,2)}}</td>
                                                                 <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
                                                                 <td>{{$item->machine_repair_docdt_note}}</td>
                                                                 <td>{{$item->machine_repair_docdt_vendor}}</td>
@@ -901,8 +977,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="row-number"></span>
                     <input type="hidden" name="machine_repair_docdt_listno[]" class="row-number-hidden"/>
                 </td>
+                <td>
+                    <select name="machine_repair_docdt_code[]" class="form-control stc-select">
+                        <option value="">เลือกรหัสสินค้า</option>
+                        @foreach ($stc as $item)
+                            <option value="{{ $item->stc_stockcard_productcode }}"
+                                data-unit="{{ $item->stc_stockcard_productunit }}"
+                                data-qty="{{ $item->stc_stockcard_productqty }}"
+                                data-price="{{ $item->stc_stockcard_productprice }}"
+                                data-name="{{ $item->stc_stockcard_productname }}">
+                                {{ $item->stc_stockcard_productcode }}/{{ $item->stc_stockcard_productname }} หน่วยนับ : {{ $item->stc_stockcard_productunit }}
+                                จำนวน : {{ $item->stc_stockcard_productqty }} ราคาต่อหน่วย :  {{ $item->stc_stockcard_productprice }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
                 <td><input type="text" name="machine_repair_docdt_remark[]" class="form-control"/></td>
-                <td><input type="text" name="machine_repair_docdt_cost[]" value="0"  class="form-control"/></td>
+                <td><input type="text" name="machine_repair_docdt_unit[]" class="form-control"/></td>
+                <td><input type="text" name="machine_repair_docdt_qty[]" class="form-control qty" value="0"></td>
+                <td><input type="text" name="machine_repair_docdt_price[]" class="form-control price" value="0"></td>
+                <td><input type="text" name="machine_repair_docdt_cost[]" class="form-control cost" value="0" readonly></td>
                 <td><input type="text" name="machine_repair_docdt_note[]" class="form-control"/></td>
                 <td><input type="text" name="machine_repair_docdt_vendor[]" class="form-control"/></td>
                 <td><input type="file" name="machine_repair_docdt_file[]" class="form-control"/></td>
@@ -918,6 +1012,40 @@ document.getElementById('tableBody').addEventListener('click', function (e) {
     if (e.target.classList.contains('deleteRow')) {
         e.target.closest('tr').remove();
         updateRowNumbers(); // อัปเดตลำดับหลังจากลบ
+    }
+});
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('stc-select')) {
+
+        let select = e.target;
+        let row = select.closest('tr');
+        let option = select.options[select.selectedIndex];
+
+        // อ่านค่า data-* จาก option
+        let unit  = option.getAttribute('data-unit') || '';
+        let qty   = option.getAttribute('data-qty') || '0';
+        let price = option.getAttribute('data-price') || '0';
+        let name  = option.getAttribute('data-name') || '';
+
+        // เซ็ตค่าให้ input ต่าง ๆ
+        row.querySelector('input[name="machine_repair_docdt_remark[]"]').value = name;
+        row.querySelector('input[name="machine_repair_docdt_unit[]"]').value   = unit;
+        row.querySelector('input[name="machine_repair_docdt_qty[]"]').value    = qty;
+        row.querySelector('input[name="machine_repair_docdt_price[]"]').value  = price;
+        row.querySelector('input[name="machine_repair_docdt_cost[]"]').value   = qty * price;
+    }
+});
+document.addEventListener("input", function (e) {
+    if (e.target.classList.contains("qty") || e.target.classList.contains("price")) {
+
+        let tr = e.target.closest("tr"); // หาแถวปัจจุบัน
+
+        let qty   = parseFloat(tr.querySelector(".qty").value)   || 0;
+        let price = parseFloat(tr.querySelector(".price").value) || 0;
+
+        let cost = qty * price;
+
+        tr.querySelector(".cost").value = cost.toFixed(2); // ใส่ผลลัพธ์
     }
 });
 </script>

@@ -24,5 +24,6 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'docu-equipment-request']);
         // Permission::create(['name' => 'docu-machine-repair']);
         // Permission::create(['name' => 'docu-machine-create']);
+        // Permission::create(['name' => 'docu-machine-issuestock']);
     }
 }

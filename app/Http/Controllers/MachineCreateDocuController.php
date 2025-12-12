@@ -124,7 +124,8 @@ class MachineCreateDocuController extends Controller
         $hd = MachineRepairDochd::leftjoin('machine_repair_statuses','machine_repair_dochds.machine_repair_status_id','=','machine_repair_statuses.machine_repair_status_id')
         ->find($id);      
         $status = MachineRepairStatus::whereIn('machine_repair_status_id',[3,8,9])->get();
-        return view('docu-machine.edit-machinecreate-docu',compact('hd','status'));
+        $stc = DB::table('vw_stc_stockcard')->get();
+        return view('docu-machine.edit-machinecreate-docu',compact('hd','status','stc'));
     }
 
     /**
@@ -184,6 +185,11 @@ class MachineCreateDocuController extends Controller
                                 'updated_at' => Carbon::now(),
                                 'machine_repair_docdt_vendor' => $request->machine_repair_docdt_vendor[$key] ?? null,
                                 'machine_repair_docdt_file' => $filePath,
+                                'machine_repair_docdt_code' => $request->machine_repair_docdt_code[$key],
+                                'machine_repair_docdt_unit' => $request->machine_repair_docdt_unit[$key],
+                                'machine_repair_docdt_qty' => $request->machine_repair_docdt_qty[$key],
+                                'machine_repair_docdt_price' => $request->machine_repair_docdt_price[$key],
+                                'poststock' => "N"
                             ]);
                     } else {
                         MachineRepairDocdt::create([
@@ -198,6 +204,11 @@ class MachineCreateDocuController extends Controller
                             'updated_at' => Carbon::now(),
                             'machine_repair_docdt_vendor' => $request->machine_repair_docdt_vendor[$key] ?? null,
                             'machine_repair_docdt_file' => $filePath,
+                            'machine_repair_docdt_code' => $request->machine_repair_docdt_code[$key],
+                            'machine_repair_docdt_unit' => $request->machine_repair_docdt_unit[$key],
+                            'machine_repair_docdt_qty' => $request->machine_repair_docdt_qty[$key],
+                            'machine_repair_docdt_price' => $request->machine_repair_docdt_price[$key],
+                            'poststock' => "N"
                         ]);
                     }
                 }
@@ -271,6 +282,13 @@ class MachineCreateDocuController extends Controller
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                         'machine_repair_docdt_vendor' => $request->machine_repair_docdt_vendor[$key] ?? null,
+                        'machine_repair_docdt_file' => $filePath,
+                        'machine_repair_docdt_code' => $request->machine_repair_docdt_code[$key],
+                        'machine_repair_docdt_unit' => $request->machine_repair_docdt_unit[$key],
+                        'machine_repair_docdt_qty' => $request->machine_repair_docdt_qty[$key],
+                        'machine_repair_docdt_price' => $request->machine_repair_docdt_price[$key],
+                        'poststock' => "N"
+
                     ]);
                 }
                 DB::commit();

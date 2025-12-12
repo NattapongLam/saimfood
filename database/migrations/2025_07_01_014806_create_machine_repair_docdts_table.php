@@ -24,6 +24,11 @@ return new class extends Migration
             $table->string('machine_repair_docdt_note')->nullable();
             $table->string('machine_repair_docdt_vendor')->nullable();
             $table->string('machine_repair_docdt_file')->nullable();
+            $table->string('machine_repair_docdt_code')->nullable();
+            $table->string('machine_repair_docdt_unit')->nullable();
+            $table->decimal('machine_repair_docdt_qty', 18, 2)->default(0);
+            $table->decimal('machine_repair_docdt_price', 18, 2)->default(0);
+            $table->string('poststock')->nullable();
             $table->string('person_at');
             $table->timestamps();
         });

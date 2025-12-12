@@ -106,13 +106,21 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/confirmDelMachineCreateDt' , [App\Http\Controllers\MachineCreateDocuController::class , 'confirmDelMachineCreateDt']);
         Route::put('/machine-create-docus/{id}/safety-update', [App\Http\Controllers\MachineCreateDocuController::class, 'updateSafety'])->name('machine-create-docus.safety-update');       
     });
-     Route::group([
+    Route::group([
         'middleware' =>  ['auth','permission:docu-equipment-request']
     ],function(){
         Route::resource('/equipment-request' , App\Http\Controllers\EquipmentRequestController::class);
         Route::put('/equipment-request/{id}/approved', [App\Http\Controllers\EquipmentRequestController::class, 'updateApproved'])->name('equipment-request.approved');
         Route::post('/confirmDelEquipmentRequest' , [App\Http\Controllers\EquipmentRequestController::class , 'confirmDelEquipmentRequest']);
         Route::resource('/customer-transfer' , App\Http\Controllers\CustomerTransfer::class);
+    });
+    Route::group([
+        'middleware' =>  ['auth','permission:docu-machine-issuestock']
+    ],function(){
+        Route::resource('/machine-issue-docus' , App\Http\Controllers\MachineIssueStockController::class);
+        Route::post('/confirmDelMachineIssueStock' , [App\Http\Controllers\MachineIssueStockController::class , 'confirmDelMachineIssueStock']);
+        Route::post('/confirmDelMachineIssueStockDt' , [App\Http\Controllers\MachineIssueStockController::class , 'confirmDelMachineIssueStockDt']);
+        Route::get('/stockcardlist', [App\Http\Controllers\MachineIssueStockController::class, 'stockcardlist'])->name('stockcardlist');
     });
     Route::resource('/asset-inout' , App\Http\Controllers\OtherAssetinoutForm::class);
     Route::post('/confirmDelAssetinoutHd' , [App\Http\Controllers\OtherAssetinoutForm::class , 'confirmDelAssetinoutHd']);

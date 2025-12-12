@@ -94,6 +94,10 @@
                                             @can('docu-machine-create')
                                             <li><a href="{{route('machine-repair-docus.index')}}" key="t-starter-page">ใบแจ้งซ่อม</a></li>
                                             @endcan
+                                            @can('docu-machine-issuestock')
+                                            <li><a href="{{route('machine-issue-docus.index')}}" key="t-starter-page">ใบรับอะไหล่</a></li>
+                                            <li><a href="{{ route('stockcardlist') }}" key="t-starter-page">สต็อคอะไหล่</a></li>
+                                            @endcan
                                         </ul>
                                     </li>                                  
                                     <li>
