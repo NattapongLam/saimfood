@@ -1,0 +1,393 @@
+@extends('layouts.main')
+@section('content')
+<link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-transparent border-primary">
+                <div class="row">
+                        @if(Session::has('error'))
+                            <div class="alert alert-danger alert-block">
+                                <strong>{{ Session::get('error') }}</strong>
+                            </div>
+                        @endif
+                        @if(Session::has('success'))
+                            <div class="alert alert-success alert-block">
+                                <strong>{{ Session::get('success') }}</strong>
+                            </div>
+                        @endif       
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ใบแจ้งซ่อม (เลขที่ : {{$hd->machine_repair_dochd_docuno}} สถานะ : {{$hd->machine_repair_status_name}})</h5>                              
+                            </div>
+                            <form class="custom-validation" 
+                            action="{{ route('machine-repair-docus.issuestock-update', $hd->machine_repair_dochd_id) }}" 
+                            method="POST" 
+                            enctype="multipart/form-data">
+                            @csrf    
+                            @method('PUT') 
+                            <h5>รายการแจ้งซ่อม ผู้แจ้ง : {{$hd->person_at}}</h5>
+                            <div class="card-body">
+                               <div class="row"> 
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่</label>
+                                            <input class="form-control" type="date" name="machine_repair_dochd_date" value="{{$hd->machine_repair_dochd_date}}" readonly required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ประเภท</label>
+                                            <select class="form-select" name="machine_repair_dochd_type" disabled>
+                                                @if ($hd->machine_repair_dochd_type == "ปกติ")
+                                                    <option value="ปกติ">ปกติ</option>
+                                                    <option value="ด่วน">ด่วน</option>
+                                                @elseif($hd->machine_repair_dochd_type == "ด่วน")
+                                                    <option value="ด่วน">ด่วน</option>
+                                                    <option value="ปกติ">ปกติ</option>                                                  
+                                                @endif
+                                               
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">เครื่องจักร</label>
+                                            <select class="select2 form-select" name="machine_code" disabled>
+                                                <option value="">กรุณาเลือก</option>
+                                                @foreach ($machine as $item)
+                                                <option value="{{$item->machine_code}}" {{ $item->machine_code == $hd->machine_code ? 'selected' : '' }}>
+                                                    {{$item->machine_code}} / {{$item->machine_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ที่ตั้ง</label>
+                                            <input class="form-control" type="type" name="machine_repair_dochd_location" value="{{$hd->machine_repair_dochd_location}}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">วันที่ต้องการเสร็จ</label>
+                                            <input class="form-control" type="date" name="machine_repair_dochd_duedate" value="{{$hd->machine_repair_dochd_duedate}}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">ชิ้นส่วน</label>
+                                            <input class="form-control" type="type" name="machine_repair_dochd_part" value="{{$hd->machine_repair_dochd_part}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="form-label">ปัญหา</label>
+                                        <textarea class="form-control" name="machine_repair_dochd_case" required>{{$hd->machine_repair_dochd_case}}</textarea>
+                                    </div>
+                                </div>
+                            </div>                                              
+                            <h5>รายละเอียดการรับงานซ่อม  ผู้รับงานซ่อม : {{$hd->accepting_at}} วันที่ : {{$hd->accepting_date}}</h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                         <label class="form-label">วันที่คาดว่าจะซ่อมเสร็จ</label>
+                                         <input class="form-control" type="date" name="accepting_duedate" value="{{$hd->accepting_duedate}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="row"> 
+                                    <div class="form-group">
+                                        <label class="form-label">หมายเหตุรับงานซ่อม</label>
+                                        <textarea class="form-control" name="accepting_note" readonly>{{$hd->accepting_note}}</textarea>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row"> 
+                                    <h5>เพิ่มเติม</h5>
+                                    <table class="table table-striped table-bordered mb-0 text-center">
+                                                    <thead>
+                                                        <tr>
+                                                             <th>#</th>
+                                                            <th>รหัสสินค้า</th>
+                                                            <th>ชื่อสินค้า</th>
+                                                            <th>หน่วยนับ</th>
+                                                            <th>จำนวน</th>
+                                                            <th>ราคาต่อหน่วย</th>
+                                                            <th>ค่าใช้จ่าย</th>
+                                                            <th>หมายเหตุ</th>
+                                                            <th>ชื่อร้าน</th>
+                                                            <th>แนบไฟล์</th>  
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($hd->details->where('machine_repair_docdt_flag', true) as $key => $item)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{$item->machine_repair_docdt_code}}</td>
+                                                                <td>{{$item->machine_repair_docdt_remark}}</td>
+                                                                <td>{{$item->machine_repair_docdt_unit}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_qty,2)}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_price,2)}}</td>
+                                                                <td>{{number_format($item->machine_repair_docdt_cost,2)}}</td>
+                                                                <td>{{$item->machine_repair_docdt_note}}</td>
+                                                                <td>{{$item->machine_repair_docdt_vendor}}</td>
+                                                                <td>
+                                                                    @if (isset($item->machine_repair_docdt_file) && $item->machine_repair_docdt_file)
+                                                                        <a href="{{ asset('/'.$item->machine_repair_docdt_file) }}" target="_blank"><i class="fas fa-file"></i></a>                                                                 
+                                                                    @endif                               
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                @if (auth()->user()->username == "444444444")
+                                    <div class="form-group">
+                                        <div class="d-flex flex-wrap gap-2 justify-content">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light" >
+                                                อนุมัติ
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endif   
+                                </div>
+                                </form>
+                                </div>
+                                <h5>รายละเอียดอนุมัติซ่อม  ผู้อนุมัติซ่อม : {{$hd->approval_at}} วันที่ : {{$hd->approval_date}}</h5>
+                                <div class="card-body">              
+                                <div class="row">
+                                     <div class="form-group">
+                                        <label class="form-label">หมายเหตุอนุมัติซ่อม</label>
+                                        <textarea class="form-control" name="approval_note" readonly>{{$hd->approval_note}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5>
+                                ผลการซ่อม  ผู้ซ่อม : {{$hd->repairer_at}} 
+                                @if ($hd->repairer_pic1)
+                                    <a href="{{ asset('/'.$hd->repairer_pic1) }}" target="_blank"><i class="fas fa-image"></i></a>
+                                @endif
+                                @if ($hd->repairer_pic2)
+                                    <a href="{{ asset('/'.$hd->repairer_pic2) }}" target="_blank"><i class="fas fa-image"></i></a>
+                                @endif
+                            </h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label">วัน-เวลาที่ซ่อมเสร็จ</label>
+                                                @php
+                                                    date_default_timezone_set('Asia/Bangkok');
+                                                @endphp
+                                                <input class="form-control" type="datetime-local" name="repairer_datetime" value="{{$hd->repairer_datetime}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label">สถานะเครื่องจักร</label>
+                                                <input class="form-control" type="text" name="repairer_type" value="{{$hd->repairer_type}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label">สถานะปัญหา</label>
+                                                <input class="form-control" type="text" name="repairer_problem" value="{{$hd->repairer_problem}}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="form-label">รายละเอียด</label>
+                                            <textarea class="form-control" name="repairer_note" readonly>{{$hd->repairer_note}}</textarea>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                <h5>ตรวจสอบการซ่อม</h5>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="form-label">หมายเหตุตรวจสอบ</label>
+                                                <textarea class="form-control" name="inspector_note">{{$hd->inspector_note}}</textarea>
+                                            </div>
+                                        </div>      
+                                </div>
+                             
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label">วัน-เวลาที่ซ่อมเสร็จ</label>
+                                                @php
+                                                    date_default_timezone_set('Asia/Bangkok');
+                                                @endphp
+                                                <input class="form-control" type="datetime-local" name="repairer_datetime" value="{{$hd->repairer_datetime}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label">สถานะเครื่องจักร</label>
+                                                <input class="form-control" type="text" name="repairer_type" value="{{$hd->repairer_type}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label">สถานะปัญหา</label>
+                                                <input class="form-control" type="text" name="repairer_problem" value="{{$hd->repairer_problem}}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="form-label">รายละเอียด</label>
+                                            <textarea class="form-control" name="repairer_note" readonly>{{$hd->repairer_note}}</textarea>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                <h5>ตรวจสอบการซ่อม ผู้ตรวจสอบ : {{$hd->inspector_at}} วันที่ : {{$hd->inspector_date}}</h5>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="form-label">หมายเหตุตรวจสอบ</label>
+                                                <textarea class="form-control" name="inspector_note" readonly>{{$hd->inspector_note}}</textarea>
+                                            </div>
+                                        </div>                                      
+                                    </div>
+                                <h5>ปิดงานซ่อม ผู้ปิดงาน : {{$hd->closing_at}} วันที่ : {{$hd->closing_date}}</h5>
+                                    <div class="card-body"> 
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="form-label">หมายเหตุปิดงาน</label>
+                                                <textarea class="form-control" name="closing_note" readonly>{{$hd->closing_note}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
+                              <div class="row">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <div class="page-title-right">
+                                        <h6 class="my-0">F-QP-MN-001-04:Rev02:11/06/2024</h6>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('script')
+<script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
+<script>
+$(document).ready(function () {
+    $('.select2').select2({
+        placeholder: "เลือกเครื่องจักร",
+        allowClear: true,
+        width: '100%'
+    });
+});
+let listNoStart = {{ $hd->details->max('machine_repair_docdt_listno') ?? 0 }};
+function updateRowNumbers() {
+    const rows = document.querySelectorAll('#tableBody tr');
+    rows.forEach((row, index) => {
+        const listno = listNoStart + index + 1;
+        row.querySelector('.row-number').textContent = listno;
+        row.querySelector('.row-number-hidden').value = listno;
+    });
+}
+document.addEventListener('DOMContentLoaded', function () {
+    const addRowBtn = document.getElementById('addRowBtn');
+    if (addRowBtn) {
+        addRowBtn.addEventListener('click', function () {
+            const tbody = document.getElementById('tableBody');
+
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>
+                    <span class="row-number"></span>
+                    <input type="hidden" name="machine_repair_docdt_listno[]" class="row-number-hidden"/>
+                </td>
+                <td>
+                    <select name="machine_repair_docdt_code[]" class="form-control stc-select">
+                        <option value="">เลือกรหัสสินค้า</option>
+                        @foreach ($stc as $item)
+                            <option value="{{ $item->stc_stockcard_productcode }}"
+                                data-unit="{{ $item->stc_stockcard_productunit }}"
+                                data-qty="{{ $item->stc_stockcard_productqty }}"
+                                data-price="{{ $item->stc_stockcard_productprice }}"
+                                data-name="{{ $item->stc_stockcard_productname }}">
+                                {{ $item->stc_stockcard_productcode }}/{{ $item->stc_stockcard_productname }} หน่วยนับ : {{ $item->stc_stockcard_productunit }}
+                                จำนวน : {{ $item->stc_stockcard_productqty }} ราคาต่อหน่วย :  {{ $item->stc_stockcard_productprice }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
+                <td><input type="text" name="machine_repair_docdt_remark[]" class="form-control"/></td>
+                <td><input type="text" name="machine_repair_docdt_unit[]" class="form-control"/></td>
+                <td><input type="text" name="machine_repair_docdt_qty[]" class="form-control qty" value="0"></td>
+                <td><input type="text" name="machine_repair_docdt_price[]" class="form-control price" value="0"></td>
+                <td><input type="text" name="machine_repair_docdt_cost[]" class="form-control cost" value="0" readonly></td>
+                <td><input type="text" name="machine_repair_docdt_note[]" class="form-control"/></td>
+                <td><input type="text" name="machine_repair_docdt_vendor[]" class="form-control"/></td>
+                <td><input type="file" name="machine_repair_docdt_file[]" class="form-control"/></td>
+                <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
+            `;
+
+            tbody.appendChild(newRow);
+            updateRowNumbers();
+        });
+    }
+});
+document.getElementById('tableBody').addEventListener('click', function (e) {
+    if (e.target.classList.contains('deleteRow')) {
+        e.target.closest('tr').remove();
+        updateRowNumbers(); // อัปเดตลำดับหลังจากลบ
+    }
+});
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('stc-select')) {
+
+        let select = e.target;
+        let row = select.closest('tr');
+        let option = select.options[select.selectedIndex];
+
+        // อ่านค่า data-* จาก option
+        let unit  = option.getAttribute('data-unit') || '';
+        let qty   = option.getAttribute('data-qty') || '0';
+        let price = option.getAttribute('data-price') || '0';
+        let name  = option.getAttribute('data-name') || '';
+
+        // เซ็ตค่าให้ input ต่าง ๆ
+        row.querySelector('input[name="machine_repair_docdt_remark[]"]').value = name;
+        row.querySelector('input[name="machine_repair_docdt_unit[]"]').value   = unit;
+        row.querySelector('input[name="machine_repair_docdt_qty[]"]').value    = qty;
+        row.querySelector('input[name="machine_repair_docdt_price[]"]').value  = price;
+        row.querySelector('input[name="machine_repair_docdt_cost[]"]').value   = qty * price;
+    }
+});
+document.addEventListener("input", function (e) {
+    if (e.target.classList.contains("qty") || e.target.classList.contains("price")) {
+
+        let tr = e.target.closest("tr"); // หาแถวปัจจุบัน
+
+        let qty   = parseFloat(tr.querySelector(".qty").value)   || 0;
+        let price = parseFloat(tr.querySelector(".price").value) || 0;
+
+        let cost = qty * price;
+
+        tr.querySelector(".cost").value = cost.toFixed(2); // ใส่ผลลัพธ์
+    }
+});
+</script>
+@endsection

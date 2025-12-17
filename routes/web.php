@@ -97,6 +97,8 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::put('/machine-repair-docus/{id}/safety-update', [App\Http\Controllers\MachineRepairDocuController::class, 'updateSafety'])->name('machine-repair-docus.safety-update');
         Route::get('/machine/history', [App\Http\Controllers\MachineRepairDocuController::class, 'getHistory'])->name('machine.history');
         Route::get('/get-machines/{groupId}', [App\Http\Controllers\MachineRepairDocuController::class, 'getMachines']);
+        Route::get('/machine-repair-close/{id}' , [App\Http\Controllers\MachineRepairDocuController::class , 'MachineRepairClose']);
+        Route::put('/machine-repair-docus/{id}/issuestock-update', [App\Http\Controllers\MachineRepairDocuController::class, 'updateIssueStock'])->name('machine-repair-docus.issuestock-update');
     });
     Route::group([
         'middleware' =>  ['auth','permission:docu-machine-create']

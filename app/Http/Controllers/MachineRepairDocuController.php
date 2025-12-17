@@ -651,9 +651,60 @@ class MachineRepairDocuController extends Controller
         });
         return response()->json($history);
     }
+
     public function getMachines($groupId)
     {
         $machines = Machine::where('machinegroup_id', $groupId)->get();
         return response()->json($machines);
+    }
+
+    public function MachineRepairClose($id)
+    {
+        $hd = MachineRepairDochd::leftjoin('machine_repair_statuses','machine_repair_dochds.machine_repair_status_id','=','machine_repair_statuses.machine_repair_status_id')
+        ->find($id);      
+        $machine = Machine::where('machine_flag',true)->get();
+        $status = MachineRepairStatus::whereIn('machine_repair_status_id',[3,8,9])->get();
+        $stc = DB::table('vw_stc_stockcard')->get();
+        return view('docu-machine.issue-machinerepair-docu',compact('hd','machine','status','stc'));
+    }
+    public function updateIssueStock(Request $request, $id)
+    {
+        $data = [
+            'machine_repair_status_id' => 10,
+            'approvedclose_at' => Auth::user()->name,
+            'approvedclose_date' => Carbon::now(),
+        ];
+        try
+        {
+            DB::beginTransaction();
+            MachineRepairDochd::where('machine_repair_dochd_id', $id)->update($data);
+            $hd = MachineRepairDochd::find($id);
+            $dt = MachineRepairDocdt::where('machine_repair_dochd_id',$id)->where('machine_repair_docdt_flag',true)->get();
+            foreach ($dt as $key => $value) {
+                DB::table('stc_stockcard')->insert([
+                    'stc_stockcard_date' => $hd->machine_repair_dochd_date,
+                    'stc_stockcard_docuno' => $hd->machine_repair_dochd_docuno,
+                    'stc_stockcard_productcode' => $value->machine_repair_docdt_code,
+                    'stc_stockcard_productname' => $value->machine_repair_docdt_remark,
+                    'stc_stockcard_productunit' => $value->machine_repair_docdt_unit,
+                    'stc_stockcard_productqty' => $value->machine_repair_docdt_qty,
+                    'stockflag' => 1,
+                    'person_at' => Auth::user()->name,
+                    'update_at' => Carbon::now(),
+                    'stc_stockcard_productprice' => $value->machine_repair_docdt_price,
+                ]);
+                MachineRepairDocdt::where('machine_repair_docdt_id',$value->machine_repair_docdt_id)
+                ->update([
+                    'poststock' => "N"
+                ]);
+            }
+            DB::commit();
+            return redirect()->route('machine-repair-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+        } catch (\Exception $e) {
+            DB::rollback();
+            $message = $e->getMessage();
+            dd($message);
+            return redirect()->route('machine-repair-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+        } 
     }
 }
