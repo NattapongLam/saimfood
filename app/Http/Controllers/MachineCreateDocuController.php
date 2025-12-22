@@ -108,7 +108,7 @@ class MachineCreateDocuController extends Controller
      */
     public function show($id)
     {
-         $hd = MachineRepairDochd::leftjoin('machine_repair_statuses','machine_repair_dochds.machine_repair_status_id','=','machine_repair_statuses.machine_repair_status_id')
+        $hd = MachineRepairDochd::leftjoin('machine_repair_statuses','machine_repair_dochds.machine_repair_status_id','=','machine_repair_statuses.machine_repair_status_id')
         ->find($id);      
         return view('docu-machine.safety-machinecreate-docu',compact('hd'));
     }
@@ -434,5 +434,12 @@ class MachineCreateDocuController extends Controller
             dd($message);
             return redirect()->route('machine-create-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
         } 
+    }
+
+    public function MachineRepairClose($id)
+    {
+        $hd = MachineRepairDochd::leftjoin('machine_repair_statuses','machine_repair_dochds.machine_repair_status_id','=','machine_repair_statuses.machine_repair_status_id')
+        ->find($id);      
+        return view('docu-machine.edit-machinecreate-docu',compact('hd'));
     }
 }

@@ -106,7 +106,9 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/machine-create-docus' , App\Http\Controllers\MachineCreateDocuController::class);
         Route::post('/confirmDelMachineCreateHd' , [App\Http\Controllers\MachineCreateDocuController::class , 'confirmDelMachineCreateHd']);
         Route::post('/confirmDelMachineCreateDt' , [App\Http\Controllers\MachineCreateDocuController::class , 'confirmDelMachineCreateDt']);
-        Route::put('/machine-create-docus/{id}/safety-update', [App\Http\Controllers\MachineCreateDocuController::class, 'updateSafety'])->name('machine-create-docus.safety-update');       
+        Route::put('/machine-create-docus/{id}/safety-update', [App\Http\Controllers\MachineCreateDocuController::class, 'updateSafety'])->name('machine-create-docus.safety-update');   
+        Route::get('/machine-create-close/{id}' , [App\Http\Controllers\MachineCreateDocuController::class , 'MachineCreateClose']);    
+        Route::put('/machine-create-docus/{id}/issuestock-update', [App\Http\Controllers\MachineCreateDocuController::class, 'updateIssueStock'])->name('machine-create-docus.issuestock-update');
     });
     Route::group([
         'middleware' =>  ['auth','permission:docu-equipment-request']

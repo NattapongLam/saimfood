@@ -124,6 +124,21 @@
                                 </ul>
                             </li>
                             @endcan
+                            <li>                               
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-detail"></i>
+                                    <span key="t-starter-page">เอกสารควบคุม</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="#" key="t-starter-page">Master List</a></li>
+                                    <li><a href="#" key="t-starter-page">NCR</a></li>
+                                    <li><a href="#" key="t-starter-page">CAR</a></li>
+                                    <li><a href="#" key="t-starter-page">Dar</a></li>
+                                    <li><a href="#" key="t-starter-page">การแจกจ่ายเอกสาร</a></li>
+                                    <li><a href="#" key="t-starter-page">แผนต่างๆ</a></li>
+                                    <li><a href="#" key="t-starter-page">เครื่องมือวัด</a></li>
+                                </ul>
+                            </li>
                             @endrole
                             <li class="menu-title" key="t-pages">Report</li>
                             <li>

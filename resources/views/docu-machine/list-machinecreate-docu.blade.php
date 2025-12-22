@@ -64,6 +64,7 @@
                                                 <th></th>
                                                 <th></th>
                                                 <th>จป.</th>
+                                                <th>อนุมัติเบิก</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -147,6 +148,11 @@
                                                             <a href="{{ route('machine-create-docus.show', $item->machine_repair_dochd_id) }}"class="btn btn-secondary btn-sm">บันทึก</a> 
                                                             @endif   
                                                         @endif  
+                                                    </td>
+                                                    <td>
+                                                        @if ($item->machine_repair_status_id == 6)
+                                                            <a href="{{url('/machine-create-close/'. $item->machine_repair_dochd_id)}}"class="btn btn-info btn-sm">บันทึก</a> 
+                                                        @endif 
                                                     </td>
                                                 </tr>
                                             @endforeach
