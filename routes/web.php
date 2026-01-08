@@ -132,12 +132,23 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/iso-masterlist' , App\Http\Controllers\IsoMasterListController::class);
         Route::post('/confirmDelMasterlist' , [App\Http\Controllers\IsoMasterListController::class , 'confirmDelMasterlist']);
     });
-     Route::group([
+    Route::group([
         'middleware' =>  ['auth','permission:iso-distributionlist']
     ],function(){
         Route::resource('/iso-distributionlist' , App\Http\Controllers\IsoDistributionListController::class);
         Route::post('/confirmDelDistributionlist' , [App\Http\Controllers\IsoDistributionListController::class , 'confirmDelDistributionlist']);
         Route::post('/approvedDistributionlist' , [App\Http\Controllers\IsoDistributionListController::class , 'approvedDistributionlist']);
+    });
+    Route::group([
+        'middleware' =>  ['auth','permission:clb-measuringlist']
+    ],function(){
+        Route::resource('/clb-measuringlist' , App\Http\Controllers\ClbMeasuringListController::class);
+        Route::post('/confirmDelMeasuringlis' , [App\Http\Controllers\ClbMeasuringListController::class , 'confirmDelMeasuringlis']);
+    });
+    Route::group([
+        'middleware' =>  ['auth','permission:clb-measuringplan']
+    ],function(){
+        Route::resource('/clb-measuringplan' , App\Http\Controllers\ClbMeasuringPlanController::class);
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-ncrlist']

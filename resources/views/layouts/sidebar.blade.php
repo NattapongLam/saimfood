@@ -148,8 +148,12 @@
                                     <span key="t-starter-page">เครื่องมือวัด</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
-                                    <li><a href="#" key="t-starter-page">บัญชีรายชื่อ</a></li>
-                                    <li><a href="#" key="t-starter-page">แผนสอบเทียบ</a></li>
+                                    @can('clb-measuringlist')
+                                    <li><a href="{{route('clb-measuringlist.index')}}" key="t-starter-page">บัญชีรายชื่อ</a></li>
+                                    @endcan
+                                    @can('clb-measuringplan')
+                                    <li><a href="{{route('clb-measuringplan.index')}}" key="t-starter-page">แผนสอบเทียบ</a></li>
+                                    @endcan
                                 </ul>
                             </li>
                             @endrole
