@@ -126,6 +126,24 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/confirmDelMachineIssueStockDt' , [App\Http\Controllers\MachineIssueStockController::class , 'confirmDelMachineIssueStockDt']);
         Route::get('/stockcardlist', [App\Http\Controllers\MachineIssueStockController::class, 'stockcardlist'])->name('stockcardlist');
     });
+    Route::group([
+        'middleware' =>  ['auth','permission:iso-masterlist']
+    ],function(){
+        Route::resource('/iso-masterlist' , App\Http\Controllers\IsoMasterListController::class);
+        Route::post('/confirmDelMasterlist' , [App\Http\Controllers\IsoMasterListController::class , 'confirmDelMasterlist']);
+    });
+     Route::group([
+        'middleware' =>  ['auth','permission:iso-distributionlist']
+    ],function(){
+        Route::resource('/iso-distributionlist' , App\Http\Controllers\IsoDistributionListController::class);
+        Route::post('/confirmDelDistributionlist' , [App\Http\Controllers\IsoDistributionListController::class , 'confirmDelDistributionlist']);
+        Route::post('/approvedDistributionlist' , [App\Http\Controllers\IsoDistributionListController::class , 'approvedDistributionlist']);
+    });
+    Route::group([
+        'middleware' =>  ['auth','permission:iso-ncrlist']
+    ],function(){
+        Route::resource('/iso-ncrlist' , App\Http\Controllers\IsoNcrListController::class);
+    });
     Route::resource('/asset-inout' , App\Http\Controllers\OtherAssetinoutForm::class);
     Route::post('/confirmDelAssetinoutHd' , [App\Http\Controllers\OtherAssetinoutForm::class , 'confirmDelAssetinoutHd']);
     Route::post('/confirmDelAssetinoutDt' , [App\Http\Controllers\OtherAssetinoutForm::class , 'confirmDelAssetinoutDt']);

@@ -25,5 +25,11 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'docu-machine-repair']);
         // Permission::create(['name' => 'docu-machine-create']);
         // Permission::create(['name' => 'docu-machine-issuestock']);
+        // Permission::create(['name' => 'iso-masterlist']);
+        // Permission::create(['name' => 'iso-ncrlist']);
+        // Permission::create(['name' => 'iso-carlist']);
+        // Permission::create(['name' => 'iso-distributionlist']);
+        // Permission::create(['name' => 'clb-measuringlist']);
+        // Permission::create(['name' => 'clb-measuringplan']);
     }
 }

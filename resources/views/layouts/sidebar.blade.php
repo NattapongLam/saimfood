@@ -130,13 +130,26 @@
                                     <span key="t-starter-page">เอกสารควบคุม</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
-                                    <li><a href="#" key="t-starter-page">Master List</a></li>
-                                    <li><a href="#" key="t-starter-page">NCR</a></li>
+                                    @can('iso-masterlist')
+                                    <li><a href="{{route('iso-masterlist.index')}}" key="t-starter-page">Master List</a></li>
+                                    @endcan
+                                    @can('iso-distributionlist')
+                                    <li><a href="{{route('iso-distributionlist.index')}}" key="t-starter-page">การแจกจ่ายเอกสาร</a></li>
+                                    @endcan
+                                    {{-- <li><a href="{{route('iso-ncrlist.index')}}" key="t-starter-page">NCR</a></li>
                                     <li><a href="#" key="t-starter-page">CAR</a></li>
-                                    <li><a href="#" key="t-starter-page">Dar</a></li>
-                                    <li><a href="#" key="t-starter-page">การแจกจ่ายเอกสาร</a></li>
-                                    <li><a href="#" key="t-starter-page">แผนต่างๆ</a></li>
-                                    <li><a href="#" key="t-starter-page">เครื่องมือวัด</a></li>
+                                    <li><a href="#" key="t-starter-page">Dar</a></li>                                    
+                                    <li><a href="#" key="t-starter-page">แผนต่างๆ</a></li> --}}
+                                </ul>
+                            </li>
+                            <li>                               
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-detail"></i>
+                                    <span key="t-starter-page">เครื่องมือวัด</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="#" key="t-starter-page">บัญชีรายชื่อ</a></li>
+                                    <li><a href="#" key="t-starter-page">แผนสอบเทียบ</a></li>
                                 </ul>
                             </li>
                             @endrole
