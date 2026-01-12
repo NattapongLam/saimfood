@@ -28,8 +28,8 @@
                                    <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ปี</label>
-                                            <select class="form-control" name="machine_planingdocu_hd_date">
-                                            @for ($i = date('Y'); $i >= 2020; $i--)
+                                            <select class="form-control" name="machine_planingdocu_hd_date" required>
+                                            @for ($i = date('Y'); $i >= 2025; $i--)
                                                 <option value="{{ $i }}">{{ $i }}</option>
                                             @endfor
                                             </select>
