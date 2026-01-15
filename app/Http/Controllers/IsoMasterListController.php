@@ -75,7 +75,7 @@ class IsoMasterListController extends Controller
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now(),
         ];
-         if ($request->hasFile('iso_master_lists_file1') && $request->file('iso_master_lists_file1')->isValid()) {
+        if ($request->hasFile('iso_master_lists_file1') && $request->file('iso_master_lists_file1')->isValid()) {
             $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('iso_master_lists_file1')->getClientOriginalExtension();
             $request->file('iso_master_lists_file1')->storeAs('masterlist_img', $filename, 'public');
             $data['iso_master_lists_file1'] = 'storage/masterlist_img/' . $filename;

@@ -140,6 +140,11 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/approvedDistributionlist' , [App\Http\Controllers\IsoDistributionListController::class , 'approvedDistributionlist']);
     });
     Route::group([
+        'middleware' =>  ['auth','permission:iso-waterqualityplan']
+    ],function(){
+        Route::resource('/iso-waterqualityplan' , App\Http\Controllers\IsoWaterQualityPlanController::class);
+    });
+    Route::group([
         'middleware' =>  ['auth','permission:clb-measuringlist']
     ],function(){
         Route::resource('/clb-measuringlist' , App\Http\Controllers\ClbMeasuringListController::class);
@@ -149,6 +154,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:clb-measuringplan']
     ],function(){
         Route::resource('/clb-measuringplan' , App\Http\Controllers\ClbMeasuringPlanController::class);
+         Route::post('/confirmDelMeasuringPlan' , [App\Http\Controllers\ClbMeasuringPlanController::class , 'confirmDelMeasuringPlan']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-ncrlist']

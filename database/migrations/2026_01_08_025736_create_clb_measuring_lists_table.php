@@ -28,7 +28,11 @@ return new class extends Migration
             $table->string('clb_measuring_lists_start')->nullable();
             $table->string('clb_measuring_lists_note')->nullable();
             $table->string('clb_measuring_lists_remark')->nullable();
-            $table->boolean('clb_measuring_lists_flag')->default(true); 
+            $table->boolean('clb_measuring_lists_flag')->default(true);
+            $table->string('clb_measuring_lists_file1')->nullable();
+            $table->string('clb_measuring_lists_file2')->nullable();
+            $table->string('clb_measuring_lists_file3')->nullable(); 
+            $table->string('clb_measuring_lists_file4')->nullable(); 
             $table->string('person_at');
             $table->timestamps();
         });

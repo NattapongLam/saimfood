@@ -17,10 +17,12 @@
                         @endif       
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>แผนการสอบเทียบเครื่องมือวัด</h5>
+                                    <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>
+                                        แผนการตรวจสอบน้ำใช้ในโรงงาน (Water Quality Testing Plan)
+                                    </h5>
                                 <div class="page-title-right">
                                     <h5 class="my-0 text-primary">
-                                        <a href="{{route('clb-measuringplan.create')}}">
+                                        <a href="{{route('iso-waterqualityplan.create')}}">
                                             เพิ่มข้อมูล
                                         </a>
                                     </h5>                  
@@ -38,9 +40,9 @@
                                         <tbody>   
                                             @foreach ($hd as $item)
                                                 <tr>
-                                                    <td>{{$item->clb_measuring_lists_date}}</td>
+                                                    <td>{{$item->iso_water_quality_plans_date}}</td>
                                                     <td>
-                                                        <a href="{{ route('clb-measuringplan.edit', $item->clb_measuring_lists_date) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i></a>
+                                                        <a href="{{ route('iso-waterqualityplan.edit', $item->iso_water_quality_plans_date) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach                                      

@@ -109,6 +109,76 @@
                                         </div>
                                     </div>
                                 </div>
+                                  <div class="row mt-3">
+                                    <div class="col-6">
+                                            <div class="card ">
+                                                <div class="card-body img-resize">
+                                                    <div class="favorite-icon">
+                                                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                                                    </div>
+                                                    <img src="" class="img-fluid clb_measuring_lists_file1" alt=""  width="50%" class="mb-3">
+                                                    <h5 class="fs-17 mb-2"><a href="{{ asset($hd->clb_measuring_lists_file1) }}" target="_blank" class="text-dark">รูปภาพ</a></h5>                                   
+                                                <div class="mt-4 hstack gap-2">
+                                                <div class="input-group">
+                                                <input type="file" class="form-control" id="inputGroupFile01"  name="clb_measuring_lists_file1" onchange="prevFile(this,'clb_measuring_lists_file1')" accept="image/*">
+                                                <label class="input-group-text" for="inputGroupFile01">Upload</label>
+                                                </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-6">
+                                            <div class="card ">
+                                                <div class="card-body img-resize">
+                                                    <div class="favorite-icon">
+                                                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                                                    </div>
+                                                    <img src="" class="img-fluid clb_measuring_lists_file2" alt=""  width="50%" class="mb-3">
+                                                    <h5 class="fs-17 mb-2"><a href="{{ asset($hd->clb_measuring_lists_file2) }}" target="_blank" class="text-dark">ใบรับประกัน</a></h5>                                   
+                                                <div class="mt-4 hstack gap-2">
+                                                <div class="input-group">
+                                                <input type="file" class="form-control" id="inputGroupFile02"  name="clb_measuring_lists_file2" onchange="prevFile(this,'clb_measuring_lists_file2')">
+                                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                                </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                    </div> 
+                                    <div class="col-6">
+                                            <div class="card ">
+                                                <div class="card-body img-resize">
+                                                    <div class="favorite-icon">
+                                                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                                                    </div>
+                                                    <img src="" class="img-fluid clb_measuring_lists_file3" alt=""  width="50%" class="mb-3">
+                                                    <h5 class="fs-17 mb-2"><a href="{{ asset($hd->clb_measuring_lists_file3) }}" target="_blank" class="text-dark">คู่มือ</a></h5>                                   
+                                                <div class="mt-4 hstack gap-2">
+                                                <div class="input-group">
+                                                <input type="file" class="form-control" id="inputGroupFile03"  name="clb_measuring_lists_file3" onchange="prevFile(this,'clb_measuring_lists_file3')">
+                                                <label class="input-group-text" for="inputGroupFile03">Upload</label>
+                                                </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-6">
+                                            <div class="card ">
+                                                <div class="card-body img-resize">
+                                                    <div class="favorite-icon">
+                                                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                                                    </div>
+                                                    <img src="" class="img-fluid clb_measuring_lists_file4" alt=""  width="50%" class="mb-3">
+                                                    <h5 class="fs-17 mb-2"><a href="{{ asset($hd->clb_measuring_lists_file4) }}" target="_blank" class="text-dark">เอกสารการซื้อ</a></h5>                                   
+                                                <div class="mt-4 hstack gap-2">
+                                                <div class="input-group">
+                                                <input type="file" class="form-control" id="inputGroupFile04"  name="clb_measuring_lists_file4" onchange="prevFile(this,'clb_measuring_lists_file4')">
+                                                <label class="input-group-text" for="inputGroupFile04">Upload</label>
+                                                </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                    </div>                                  
+                                </div>
                             </div>
                             <br>
                                 <div class="form-group">

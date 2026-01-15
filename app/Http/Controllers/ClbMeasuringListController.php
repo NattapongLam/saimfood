@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ClbMeasuringList;
 use Illuminate\Support\Facades\DB;
@@ -75,6 +76,26 @@ class ClbMeasuringListController extends Controller
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now(),
         ];
+        if ($request->hasFile('clb_measuring_lists_file1') && $request->file('clb_measuring_lists_file1')->isValid()) {
+            $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('clb_measuring_lists_file1')->getClientOriginalExtension();
+            $request->file('clb_measuring_lists_file1')->storeAs('measuringlist_img', $filename, 'public');
+            $data['clb_measuring_lists_file1'] = 'storage/measuringlist_img/' . $filename;
+        }
+        if ($request->hasFile('clb_measuring_lists_file2') && $request->file('clb_measuring_lists_file2')->isValid()) {
+            $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('clb_measuring_lists_file2')->getClientOriginalExtension();
+            $request->file('clb_measuring_lists_file2')->storeAs('measuringlist_img', $filename, 'public');
+            $data['clb_measuring_lists_file2'] = 'storage/measuringlist_img/' . $filename;
+        }
+        if ($request->hasFile('clb_measuring_lists_file3') && $request->file('clb_measuring_lists_file3')->isValid()) {
+            $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('clb_measuring_lists_file3')->getClientOriginalExtension();
+            $request->file('clb_measuring_lists_file3')->storeAs('measuringlist_img', $filename, 'public');
+            $data['clb_measuring_lists_file3'] = 'storage/measuringlist_img/' . $filename;
+        }
+        if ($request->hasFile('clb_measuring_lists_file4') && $request->file('clb_measuring_lists_file4')->isValid()) {
+            $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('clb_measuring_lists_file4')->getClientOriginalExtension();
+            $request->file('clb_measuring_lists_file4')->storeAs('measuringlist_img', $filename, 'public');
+            $data['clb_measuring_lists_file4'] = 'storage/measuringlist_img/' . $filename;
+        }
         try 
         {
             DB::beginTransaction();
@@ -140,6 +161,26 @@ class ClbMeasuringListController extends Controller
             'person_at' => Auth::user()->name,
             'updated_at'=> Carbon::now(),
         ];
+        if ($request->hasFile('clb_measuring_lists_file1') && $request->file('clb_measuring_lists_file1')->isValid()) {
+            $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('clb_measuring_lists_file1')->getClientOriginalExtension();
+            $request->file('clb_measuring_lists_file1')->storeAs('measuringlist_img', $filename, 'public');
+            $data['clb_measuring_lists_file1'] = 'storage/measuringlist_img/' . $filename;
+        }
+        if ($request->hasFile('clb_measuring_lists_file2') && $request->file('clb_measuring_lists_file2')->isValid()) {
+            $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('clb_measuring_lists_file2')->getClientOriginalExtension();
+            $request->file('clb_measuring_lists_file2')->storeAs('measuringlist_img', $filename, 'public');
+            $data['clb_measuring_lists_file2'] = 'storage/measuringlist_img/' . $filename;
+        }
+        if ($request->hasFile('clb_measuring_lists_file3') && $request->file('clb_measuring_lists_file3')->isValid()) {
+            $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('clb_measuring_lists_file3')->getClientOriginalExtension();
+            $request->file('clb_measuring_lists_file3')->storeAs('measuringlist_img', $filename, 'public');
+            $data['clb_measuring_lists_file3'] = 'storage/measuringlist_img/' . $filename;
+        }
+        if ($request->hasFile('clb_measuring_lists_file4') && $request->file('clb_measuring_lists_file4')->isValid()) {
+            $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('clb_measuring_lists_file4')->getClientOriginalExtension();
+            $request->file('clb_measuring_lists_file4')->storeAs('measuringlist_img', $filename, 'public');
+            $data['clb_measuring_lists_file4'] = 'storage/measuringlist_img/' . $filename;
+        }
         try 
         {
             DB::beginTransaction();

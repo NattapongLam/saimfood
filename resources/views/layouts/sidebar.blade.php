@@ -138,8 +138,13 @@
                                     @endcan
                                     {{-- <li><a href="{{route('iso-ncrlist.index')}}" key="t-starter-page">NCR</a></li>
                                     <li><a href="#" key="t-starter-page">CAR</a></li>
-                                    <li><a href="#" key="t-starter-page">Dar</a></li>                                    
-                                    <li><a href="#" key="t-starter-page">แผนต่างๆ</a></li> --}}
+                                    <li><a href="#" key="t-starter-page">Dar</a></li>--}}
+                                    <li><a href="#" key="t-starter-page">แผนการ Swab Test</a></li>
+                                    <li><a href="#" key="t-starter-page">แผนตรวจหาแบคทีเรียในอากาศ</a></li>
+                                    <li><a href="#" key="t-starter-page">แผนการส่งตรวจวิเคราะห์สินค้าสำเร็จรูป</a></li>
+                                    @can('iso-waterqualityplan')
+                                    <li><a href="{{route('iso-waterqualityplan.index')}}" key="t-starter-page">แผนการตรวจสอบน้ำใช้ในโรงงาน</a></li>
+                                    @endcan
                                 </ul>
                             </li>
                             <li>                               

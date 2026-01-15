@@ -225,4 +225,29 @@ class ClbMeasuringPlanController extends Controller
     {
         //
     }
+
+    public function confirmDelMeasuringPlan(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            ClbMeasuringPlan::where('clb_measuring_plans_id',$id)->update([
+                'clb_measuring_lists_flag' => false,
+                'person_at' => Auth::user()->name,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }
