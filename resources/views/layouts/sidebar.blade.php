@@ -124,7 +124,7 @@
                                 </ul>
                             </li>
                             @endcan
-                            <li>                               
+                            {{-- <li>                               
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bx-detail"></i>
                                     <span key="t-starter-page">เอกสารควบคุม</span>
@@ -136,9 +136,9 @@
                                     @can('iso-distributionlist')
                                     <li><a href="{{route('iso-distributionlist.index')}}" key="t-starter-page">การแจกจ่ายเอกสาร</a></li>
                                     @endcan
-                                    {{-- <li><a href="{{route('iso-ncrlist.index')}}" key="t-starter-page">NCR</a></li>
+                                    <li><a href="{{route('iso-ncrlist.index')}}" key="t-starter-page">NCR</a></li>
                                     <li><a href="#" key="t-starter-page">CAR</a></li>
-                                    <li><a href="#" key="t-starter-page">Dar</a></li>--}}
+                                    <li><a href="#" key="t-starter-page">Dar</a></li>
                                     <li><a href="#" key="t-starter-page">แผนการ Swab Test</a></li>
                                     <li><a href="#" key="t-starter-page">แผนตรวจหาแบคทีเรียในอากาศ</a></li>
                                     <li><a href="#" key="t-starter-page">แผนการส่งตรวจวิเคราะห์สินค้าสำเร็จรูป</a></li>
@@ -160,7 +160,7 @@
                                     <li><a href="{{route('clb-measuringplan.index')}}" key="t-starter-page">แผนสอบเทียบ</a></li>
                                     @endcan
                                 </ul>
-                            </li>
+                            </li> --}}
                             @endrole
                             <li class="menu-title" key="t-pages">Report</li>
                             <li>
