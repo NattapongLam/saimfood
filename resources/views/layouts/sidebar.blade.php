@@ -124,7 +124,7 @@
                                 </ul>
                             </li>
                             @endcan
-                            {{-- <li>                               
+                            <li>                               
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bx-detail"></i>
                                     <span key="t-starter-page">เอกสารควบคุม</span>
@@ -160,7 +160,7 @@
                                     <li><a href="{{route('clb-measuringplan.index')}}" key="t-starter-page">แผนสอบเทียบ</a></li>
                                     @endcan
                                 </ul>
-                            </li> --}}
+                            </li>
                             @endrole
                             <li class="menu-title" key="t-pages">Report</li>
                             <li>
