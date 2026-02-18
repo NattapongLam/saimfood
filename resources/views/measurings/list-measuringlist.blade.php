@@ -32,6 +32,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ลำดับ</th>
+                                                <th>รูปภาพ</th>
                                                 <th>หมายเลขเครื่องมือวัด</th>
                                                 <th>ชื่อเครื่องมือวัด</th>
                                                 <th>ยี่ห้อ</th>
@@ -41,7 +42,7 @@
                                                 <th>ช่วงใช้งานจริง</th>
                                                 <th>ความละเอียด</th>
                                                 <th>เกณฑ์ยอมรับ</th>
-                                                <th>เริ่มใช้งาน</th>
+                                                <th>เริ่มใช้งาน</th>                        
                                                 <th>แก้ไข</th>
                                                 <th>ยกเลิก</th>
                                             </tr>
@@ -50,6 +51,9 @@
                                            @foreach ($hd as $item)
                                                <tr>
                                                     <td>{{$item->clb_measuring_lists_listno}}</td>
+                                                    <td>
+                                                         <img src="{{ asset($item->clb_measuring_lists_file1 ?? 'images/no-image.png') }}" alt="Measuring Image" class="rounded-circle avatar-xl">
+                                                    </td>
                                                     <td>{{$item->clb_measuring_lists_code}}</td>
                                                     <td>{{$item->clb_measuring_lists_name}}</td>
                                                     <td>{{$item->clb_measuring_lists_brand}}</td>
@@ -59,7 +63,7 @@
                                                     <td>{{$item->actualuseperiod}}</td>
                                                     <td>{{$item->resolution}}</td>
                                                     <td>{{$item->acceptancecriteria}}</td>
-                                                    <td>{{$item->clb_measuring_lists_start}}</td>
+                                                    <td>{{$item->clb_measuring_lists_start}}</td>                                                   
                                                     <td>
                                                         <a href="{{ route('clb-measuringlist.edit', $item->clb_measuring_lists_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i></a>
                                                     </td>
@@ -88,7 +92,7 @@ $(document).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "order": [[1, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
+        "order": [[0, "asc"]], // <-- เรียงวันที่ล่าสุดก่อน
         "language": {
             "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
             "zeroRecords": "ไม่พบข้อมูล",

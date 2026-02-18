@@ -39,7 +39,7 @@ class ClbMeasuringListController extends Controller
         ->first();
         $listno = 1;
         if($hd){
-            $listno = $hd->clb_measuring_lists_listno;
+            $listno = $hd->clb_measuring_lists_listno +1;
         }
         return view('measurings.create-measuringlist',compact('hd','listno'));
     }
