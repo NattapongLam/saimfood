@@ -86,9 +86,9 @@
                                                     <th>ภายนอก</th>
                                                 </tr>
                                             </thead>
-                                        <tbody>
+                                        <tbody style="color: black">
                                             @foreach ($clb as $key => $item)
-                                                <tr>
+                                                <tr style="background-color:beige">
                                                     <td>
                                                         {{$item->clb_measuring_lists_listno}}
                                                         <input type="hidden" name="clb_measuring_lists_id[]" value="{{$item->clb_measuring_lists_id}}">
@@ -127,7 +127,7 @@
                                                         <input class="form-control form-control-sm input-auto"oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" name="clb_measuring_lists_remark[]">
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr style="background-color:aliceblue">
                                                     <th colspan="12">การดำเนินการตามแผนเดือน</th>
                                                 </tr>
                                                 <tr>

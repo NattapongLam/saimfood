@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Models\ClbMeasuringList;
 use App\Models\ClbMeasuringPlan;
-use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ClbMeasuringPlanController extends Controller
 {
@@ -36,7 +37,7 @@ class ClbMeasuringPlanController extends Controller
      */
     public function create()
     {
-        $clb = ClbMeasuringList::where('clb_measuring_lists_flag',true)->get();
+        $clb = ClbMeasuringList::where('clb_measuring_lists_flag',true)->orderBy('clb_measuring_lists_listno', 'asc')->get();
         return view('measurings.create-measuringplan',compact('clb'));
     }
 
@@ -136,6 +137,7 @@ class ClbMeasuringPlanController extends Controller
         $clb = DB::table('clb_measuring_plans')
         ->where('clb_measuring_lists_flag',true)
         ->where('clb_measuring_lists_date',$id)
+        ->orderBy('clb_measuring_lists_listno', 'asc')
         ->get();
         return view('measurings.edit-measuringplan',compact('clb','year'));
     }

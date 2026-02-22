@@ -87,9 +87,9 @@
                                                     <th>ภายนอก</th>
                                                 </tr>
                                             </thead>
-                                        <tbody>
+                                        <tbody style="color: black">
                                             @foreach ($clb as $key => $item)
-                                                <tr>
+                                                <tr style="background-color:beige">
                                                     <td>
                                                         {{$item->clb_measuring_lists_listno }}
                                                         <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->clb_measuring_plans_id }}')"><i class="fas fa-trash"></i></a>    
@@ -142,7 +142,7 @@
                                                         value="{{$item->clb_measuring_lists_remark}}">
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr style="background-color:aliceblue">
                                                     <th colspan="12">การดำเนินการตามแผนเดือน</th>
                                                 </tr>
                                                 <tr>

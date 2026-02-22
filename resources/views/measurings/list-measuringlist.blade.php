@@ -28,7 +28,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="row"> 
-                                    <table id="DataTableList" class="table table-bordered dt-responsive nowrap w-100 text-center table-sm">
+                                    <div class="table-responsive">
+                                         <table id="DataTableList" class="table table-bordered nowrap w-100 text-center table-sm">
                                         <thead>
                                             <tr>
                                                 <th>ลำดับ</th>
@@ -74,6 +75,7 @@
                                            @endforeach
                                         </tbody>
                                     </table>
+                                    </div>                                   
                                 </div>
                             </div>
                         </div>

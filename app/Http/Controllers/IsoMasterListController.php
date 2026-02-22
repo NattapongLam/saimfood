@@ -39,7 +39,7 @@ class IsoMasterListController extends Controller
         ->first();
         $listno = 1;
         if($hd){
-            $listno = $hd->iso_master_lists_listno;
+            $listno = $hd->iso_master_lists_listno + 1;
         }
         return view('iso.create-masterlist',compact('hd','listno'));
     }

@@ -117,7 +117,14 @@
                                                         <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
                                                     </div>
                                                     <img src="" class="img-fluid clb_measuring_lists_file1" alt=""  width="50%" class="mb-3">
-                                                    <h5 class="fs-17 mb-2"><a href="{{ asset($hd->clb_measuring_lists_file1) }}" target="_blank" class="text-dark">รูปภาพ</a></h5>                                   
+                                                    <h5 class="fs-17 mb-2">
+                                                        <a href="#" target="_blank" class="text-dark">รูปภาพ</a>
+                                                        @if ($hd->clb_measuring_lists_file1)
+                                                            <a href="{{ asset($hd->clb_measuring_lists_file1) }}" target="_blank">
+                                                                <i class="fas fa-file"></i>
+                                                            </a> 
+                                                        @endif
+                                                    </h5>                                   
                                                 <div class="mt-4 hstack gap-2">
                                                 <div class="input-group">
                                                 <input type="file" class="form-control" id="inputGroupFile01"  name="clb_measuring_lists_file1" onchange="prevFile(this,'clb_measuring_lists_file1')" accept="image/*">
@@ -134,7 +141,14 @@
                                                         <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
                                                     </div>
                                                     <img src="" class="img-fluid clb_measuring_lists_file2" alt=""  width="50%" class="mb-3">
-                                                    <h5 class="fs-17 mb-2"><a href="{{ asset($hd->clb_measuring_lists_file2) }}" target="_blank" class="text-dark">ใบรับประกัน</a></h5>                                   
+                                                    <h5 class="fs-17 mb-2">
+                                                        <a href="#" target="_blank" class="text-dark">ใบรับประกัน</a>
+                                                        @if ($hd->clb_measuring_lists_file2)
+                                                            <a href="{{ asset($hd->clb_measuring_lists_file2) }}" target="_blank">
+                                                                <i class="fas fa-file"></i>
+                                                            </a> 
+                                                        @endif
+                                                    </h5>                                   
                                                 <div class="mt-4 hstack gap-2">
                                                 <div class="input-group">
                                                 <input type="file" class="form-control" id="inputGroupFile02"  name="clb_measuring_lists_file2" onchange="prevFile(this,'clb_measuring_lists_file2')">
@@ -151,7 +165,14 @@
                                                         <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
                                                     </div>
                                                     <img src="" class="img-fluid clb_measuring_lists_file3" alt=""  width="50%" class="mb-3">
-                                                    <h5 class="fs-17 mb-2"><a href="{{ asset($hd->clb_measuring_lists_file3) }}" target="_blank" class="text-dark">คู่มือ</a></h5>                                   
+                                                    <h5 class="fs-17 mb-2">
+                                                        <a href="#" target="_blank" class="text-dark">คู่มือ</a>
+                                                        @if ($hd->clb_measuring_lists_file3)
+                                                            <a href="{{ asset($hd->clb_measuring_lists_file3) }}" target="_blank">
+                                                                <i class="fas fa-file"></i>
+                                                            </a> 
+                                                        @endif
+                                                    </h5>                                   
                                                 <div class="mt-4 hstack gap-2">
                                                 <div class="input-group">
                                                 <input type="file" class="form-control" id="inputGroupFile03"  name="clb_measuring_lists_file3" onchange="prevFile(this,'clb_measuring_lists_file3')">
@@ -159,7 +180,9 @@
                                                 </div>
                                                 </div>
                                                 </div>
+                                                
                                             </div>
+                                           
                                     </div>
                                     <div class="col-6">
                                             <div class="card ">
@@ -168,7 +191,14 @@
                                                         <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
                                                     </div>
                                                     <img src="" class="img-fluid clb_measuring_lists_file4" alt=""  width="50%" class="mb-3">
-                                                    <h5 class="fs-17 mb-2"><a href="{{ asset($hd->clb_measuring_lists_file4) }}" target="_blank" class="text-dark">เอกสารการซื้อ</a></h5>                                   
+                                                    <h5 class="fs-17 mb-2">
+                                                        <a href="#" target="_blank" class="text-dark">เอกสารการซื้อ</a>
+                                                        @if ($hd->clb_measuring_lists_file4)
+                                                            <a href="{{ asset($hd->clb_measuring_lists_file4) }}" target="_blank">
+                                                                <i class="fas fa-file"></i>
+                                                            </a> 
+                                                        @endif
+                                                    </h5>                                   
                                                 <div class="mt-4 hstack gap-2">
                                                 <div class="input-group">
                                                 <input type="file" class="form-control" id="inputGroupFile04"  name="clb_measuring_lists_file4" onchange="prevFile(this,'clb_measuring_lists_file4')">
