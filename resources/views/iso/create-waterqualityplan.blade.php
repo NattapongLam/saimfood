@@ -21,7 +21,7 @@
                                         แผนการตรวจสอบน้ำใช้ในโรงงาน (Water Quality Testing Plan)
                                     </h5>                              
                             </div>
-                            <form class="custom-validation" action="{{ route('clb-measuringplan.store') }}" method="POST" enctype="multipart/form-data" validate>
+                            <form class="custom-validation" action="{{ route('iso-waterqualityplan.store') }}" method="POST" enctype="multipart/form-data" validate>
                             @csrf  
                             <div class="card-body">
                                 <div class="row mt-3"> 
@@ -46,13 +46,13 @@
                                         <table class="table table-bordered dt-responsive nowrap w-100 text-center table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="2">ลำดับ</th>
-                                                    <th rowspan="2">สถานที่</th>
-                                                    <th rowspan="2">บริเวณจุดเก็บน้ำ</th>
+                                                    <th rowspan="2" style="width:5%">ลำดับ</th>
+                                                    <th rowspan="2" style="width:10%">สถานที่</th>
+                                                    <th rowspan="2" style="width:10%">บริเวณจุดเก็บน้ำ</th>
                                                     <th colspan="12">เดือน</th>
-                                                    <th rowspan="2">ผู้รับผิดชอบ</th>
-                                                    <th rowspan="2">ผู้ทวนสอบ</th>
-                                                    <th rowspan="2">หมายเหตุ</th>
+                                                    <th rowspan="2" style="width:10%">ผู้รับผิดชอบ</th>
+                                                    <th rowspan="2" style="width:10%">ผู้ทวนสอบ</th>
+                                                    <th rowspan="2" style="width:10%">หมายเหตุ</th>
                                                     <th rowspan="2"></th>
                                                 </tr>
                                                 <tr>

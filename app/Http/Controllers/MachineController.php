@@ -9,7 +9,6 @@ use App\Models\MachineGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\File;
 
 class MachineController extends Controller
 {
@@ -134,6 +133,7 @@ class MachineController extends Controller
     public function update(Request $request, $id)
     {
          $request->validate([
+            'machine_code' => 'required',
             'machine_name' => 'required',
             'machinegroup_id' => 'required',
             'machine_date' => 'required',
@@ -145,6 +145,7 @@ class MachineController extends Controller
             $flag = false;
         }
          $data = [
+            'machine_code' => $request->machine_code,
             'machine_date' => $request->machine_date,
             'machine_name' => $request->machine_name,
             'machinegroup_id' => $request->machinegroup_id,

@@ -78,7 +78,7 @@
                                                <input class="form-control" type="text" name="machine_code" required 
                                                oninvalid="this.setCustomValidity('กรุณากรอกรหัสเครื่องจักร')" 
                                                oninput="this.setCustomValidity('')" 
-                                               readonly value="{{$hd->machine_code}}">
+                                               value="{{$hd->machine_code}}">
                                         </div>
                                     </div>  
                                     <div class="col-6">

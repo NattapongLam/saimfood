@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MachineChecksheetDocuDt;
+use App\Models\MachineChecksheetDocuEmp;
+use App\Models\MachineChecksheetDocuHd;
+use App\Models\MachineChecksheetHd;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Models\MachineChecksheetHd;
 use Illuminate\Support\Facades\Auth;
-use App\Models\MachineChecksheetDocuDt;
-use App\Models\MachineChecksheetDocuHd;
-use App\Models\MachineChecksheetDocuEmp;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MachineChecksheetDocuController extends Controller
 {
@@ -27,10 +28,11 @@ class MachineChecksheetDocuController extends Controller
         $dateYear = $request->year ? $request->year : date("Y");
         $dateMonth = $request->month ? $request->month : date("m");
         $hd = MachineChecksheetDocuHd::leftjoin('machines','machine_checksheet_docu_hds.machine_code','=','machines.machine_code')
+        ->leftjoin('machine_checksheet_hds','machine_checksheet_docu_hds.machine_code','=','machine_checksheet_hds.machine_code')
         ->where('machine_checksheet_docu_hds.machine_checksheet_docu_hd_flag','=',true)
         ->whereYear('machine_checksheet_docu_hds.machine_checksheet_docu_hd_date', $dateYear)
         ->whereMonth('machine_checksheet_docu_hds.machine_checksheet_docu_hd_date', $dateMonth)
-        ->select('machine_checksheet_docu_hds.*','machines.machine_name','machines.machine_pic1')
+        ->select('machine_checksheet_docu_hds.*','machines.machine_name','machines.machine_pic1','machine_checksheet_hds.review_at1','machine_checksheet_hds.review_at2')
         ->get();
         return view('docu-machine.list-machinechecksheet-docu',compact('hd','dateYear','dateMonth'));
     }

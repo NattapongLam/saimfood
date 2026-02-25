@@ -96,6 +96,9 @@
                                                         {{$item->approved_at}} 
                                                     </td>
                                                     <td>
+                                                        
+                                                        ผู้ตรวจสอบ : {{$item->review_at1}} , {{$item->review_at2}}
+                                                        <br>
                                                         <a href="{{ route('machine-checksheet-docus.edit', $item->machine_checksheet_docu_hd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> อัพเดท</a>                                                                                                                  
                                                     </td>
                                                     <td>
