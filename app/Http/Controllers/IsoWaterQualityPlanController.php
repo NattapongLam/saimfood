@@ -124,7 +124,9 @@ class IsoWaterQualityPlanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $list = IsoWaterQualityPlan::where('iso_water_quality_plans_date',$id)->first();
+        $hd = IsoWaterQualityPlan::where('iso_water_quality_plans_date',$id)->get();
+        return view('iso.edit-waterqualityplan',compact('hd','list'));
     }
 
     /**
@@ -136,7 +138,93 @@ class IsoWaterQualityPlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+           
+            foreach ($request->iso_water_quality_plans_id as $key => $value) {
+                if($value != 0){
+                    IsoWaterQualityPlan::where('iso_water_quality_plans_id',$value)->update([
+                        'iso_water_quality_plans_location' => $request->iso_water_quality_plans_location[$key],
+                        'iso_water_quality_plans_area' => $request->iso_water_quality_plans_area[$key],
+
+                        'plan_jan' => isset($request->plan_jan[$key]) ? 1 : 0,
+                        'plan_feb' => isset($request->plan_feb[$key]) ? 1 : 0,
+                        'plan_mar' => isset($request->plan_mar[$key]) ? 1 : 0,
+                        'plan_apr' => isset($request->plan_apr[$key]) ? 1 : 0,
+                        'plan_may' => isset($request->plan_may[$key]) ? 1 : 0,
+                        'plan_jun' => isset($request->plan_jun[$key]) ? 1 : 0,
+                        'plan_jul' => isset($request->plan_jul[$key]) ? 1 : 0,
+                        'plan_aug' => isset($request->plan_aug[$key]) ? 1 : 0,
+                        'plan_sep' => isset($request->plan_sep[$key]) ? 1 : 0,
+                        'plan_oct' => isset($request->plan_oct[$key]) ? 1 : 0,
+                        'plan_nov' => isset($request->plan_nov[$key]) ? 1 : 0,
+                        'plan_dec' => isset($request->plan_dec[$key]) ? 1 : 0,
+
+
+                        'iso_water_quality_plans_person' => $request->iso_water_quality_plans_person[$key],
+                        'iso_water_quality_plans_review' => $request->iso_water_quality_plans_review[$key],
+                        'iso_water_quality_plans_remark' => $request->iso_water_quality_plans_remark[$key],
+
+                        'iso_water_quality_plans_flag' => true,
+                        'person_at' => Auth::user()->name,
+                        'updated_at' => now(),
+                    ]);
+                }else if($value == 0){
+                    IsoWaterQualityPlan::create([
+                        'iso_water_quality_plans_listno' => $value,
+                        'iso_water_quality_plans_location' => $request->iso_water_quality_plans_location[$key],
+                        'iso_water_quality_plans_area' => $request->iso_water_quality_plans_area[$key],
+
+                        'plan_jan' => isset($request->plan_jan[$key]) ? 1 : 0,
+                        'plan_feb' => isset($request->plan_feb[$key]) ? 1 : 0,
+                        'plan_mar' => isset($request->plan_mar[$key]) ? 1 : 0,
+                        'plan_apr' => isset($request->plan_apr[$key]) ? 1 : 0,
+                        'plan_may' => isset($request->plan_may[$key]) ? 1 : 0,
+                        'plan_jun' => isset($request->plan_jun[$key]) ? 1 : 0,
+                        'plan_jul' => isset($request->plan_jul[$key]) ? 1 : 0,
+                        'plan_aug' => isset($request->plan_aug[$key]) ? 1 : 0,
+                        'plan_sep' => isset($request->plan_sep[$key]) ? 1 : 0,
+                        'plan_oct' => isset($request->plan_oct[$key]) ? 1 : 0,
+                        'plan_nov' => isset($request->plan_nov[$key]) ? 1 : 0,
+                        'plan_dec' => isset($request->plan_dec[$key]) ? 1 : 0,
+
+                        'action_jan' => false,
+                        'action_feb' => false,
+                        'action_mar' => false,
+                        'action_apr' => false,
+                        'action_may' => false,
+                        'action_jun' => false,
+                        'action_jul' => false,
+                        'action_aug' => false,
+                        'action_sep' => false,
+                        'action_oct' => false,
+                        'action_nov' => false,
+                        'action_dec' => false,
+
+                        'iso_water_quality_plans_person' => $request->iso_water_quality_plans_person[$key],
+                        'iso_water_quality_plans_review' => $request->iso_water_quality_plans_review[$key],
+                        'iso_water_quality_plans_remark' => $request->iso_water_quality_plans_remark[$key],
+
+                        'iso_water_quality_plans_flag' => true,
+                        'person_at' => Auth::user()->name,
+                        'iso_water_quality_plans_date' => $request->iso_water_quality_plans_date,
+
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+               
+            }
+
+            DB::commit();
+            return redirect()->route('iso-waterqualityplan.index')
+                ->with('success', 'บันทึกข้อมูลเรียบร้อย');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('iso-waterqualityplan.index')
+                ->with('error', 'บันทึกข้อมูลไม่สำเร็จ : ' . $e->getMessage());
+        }
     }
 
     /**

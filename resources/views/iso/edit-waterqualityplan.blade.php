@@ -21,16 +21,20 @@
                                         แผนการตรวจสอบน้ำใช้ในโรงงาน (Water Quality Testing Plan)
                                     </h5>                              
                             </div>
-                            <form class="custom-validation" action="{{ route('iso-waterqualityplan.store') }}" method="POST" enctype="multipart/form-data" validate>
+                            <form class="custom-validation" action="{{ route('iso-waterqualityplan.update',$list->iso_water_quality_plans_date) }}" method="POST" enctype="multipart/form-data" validate>
                             @csrf  
+                            @method('PUT')
                             <div class="card-body">
                                 <div class="row mt-3"> 
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ปี</label>
-                                            <select class="form-control" name="iso_water_quality_plans_date">
+                                            <select class="form-control" name="iso_water_quality_plans_date">                                            
                                             @for ($i = date('Y'); $i >= 2025; $i--)
-                                                <option value="{{ $i }}">{{ $i }}</option>
+                                                <option value="{{ $i }}"
+                                                    {{ old('iso_water_quality_plans_date', $list->iso_water_quality_plans_date ?? '') == $i ? 'selected' : '' }}>
+                                                    {{ $i }}
+                                                </option>
                                             @endfor
                                             </select>
                                         </div>
@@ -72,7 +76,193 @@
 
                                                 </tr>
                                             </thead>
-                                            <tbody id="tableBody"> </tbody>
+                                            <tbody id="tableBody">
+                                                @foreach ($hd as $item)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $loop->iteration }}
+                                                            <input type="hidden" 
+                                                                name="plans[{{ $loop->index }}][listno]" 
+                                                                value="{{ $loop->iteration }}">
+                                                            <input type="hidden" 
+                                                                name="iso_water_quality_plans_id[]" 
+                                                                value="{{ $item->iso_water_quality_plans_id }}">
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                name="iso_water_quality_plans_location[]" 
+                                                                value="{{ $item->iso_water_quality_plans_location }}">
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                name="iso_water_quality_plans_area[]" 
+                                                                value="{{ $item->iso_water_quality_plans_area }}">
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][jan]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][jan]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][feb]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][feb]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][mar]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][mar]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][apr]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][apr]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][may]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][may]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][jun]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][jun]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][jul]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][jul]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][aug]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][aug]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][sep]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][sep]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][oct]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][oct]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][nov]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][nov]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check d-flex justify-content-center">
+                                                                <input type="hidden" 
+                                                                    name="plans[{{ $loop->index }}][dec]" 
+                                                                    value="0">
+                                                                    
+                                                                <input type="checkbox" 
+                                                                    class="form-check-input"
+                                                                    name="plans[{{ $loop->index }}][dec]" 
+                                                                    value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                name="iso_water_quality_plans_person[]" 
+                                                                value="{{ $item->iso_water_quality_plans_person }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                name="iso_water_quality_plans_review[]" 
+                                                                value="{{ $item->iso_water_quality_plans_review }}">
+                                                        </td>
+                                                         <td>
+                                                            <input type="text" class="form-control"
+                                                                name="iso_water_quality_plans_remark[]" 
+                                                                value="{{ $item->iso_water_quality_plans_remark }}">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
                                         </table>
                                         </div>                                        
                                     </div>
@@ -99,8 +289,16 @@
 function updateRowNumbers() {
     const rows = document.querySelectorAll('#tableBody tr');
     rows.forEach((row, index) => {
-        row.querySelector('.row-number').textContent = index + 1;
-        row.querySelector('.row-number-hidden').value = index + 1;
+        const numberSpan = row.querySelector('.row-number');
+        const numberHidden = row.querySelector('.row-number-hidden');
+
+        if (numberSpan) {
+            numberSpan.textContent = index + 1;
+        }
+
+        if (numberHidden) {
+            numberHidden.value = index + 1;
+        }
     });
 }
 document.getElementById('addRowBtn').addEventListener('click', function () {
@@ -111,6 +309,7 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
             <td>
                 <span class="row-number"></span>
                 <input type="hidden" name="iso_water_quality_plans_listno[]" class="row-number-hidden"/>
+                <input type="hidden" name="iso_water_quality_plans_id[]" value="0">
             </td>
             <td><input type="text" name="iso_water_quality_plans_location[]" class="form-control"/></td>
             <td><input type="text" name="iso_water_quality_plans_area[]" class="form-control"/></td>
