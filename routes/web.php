@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 
 /*
@@ -143,6 +143,11 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:iso-waterqualityplan']
     ],function(){
         Route::resource('/iso-waterqualityplan' , App\Http\Controllers\IsoWaterQualityPlanController::class);
+    });
+    Route::group([
+        'middleware' =>  ['auth','permission:iso-producttestingplan']
+    ],function(){
+        Route::resource('/iso-producttestingplan' , App\Http\Controllers\IsoProductTestingPlanController::class);
     });
     Route::group([
         'middleware' =>  ['auth','permission:clb-measuringlist']

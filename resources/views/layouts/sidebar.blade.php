@@ -141,7 +141,9 @@
                                     <li><a href="#" key="t-starter-page">Dar</a></li>
                                     <li><a href="#" key="t-starter-page">แผนการ Swab Test</a></li>
                                     <li><a href="#" key="t-starter-page">แผนตรวจหาแบคทีเรียในอากาศ</a></li>
-                                    <li><a href="#" key="t-starter-page">แผนการส่งตรวจวิเคราะห์สินค้าสำเร็จรูป</a></li>
+                                    @can('iso-producttestingplan')
+                                    <li><a href="{{route('iso-producttestingplan.index')}}" key="t-starter-page">แผนการส่งตรวจวิเคราะห์สินค้าสำเร็จรูป</a></li>
+                                    @endcan
                                     @can('iso-waterqualityplan')
                                     <li><a href="{{route('iso-waterqualityplan.index')}}" key="t-starter-page">แผนการตรวจสอบน้ำใช้ในโรงงาน</a></li>
                                     @endcan

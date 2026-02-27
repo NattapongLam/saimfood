@@ -18,10 +18,10 @@
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                     <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>
-                                        แผนการตรวจสอบน้ำใช้ในโรงงาน (Water Quality Testing Plan)
+                                        แผนการส่งตรวจวิเคราะห์สินค้าสำเร็จรูป
                                     </h5>                              
                             </div>
-                            <form class="custom-validation" action="{{ route('iso-waterqualityplan.update',$list->iso_water_quality_plans_date) }}" method="POST" enctype="multipart/form-data" validate>
+                            <form class="custom-validation" action="{{ route('iso-producttestingplan.update',$list->iso_product_testing_plans_date) }}" method="POST" enctype="multipart/form-data" validate>
                             @csrf  
                             @method('PUT')
                             <div class="card-body">
@@ -29,10 +29,9 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ปี</label>
-                                            <select class="form-control" name="iso_water_quality_plans_date">                                            
+                                            <select class="form-control" name="iso_product_testing_plans_date">
                                             @for ($i = date('Y'); $i >= 2025; $i--)
-                                                <option value="{{ $i }}"
-                                                    {{ old('iso_water_quality_plans_date', $list->iso_water_quality_plans_date ?? '') == $i ? 'selected' : '' }}>
+                                                <option value="{{ $i }}" {{ old('iso_product_testing_plans_date', $list->iso_product_testing_plans_date ?? '') == $i ? 'selected' : '' }}>
                                                     {{ $i }}
                                                 </option>
                                             @endfor
@@ -51,12 +50,10 @@
                                             <thead>
                                                 <tr>
                                                     <th rowspan="2" style="width:5%">ลำดับ</th>
-                                                    <th rowspan="2" style="width:10%">สถานที่</th>
-                                                    <th rowspan="2" style="width:10%">บริเวณจุดเก็บน้ำ</th>
+                                                    <th rowspan="2" style="width:10%">ชื่อสินค้า</th>
+                                                    <th rowspan="2" style="width:10%">รหัสสินค้า</th>
+                                                     <th rowspan="2" style="width:10%">กลุ่มผลิตภัณฑ์</th>
                                                     <th colspan="12">เดือน</th>
-                                                    <th rowspan="2" style="width:10%">ผู้รับผิดชอบ</th>
-                                                    <th rowspan="2" style="width:10%">ผู้ทวนสอบ</th>
-                                                    <th rowspan="2" style="width:10%">หมายเหตุ</th>
                                                     <th rowspan="2"></th>
                                                 </tr>
                                                 <tr>
@@ -82,23 +79,26 @@
                                                         <td>
                                                             {{ $loop->iteration }}
                                                             <input type="hidden" 
-                                                                name="iso_water_quality_plans_listno[]" 
+                                                                name="iso_product_testing_plans_listno[]" 
                                                                 value="{{ $loop->iteration }}">
                                                             <input type="hidden" 
-                                                                name="iso_water_quality_plans_id[]" 
-                                                                value="{{ $item->iso_water_quality_plans_id }}">
+                                                                name="iso_product_testing_plans_id[]" 
+                                                                value="{{ $item->iso_product_testing_plans_id }}">
                                                         </td>
-
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                name="iso_water_quality_plans_location[]" 
-                                                                value="{{ $item->iso_water_quality_plans_location }}">
+                                                                name="iso_product_testing_plans_name[]" 
+                                                                value="{{ $item->iso_product_testing_plans_name }}">
                                                         </td>
-
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                name="iso_water_quality_plans_area[]" 
-                                                                value="{{ $item->iso_water_quality_plans_area }}">
+                                                                name="iso_product_testing_plans_code[]" 
+                                                                value="{{ $item->iso_product_testing_plans_code }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                name="iso_product_testing_plans_group[]" 
+                                                                value="{{ $item->iso_product_testing_plans_group }}">
                                                         </td>
                                                         <td>
                                                             <div class="form-check d-flex justify-content-center">
@@ -243,21 +243,6 @@
                                                                     name="plans[{{ $loop->index }}][dec]" 
                                                                     value="1">
                                                             </div>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                name="iso_water_quality_plans_person[]" 
-                                                                value="{{ $item->iso_water_quality_plans_person }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                name="iso_water_quality_plans_review[]" 
-                                                                value="{{ $item->iso_water_quality_plans_review }}">
-                                                        </td>
-                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                name="iso_water_quality_plans_remark[]" 
-                                                                value="{{ $item->iso_water_quality_plans_remark }}">
                                                         </td>
                                                         <td></td>
                                                     </tr>
@@ -308,11 +293,12 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
         newRow.innerHTML = `
             <td>
                 <span class="row-number"></span>
-                <input type="hidden" name="iso_water_quality_plans_listno[]" class="row-number-hidden"/>
-                <input type="hidden" name="iso_water_quality_plans_id[]" value="0">
+                <input type="hidden" name="iso_product_testing_plans_listno[]" class="row-number-hidden"/>
+                <input type="hidden" name="iso_product_testing_plans_id[]" value="0">
             </td>
-            <td><input type="text" name="iso_water_quality_plans_location[]" class="form-control"/></td>
-            <td><input type="text" name="iso_water_quality_plans_area[]" class="form-control"/></td>
+            <td><input type="text" name="iso_product_testing_plans_name[]" class="form-control"/></td>
+            <td><input type="text" name="iso_product_testing_plans_code[]" class="form-control"/></td>
+            <td><input type="text" name="iso_product_testing_plans_group[]" class="form-control"/></td>
             <td>
                 <div class="form-check d-flex justify-content-center">
                     <input type="checkbox" 
@@ -409,9 +395,6 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
                     value="1">
                 </div>
             </td>
-            <td><input type="text" name="iso_water_quality_plans_person[]" class="form-control"/></td>
-            <td><input type="text" name="iso_water_quality_plans_review[]" class="form-control"/></td>
-            <td><input type="text" name="iso_water_quality_plans_remark[]" class="form-control"/></td>
             <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
         `;
 
