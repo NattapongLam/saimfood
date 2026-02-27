@@ -140,7 +140,9 @@
                                     <li><a href="#" key="t-starter-page">CAR</a></li>
                                     <li><a href="#" key="t-starter-page">Dar</a></li>
                                     <li><a href="#" key="t-starter-page">แผนการ Swab Test</a></li>
-                                    <li><a href="#" key="t-starter-page">แผนตรวจหาแบคทีเรียในอากาศ</a></li>
+                                    @can('iso-airtestplan')
+                                    <li><a href="{{route('iso-airtestplan.index')}}" key="t-starter-page">แผนตรวจหาแบคทีเรียในอากาศ</a></li>
+                                    @endcan
                                     @can('iso-producttestingplan')
                                     <li><a href="{{route('iso-producttestingplan.index')}}" key="t-starter-page">แผนการส่งตรวจวิเคราะห์สินค้าสำเร็จรูป</a></li>
                                     @endcan

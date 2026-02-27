@@ -33,5 +33,6 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'clb-measuringplan']);
         // Permission::create(['name' => 'iso-waterqualityplan']);
         // Permission::create(['name' => 'iso-producttestingplan']);
+        // Permission::create(['name' => 'iso-airtestplan']);
     }
 }

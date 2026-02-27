@@ -150,6 +150,11 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/iso-producttestingplan' , App\Http\Controllers\IsoProductTestingPlanController::class);
     });
     Route::group([
+        'middleware' =>  ['auth','permission:iso-airtestplan']
+    ],function(){
+        Route::resource('/iso-airtestplan' , App\Http\Controllers\IsoAirtestPlanController::class);
+    });
+    Route::group([
         'middleware' =>  ['auth','permission:clb-measuringlist']
     ],function(){
         Route::resource('/clb-measuringlist' , App\Http\Controllers\ClbMeasuringListController::class);
