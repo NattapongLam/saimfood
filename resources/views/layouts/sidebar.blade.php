@@ -139,7 +139,9 @@
                                     <li><a href="{{route('iso-ncrlist.index')}}" key="t-starter-page">NCR</a></li>
                                     <li><a href="#" key="t-starter-page">CAR</a></li>
                                     <li><a href="#" key="t-starter-page">Dar</a></li>
-                                    <li><a href="#" key="t-starter-page">แผนการ Swab Test</a></li>
+                                    @can('iso-swabtestplan')
+                                    <li><a href="{{route('iso-swabtestplan.index')}}" key="t-starter-page">แผนการ Swab Test</a></li>
+                                    @endcan
                                     @can('iso-airtestplan')
                                     <li><a href="{{route('iso-airtestplan.index')}}" key="t-starter-page">แผนตรวจหาแบคทีเรียในอากาศ</a></li>
                                     @endcan
