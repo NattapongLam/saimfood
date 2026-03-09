@@ -112,6 +112,19 @@
                                    
                                 </ul>
                             </li>
+                            @can('setup-deliverychecksheet')
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-detail"></i>
+                                    <span key="t-starter-page">ขนส่ง</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li>
+                                        <li><a href="{{route('delivery-checksheet-docus.index')}}" key="t-starter-page">ตรวจเช็คประจำวัน</a></li>
+                                    </li>                                   
+                                </ul>
+                            </li>
+                            @endcan
                             @can('docu-equipment-request')
                             <li>                               
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">

@@ -79,6 +79,15 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/confirmApprovedMachineChecksheetDocuHd' , [App\Http\Controllers\MachineChecksheetDocuController::class , 'confirmApprovedMachineChecksheetDocuHd']);
     });
     Route::group([
+        'middleware' =>  ['auth','permission:setup-deliverychecksheet']
+    ],function(){
+        Route::resource('/delivery-checksheet-docus' , App\Http\Controllers\DeliveryChecksheetDocuController::class);
+        Route::post('/confirmDelDeliveryChecksheetDocuHd' , [App\Http\Controllers\DeliveryChecksheetDocuController::class , 'confirmDelDeliveryChecksheetDocuHd']);
+        Route::get('/get-delivery-checkdetails/{id}', [App\Http\Controllers\DeliveryChecksheetDocuController::class, 'getCheckDetails']);
+        Route::get('/delivery-checksheet-docus-print/{id}', [App\Http\Controllers\DeliveryChecksheetDocuController::class, 'DeliveryChecksheetPrint'])->name('delivery-checksheet-docus.print');
+        Route::post('/confirmApprovedDeliveryChecksheetDocuHd' , [App\Http\Controllers\DeliveryChecksheetDocuController::class , 'confirmApprovedDeliveryChecksheetDocuHd']);
+    });
+    Route::group([
         'middleware' =>  ['auth','permission:setup-equipment']
     ],function(){
         Route::resource('/equipments' , App\Http\Controllers\EquipmentController::class);

@@ -10,9 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
-class MachineChecksheetDocuController extends Controller
+class DeliveryChecksheetDocuController extends Controller
 {
     public function __construct()
     {
@@ -30,12 +29,12 @@ class MachineChecksheetDocuController extends Controller
         $hd = MachineChecksheetDocuHd::leftjoin('machines','machine_checksheet_docu_hds.machine_code','=','machines.machine_code')
         ->leftjoin('machine_checksheet_hds','machine_checksheet_docu_hds.machine_code','=','machine_checksheet_hds.machine_code')
         ->where('machine_checksheet_docu_hds.machine_checksheet_docu_hd_flag','=',true)
-        ->where('machines.machinegroup_id','<>',12)
+        ->where('machines.machinegroup_id',12)
         ->whereYear('machine_checksheet_docu_hds.machine_checksheet_docu_hd_date', $dateYear)
         ->whereMonth('machine_checksheet_docu_hds.machine_checksheet_docu_hd_date', $dateMonth)
         ->select('machine_checksheet_docu_hds.*','machines.machine_name','machines.machine_pic1','machine_checksheet_hds.review_at1','machine_checksheet_hds.review_at2')
         ->get();
-        return view('docu-machine.list-machinechecksheet-docu',compact('hd','dateYear','dateMonth'));
+        return view('docu-delivery.list-deliverychecksheet-docu',compact('hd','dateYear','dateMonth'));
     }
 
     /**
@@ -47,10 +46,10 @@ class MachineChecksheetDocuController extends Controller
     {
         $mc = MachineChecksheetHd::leftjoin('machines','machine_checksheet_hds.machine_code','=','machines.machine_code')
         ->where('machine_checksheet_hd_flag',true)
-        ->where('machines.machinegroup_id','<>',12)
+        ->where('machines.machinegroup_id',12)
         ->get();
         $emp = DB::table('tg_employee_list')->whereIn('personcode',['630701029','651017104','650815085','641006044','680303281'])->get();
-        return view('docu-machine.create-machinechecksheet-docu',compact('mc','emp'));
+        return view('docu-delivery.create-deliverychecksheet-docu',compact('mc','emp'));
     }
 
     /**
@@ -102,13 +101,13 @@ class MachineChecksheetDocuController extends Controller
                     'created_at' => Carbon::now(),
             ]);
             DB::commit();
-            return redirect()->route('machine-checksheet-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            return redirect()->route('delivery-checksheet-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
             DB::rollback();
             $message = $e->getMessage();
             dd($message);
-            return redirect()->route('machine-checksheet-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
-        }     
+            return redirect()->route('delivery-checksheet-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+        } 
     }
 
     /**
@@ -147,7 +146,7 @@ class MachineChecksheetDocuController extends Controller
             }
         }
         $ck = MachineChecksheetHd::where('machine_code', $hd->machine_code)->first();
-        return view('docu-machine.edit-machinechecksheet-docu',compact('hd','emp','ck'));
+        return view('docu-delivery.edit-deliverychecksheet-docu',compact('hd','emp','ck'));
     }
 
     /**
@@ -200,12 +199,12 @@ class MachineChecksheetDocuController extends Controller
                 MachineChecksheetDocuEmp::where('machine_checksheet_docu_emp_id',$request->machine_checksheet_docu_emp_id)->update($data1);   
                 
             DB::commit();
-            return redirect()->route('machine-checksheet-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            return redirect()->route('delivery-checksheet-docus.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
             DB::rollback();
             $message = $e->getMessage();
             dd($message);
-            return redirect()->route('machine-checksheet-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            return redirect()->route('delivery-checksheet-docus.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
         }     
     }
 
@@ -220,7 +219,7 @@ class MachineChecksheetDocuController extends Controller
         //
     }
 
-    public function confirmDelMachineChecksheetDocuHd(Request $request)
+    public function confirmDelDeliveryChecksheetDocuHd(Request $request)
     {
         $id = $request->refid;
         try 
@@ -257,13 +256,13 @@ class MachineChecksheetDocuController extends Controller
         return response()->json($details);
     }
 
-    public function MachineChecksheetPrint($id)
+    public function DeliveryChecksheetPrint($id)
     {
         $hd = MachineChecksheetDocuHd::leftjoin('machines','machine_checksheet_docu_hds.machine_code','=','machines.machine_code')->findOrFail($id);
         return view('docu-machine.print-machinechecksheet-docu',compact('hd'));
     }
 
-    public function confirmApprovedMachineChecksheetDocuHd(Request $request)
+    public function confirmApprovedDeliveryChecksheetDocuHd(Request $request)
     {
         $id  = $request->refid;
         $day = $request->day; // ใช้ตามค่าที่ส่งมา ไม่ดัดแปลง
@@ -299,6 +298,4 @@ class MachineChecksheetDocuController extends Controller
             ]);
         }
     }
-
-
 }
