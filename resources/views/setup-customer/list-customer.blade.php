@@ -84,7 +84,8 @@ $(document).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "order": [[1, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
+        "pageLength": 50, // แสดง 50 รายการต่อหน้า
+        "order": [[1, "desc"]], // เรียงวันที่ล่าสุดก่อน
         "language": {
             "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
             "zeroRecords": "ไม่พบข้อมูล",

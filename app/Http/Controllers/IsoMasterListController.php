@@ -23,7 +23,7 @@ class IsoMasterListController extends Controller
      */
     public function index()
     {
-        $hd = IsoMasterList::where('iso_master_lists_flag',true)->get();
+        $hd = IsoMasterList::where('iso_master_lists_flag',true)->orderby('iso_master_lists_listno','asc')->get();
         return view('iso.list-masterlist',compact('hd'));
     }
 

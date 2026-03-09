@@ -28,11 +28,12 @@
                 </div>
                 </div>
                  </div>       
-            </div>          
+            </div>
+            <div class="card">          
             <div class="card-body">
                 <div class="row">
-                    <div class="table-responsive">
-                        <table class="table table-bordered dt-responsive  nowrap w-100 text-center">
+                    <div class="table-responsive" style="overflow-x:auto;">
+                            <table id="DataTableList" class="table table-bordered dt-responsive table-sm" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>สถานะ</th>
@@ -75,7 +76,39 @@
                     </div>
                 </div>                
             </div>
+            </div>
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+$(document).ready(function() {
+    $('#DataTableList').DataTable({
+        "paging": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "pageLength": 50, // แสดง 50 รายการต่อหน้า
+        "order": [[1, "asc"]], // เรียงวันที่ล่าสุดก่อน
+        "language": {
+            "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
+            "zeroRecords": "ไม่พบข้อมูล",
+            "info": "แสดง _START_ ถึง _END_ จาก _TOTAL_ รายการ",
+            "infoEmpty": "ไม่มีข้อมูล",
+            "search": "ค้นหา:",
+            "paginate": {
+                "first": "หน้าแรก",
+                "last": "หน้าสุดท้าย",
+                "next": "ถัดไป",
+                "previous": "ก่อนหน้า"
+            }
+        },
+        "columnDefs": [
+            { "className": "text-center", "targets": "_all" }
+        ]
+    });
+});
+</script>
 @endsection

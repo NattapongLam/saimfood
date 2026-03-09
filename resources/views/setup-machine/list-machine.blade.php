@@ -25,7 +25,7 @@
                                     </a>
                                 </h5>                  
                             </div>
-                            </div>
+                        </div>
         <div class="card">
             <div class="card-body">
                 <table id="DataTableList" class="table table-bordered dt-responsive nowrap w-100 table-sm">
@@ -90,7 +90,8 @@ $(document).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "order": [[4, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
+        "pageLength": 50, // แสดง 50 รายการต่อหน้า
+        "order": [[3, "asc"]], // เรียงวันที่ล่าสุดก่อน
         "language": {
             "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
             "zeroRecords": "ไม่พบข้อมูล",
