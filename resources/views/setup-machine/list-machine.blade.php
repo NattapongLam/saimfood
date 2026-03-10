@@ -16,8 +16,8 @@
                             </div>
                         @endif       
                         <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ใบมาตรฐานของเครื่องจักร</h5>
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>บัญชีรายชื่อเครื่องจักรและอุปกรณ์</h5>
                             <div class="page-title-right">
                                 <h5 class="my-0 text-primary">
                                     <a href="{{route('machines.create')}}">
@@ -26,6 +26,9 @@
                                 </h5>                  
                             </div>
                         </div>
+                        </div>
+                </div>
+            </div>
         <div class="card">
             <div class="card-body">
                 <table id="DataTableList" class="table table-bordered dt-responsive nowrap w-100 table-sm">
@@ -75,11 +78,16 @@
                         </tr>                          
                         @endforeach
                     </tbody>
-                </table>               
+                </table>
+                <br>
+                <div class="d-flex justify-content-end">
+                    <h6>F-QP-MN-001-05</h6>
+                </div>                      
             </div>
         </div>
     </div>
 </div>
+</div>         
 @endsection
 @section('script')
 <script>

@@ -40,11 +40,12 @@
                                                 <li><a href="{{route('machine-groups.create')}}" key="t-starter-page">กลุ่มเครื่องจักรและอุปกรณ์</a></li>
                                             @endcan
                                             @can('setup-machine')
-                                                <li><a href="{{route('machines.index')}}" key="t-starter-page">ใบมาตรฐานของเครื่องจักร</a></li>
+                                                <li><a href="{{route('machines.index')}}" key="t-starter-page">บัญชีรายชื่อเครื่องจักรและอุปกรณ์</a></li>
                                             @endcan
                                             @can('setup-machineplaning')
-                                                <li><a href="{{route('machine-planings.index')}}" key="t-starter-page">ตั้งค่าตรวจเช็คตามแผน</a></li>
+                                                <li><a href="{{route('machine-planings.index')}}" key="t-starter-page">แผนการบำรุงรักษาเครื่องจักรและอุปกรณ์</a></li>
                                             @endcan
+                                            <li><a href="#" key="t-starter-page">แผนบำรุงการรักษาเครื่องปรับอากาศ</a></li>
                                             @can('setup-machinechecksheet')
                                                 <li><a href="{{route('machine-checksheets.index')}}" key="t-starter-page">ตั้งค่าตรวจเช็คประจำวัน</a></li>  
                                             @endcan  
