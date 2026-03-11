@@ -45,7 +45,9 @@
                                             @can('setup-machineplaning')
                                                 <li><a href="{{route('machine-planings.index')}}" key="t-starter-page">แผนการบำรุงรักษาเครื่องจักรและอุปกรณ์</a></li>
                                             @endcan
-                                            <li><a href="#" key="t-starter-page">แผนบำรุงการรักษาเครื่องปรับอากาศ</a></li>
+                                            @can('setup-airplaning')
+                                            <li><a href="{{route('air-planings.index')}}" key="t-starter-page">แผนบำรุงการรักษาเครื่องปรับอากาศ</a></li>
+                                            @endcan
                                             @can('setup-machinechecksheet')
                                                 <li><a href="{{route('machine-checksheets.index')}}" key="t-starter-page">ตั้งค่าตรวจเช็คประจำวัน</a></li>  
                                             @endcan  

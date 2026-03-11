@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\Machine;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\MachineChecksheetDt;
 use App\Models\MachineChecksheetHd;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MachineChecksheetController extends Controller
 {
@@ -23,7 +24,8 @@ class MachineChecksheetController extends Controller
      */
     public function index()
     {
-        $hd = MachineChecksheetHd::leftjoin('machines','machine_checksheet_hds.machine_code','=','machines.machine_code')->get();       
+        $hd = MachineChecksheetHd::leftjoin('machines','machine_checksheet_hds.machine_code','=','machines.machine_code')    
+        ->get();       
         return view('setup-machine.list-machinechecksheet',compact('hd'));
     }
 
@@ -34,7 +36,8 @@ class MachineChecksheetController extends Controller
      */
     public function create()
     {
-        $machine = Machine::where('machine_flag',true)->get();
+        $machine = Machine::where('machine_flag',true)
+        ->get();
         $emp = DB::table('tg_employee_list')->get();
         return view('setup-machine.create-machinechecksheet',compact('machine','emp'));
     }
@@ -107,7 +110,8 @@ class MachineChecksheetController extends Controller
     public function edit($id)
     {
         $hd = MachineChecksheetHd::find($id);
-        $machine = Machine::where('machine_flag',true)->get();
+        $machine = Machine::where('machine_flag',true)
+        ->get();
         $emp = DB::table('tg_employee_list')->get();
         return view('setup-machine.edit-machinechecksheet',compact('hd','machine','emp'));
     }

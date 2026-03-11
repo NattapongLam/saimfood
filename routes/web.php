@@ -88,6 +88,13 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/confirmApprovedDeliveryChecksheetDocuHd' , [App\Http\Controllers\DeliveryChecksheetDocuController::class , 'confirmApprovedDeliveryChecksheetDocuHd']);
     });
     Route::group([
+        'middleware' =>  ['auth','permission:setup-airplaning']
+    ],function(){
+        Route::resource('/air-planings' , App\Http\Controllers\AirPlaningController::class);
+        Route::post('/confirmDelAirPlaning' , [App\Http\Controllers\AirPlaningController::class , 'confirmDelAirPlaning']);
+        Route::post('/confirmDelAirPlaningHd' , [App\Http\Controllers\AirPlaningController::class , 'confirmDelAirPlaningHd']);
+    });
+    Route::group([
         'middleware' =>  ['auth','permission:setup-equipment']
     ],function(){
         Route::resource('/equipments' , App\Http\Controllers\EquipmentController::class);

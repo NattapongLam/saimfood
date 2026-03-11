@@ -36,5 +36,6 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'iso-airtestplan']);
         // Permission::create(['name' => 'iso-swabtestplan']);
         // Permission::create(['name' => 'setup-deliverychecksheet']);
+        // Permission::create(['name' => 'setup-airplaning']);
     }
 }

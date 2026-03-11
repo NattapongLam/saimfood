@@ -17,10 +17,10 @@
                         @endif       
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>แผนการบำรุงรักษาเครื่องจักรและอุปกรณ์</h5>
+                                <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>แผนบำรุงการรักษาเครื่องปรับอากาศ</h5>
                              <div class="page-title-right">
                             <h5 class="my-0 text-primary">
-                                <a href="{{route('machine-planings.create')}}">
+                                <a href="{{route('air-planings.create')}}">
                                     เพิ่มข้อมูล
                                 </a>
                             </h5>
@@ -62,7 +62,7 @@
                                                         {{$item->machine_planing_hd_note}}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('machine-planings.edit', $item->machine_planing_hd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> แก้ไข</a>                                                      
+                                                        <a href="{{ route('air-planings.edit', $item->machine_planing_hd_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i> แก้ไข</a>                                                      
                                                     </td>
                                                     <td>
                                                         <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->machine_planing_hd_id }}')"><i class="fas fa-trash"></i></a>   
@@ -74,7 +74,7 @@
                                 </div>
                                 <br>
                                 <div class="d-flex justify-content-end">
-                                    <h6>SD-MN-001</h6>
+                                    <h6>SD-MN-002</h6>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +124,7 @@ Swal.fire({
 }).then(function(result) {
     if (result.value) {
         $.ajax({
-            url: `{{ url('/confirmDelMachinePlaningHd') }}`,
+            url: `{{ url('/confirmDelAirPlaningHd') }}`,
             type: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",

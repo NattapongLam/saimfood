@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class MachinePlaningController extends Controller
+class AirPlaningController extends Controller
 {
     public function __construct()
     {
@@ -25,9 +25,9 @@ class MachinePlaningController extends Controller
     public function index()
     {
         $hd = MachinePlaningHd::leftjoin('machines','machine_planing_hds.machine_code','=','machines.machine_code')
-        ->whereNotIn('machines.machinegroup_id',[16,17])
+        ->whereIn('machines.machinegroup_id',[16,17])
         ->get();
-        return view('setup-machine.list-machineplaning',compact('hd'));
+        return view('setup-machine.list-airplaning',compact('hd'));
     }
 
     /**
@@ -38,9 +38,9 @@ class MachinePlaningController extends Controller
     public function create()
     {
         $machine = Machine::where('machine_flag',true)
-        ->whereNotIn('machinegroup_id',[16,17])
+        ->whereIn('machinegroup_id',[16,17])
         ->get();
-        return view('setup-machine.create-machineplaning',compact('machine'));
+        return view('setup-machine.create-airplaning',compact('machine'));
     }
 
     /**
@@ -51,7 +51,7 @@ class MachinePlaningController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+         $request->validate([
             'machine_code' => 'required',
             'machine_planing_dt_remark' => 'required',
             'machine_planing_dt_listno' => 'required',
@@ -80,12 +80,12 @@ class MachinePlaningController extends Controller
                 ]);
             }
             DB::commit();
-            return redirect()->route('machine-planings.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            return redirect()->route('air-planings.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
             DB::rollback();
             $message = $e->getMessage();
             dd($message);
-            return redirect()->route('machine-planings.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            return redirect()->route('air-planings.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
         }     
     }
 
@@ -110,9 +110,9 @@ class MachinePlaningController extends Controller
     {
         $hd = MachinePlaningHd::find($id);
         $machine = Machine::where('machine_flag',true)
-        ->whereNotIn('machinegroup_id',[16,17])
+        ->whereIn('machinegroup_id',[16,17])
         ->get();
-        return view('setup-machine.edit-machineplaning',compact('hd','machine'));
+        return view('setup-machine.edit-airplaning',compact('hd','machine'));
     }
 
     /**
@@ -124,7 +124,7 @@ class MachinePlaningController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+         $request->validate([
             'machine_code' => 'required',
             'machine_planing_dt_remark' => 'required',
             'machine_planing_dt_listno' => 'required',
@@ -165,12 +165,12 @@ class MachinePlaningController extends Controller
                 }
             }
             DB::commit();
-            return redirect()->route('machine-planings.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            return redirect()->route('air-planings.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
             DB::rollback();
             $message = $e->getMessage();
             dd($message);
-            return redirect()->route('machine-planings.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            return redirect()->route('air-planings.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
         }      
     }
 
@@ -184,7 +184,8 @@ class MachinePlaningController extends Controller
     {
         //
     }
-    public function confirmDelMachinePlaning(Request $request)
+
+    public function confirmDelAirPlaning(Request $request)
     {
         $id = $request->refid;
         try 
@@ -221,7 +222,7 @@ class MachinePlaningController extends Controller
         }
     }
 
-    public function confirmDelMachinePlaningHd(Request $request)
+    public function confirmDelAirPlaningHd(Request $request)
     {
         $id = $request->refid;
         try 
