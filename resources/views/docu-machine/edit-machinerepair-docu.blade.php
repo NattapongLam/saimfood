@@ -547,7 +547,7 @@
                                                 @php
                                                     date_default_timezone_set('Asia/Bangkok');
                                                 @endphp
-                                                <input class="form-control" type="datetime-local" name="repairer_datetime" value="{{$hd->repairer_datetime}}" readonly>
+                                                <input class="form-control" type="datetime-local" name="repairer_datetime" value="{{$hd->repairer_datetime}}">
                                             </div>
                                         </div>
                                         <div class="col-4">
@@ -737,6 +737,26 @@
                                 </div>
                                 <br>
                                 @if (auth()->user()->username == "670902251" || auth()->user()->username == "admin")
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label" style="color: red">แก้ไขวันที่ - เวลารับงานซ่อม</label>
+                                            <input 
+                                                class="form-control" 
+                                                type="datetime-local" 
+                                                name="accepting_datetime" 
+                                                value="{{ $hd->accepting_datetime }}" 
+                                                required
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label" style="color: red">แก้ไขวัน-เวลาที่ซ่อมเสร็จ</label>
+                                                <input class="form-control" type="datetime-local" name="repairer_datetime" value="{{$hd->repairer_datetime}}" readonly>
+                                            </div>
+                                        </div>
+                                </div>
                                 <div class="row"> 
                                      <div class="col-12" style="text-align: right;">
                                                 <a href="javascript:void(0);" class="btn btn-secondary" id="addRowBtn">เพิ่มรายการ</a>

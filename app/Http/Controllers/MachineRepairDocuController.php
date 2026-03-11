@@ -412,7 +412,8 @@ class MachineRepairDocuController extends Controller
                     'machine_repair_status_id' => 5,
                     'inspector_at' => Auth::user()->name,
                     'inspector_date' =>  Carbon::now(),
-                    'inspector_note' => $request->inspector_note
+                    'inspector_note' => $request->inspector_note,
+                    'repairer_datetime' => $request->repairer_datetime
                 ]);
                 DB::commit();
                 $mc = Machine::where('machine_code',$ck->machine_code)->first();
@@ -470,6 +471,8 @@ class MachineRepairDocuController extends Controller
                 MachineRepairDochd::where('machine_repair_dochd_id',$id)
                 ->update([
                     'updated_at' => Carbon::now(),
+                    'accepting_datetime' => $request->accepting_datetime,
+                    'repairer_datetime' => $request->repairer_datetime
                 ]);
                 $listnos = $request->machine_repair_docdt_listno ?? [];
                 $ids = $request->machine_repair_docdt_id ?? [];
