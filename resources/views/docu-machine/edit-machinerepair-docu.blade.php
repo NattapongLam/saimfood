@@ -547,7 +547,7 @@
                                                 @php
                                                     date_default_timezone_set('Asia/Bangkok');
                                                 @endphp
-                                                <input class="form-control" type="datetime-local" name="repairer_datetime" value="{{$hd->repairer_datetime}}">
+                                                <input class="form-control" type="datetime-local" name="repairer_datetime" value="{{$hd->repairer_datetime}}" readonly>
                                             </div>
                                         </div>
                                         <div class="col-4">

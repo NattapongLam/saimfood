@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\Machine;
-use Illuminate\Support\Str;
 use App\Models\MachineGroup;
-use Illuminate\Http\Request;
 use App\Models\MachineRepairDocdt;
 use App\Models\MachineRepairDochd;
-use Illuminate\Support\Facades\DB;
 use App\Models\MachineRepairStatus;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class MachineRepairDocuController extends Controller
 {
@@ -413,7 +414,6 @@ class MachineRepairDocuController extends Controller
                     'inspector_at' => Auth::user()->name,
                     'inspector_date' =>  Carbon::now(),
                     'inspector_note' => $request->inspector_note,
-                    'repairer_datetime' => $request->repairer_datetime
                 ]);
                 DB::commit();
                 $mc = Machine::where('machine_code',$ck->machine_code)->first();
