@@ -742,10 +742,10 @@
                                         <div class="form-group">
                                             <label class="form-label" style="color: red">แก้ไขวันที่ - เวลารับงานซ่อม</label>
                                             <input 
-                                                class="form-control" 
-                                                type="datetime-local" 
-                                                name="accepting_datetime" 
-                                                value="{{ $hd->accepting_datetime }}" 
+                                                class="form-control"
+                                                type="datetime-local"
+                                                name="accepting_datetime"
+                                                value="{{ $hd->accepting_datetime ? \Carbon\Carbon::parse($hd->accepting_datetime)->format('Y-m-d\TH:i') : '' }}"
                                                 required
                                             >
                                         </div>
@@ -753,7 +753,12 @@
                                     <div class="col-4">
                                             <div class="form-group">
                                                 <label class="form-label" style="color: red">แก้ไขวัน-เวลาที่ซ่อมเสร็จ</label>
-                                                <input class="form-control" type="datetime-local" name="repairer_datetime" value="{{$hd->repairer_datetime}}" readonly>
+                                                <input 
+                                                    class="form-control"
+                                                    type="datetime-local"
+                                                    name="repairer_datetime"
+                                                    value="{{ $hd->repairer_datetime ? \Carbon\Carbon::parse($hd->repairer_datetime)->format('Y-m-d\TH:i') : '' }}"
+                                                >
                                             </div>
                                         </div>
                                 </div>

@@ -471,8 +471,12 @@ class MachineRepairDocuController extends Controller
                 MachineRepairDochd::where('machine_repair_dochd_id',$id)
                 ->update([
                     'updated_at' => Carbon::now(),
-                    'accepting_datetime' => $request->accepting_datetime,
-                    'repairer_datetime' => $request->repairer_datetime
+                    'accepting_datetime' => $request->accepting_datetime 
+                        ? Carbon::parse($request->accepting_datetime)
+                        : null,
+                    'repairer_datetime' => $request->repairer_datetime 
+                        ? Carbon::parse($request->repairer_datetime)
+                        : null
                 ]);
                 $listnos = $request->machine_repair_docdt_listno ?? [];
                 $ids = $request->machine_repair_docdt_id ?? [];
