@@ -276,12 +276,12 @@ class MachineChecksheetDocuController extends Controller
             // ใช้ค่าตามที่ส่งมา เช่น 1, 01, 2, 02, 10, 25, 31
             $empField  = "emp_{$day}";
             $dateField = "date_{$day}";
-
-            $target->update([
-                $empField  => Auth::user()->name,
-                $dateField => Carbon::now(),
-            ]);
-
+            if($target->$empField == null && $target->dateField == null){
+                $target->update([
+                    $empField  => Auth::user()->name,
+                    $dateField => Carbon::now(),
+                ]);
+            }
             DB::commit();
 
             return response()->json([
