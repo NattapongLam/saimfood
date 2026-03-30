@@ -55,7 +55,7 @@ class MachineChecksheetController extends Controller
             'machine_checksheet_dt_listno' => 'required',
             'machine_checksheet_dt_remark' => 'required',
         ]);
-         $data = [
+        $data = [
             'machine_code' => $request->machine_code,
             'machine_checksheet_hd_note' => $request->machine_checksheet_hd_note,
             'machine_checksheet_hd_flag' => true,           

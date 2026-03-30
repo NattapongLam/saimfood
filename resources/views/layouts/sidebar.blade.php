@@ -152,9 +152,15 @@
                                     @can('iso-distributionlist')
                                     <li><a href="{{route('iso-distributionlist.index')}}" key="t-starter-page">การแจกจ่ายเอกสาร</a></li>
                                     @endcan
+                                    @can('iso-ncrlist')
                                     <li><a href="{{route('iso-ncrlist.index')}}" key="t-starter-page">NCR</a></li>
+                                    @endcan
+                                    @can('iso-carlist')
                                     <li><a href="#" key="t-starter-page">CAR</a></li>
-                                    <li><a href="#" key="t-starter-page">Dar</a></li>
+                                    @endcan
+                                    @can('iso-darlist')
+                                    <li><a href="{{route('iso-darlist.index')}}" key="t-starter-page">Dar</a></li>
+                                    @endcan
                                     @can('iso-swabtestplan')
                                     <li><a href="{{route('iso-swabtestplan.index')}}" key="t-starter-page">แผนการ Swab Test</a></li>
                                     @endcan

@@ -176,6 +176,11 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/iso-swabtestplan' , App\Http\Controllers\IsoSwabtestPlanController::class);
     });
     Route::group([
+        'middleware' =>  ['auth','permission:iso-darlist']
+    ],function(){
+        Route::resource('/iso-darlist' , App\Http\Controllers\IsoDarListController::class);
+    });
+    Route::group([
         'middleware' =>  ['auth','permission:clb-measuringlist']
     ],function(){
         Route::resource('/clb-measuringlist' , App\Http\Controllers\ClbMeasuringListController::class);
