@@ -156,7 +156,7 @@
                                     <li><a href="{{route('iso-ncrlist.index')}}" key="t-starter-page">NCR</a></li>
                                     @endcan
                                     @can('iso-carlist')
-                                    <li><a href="#" key="t-starter-page">CAR</a></li>
+                                    <li><a href="{{route('iso-carlist.index')}}" key="t-starter-page">CAR</a></li>
                                     @endcan
                                     @can('iso-darlist')
                                     <li><a href="{{route('iso-darlist.index')}}" key="t-starter-page">Dar</a></li>

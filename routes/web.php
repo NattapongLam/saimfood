@@ -176,6 +176,16 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/iso-swabtestplan' , App\Http\Controllers\IsoSwabtestPlanController::class);
     });
     Route::group([
+        'middleware' =>  ['auth','permission:iso-ncrlist']
+    ],function(){
+        Route::resource('/iso-ncrlist' , App\Http\Controllers\IsoNcrListController::class);
+    });
+    Route::group([
+        'middleware' =>  ['auth','permission:iso-carlist']
+    ],function(){
+        Route::resource('/iso-carlist' , App\Http\Controllers\IsoCarListController::class);
+    });
+    Route::group([
         'middleware' =>  ['auth','permission:iso-darlist']
     ],function(){
         Route::resource('/iso-darlist' , App\Http\Controllers\IsoDarListController::class);
@@ -191,11 +201,6 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
     ],function(){
         Route::resource('/clb-measuringplan' , App\Http\Controllers\ClbMeasuringPlanController::class);
          Route::post('/confirmDelMeasuringPlan' , [App\Http\Controllers\ClbMeasuringPlanController::class , 'confirmDelMeasuringPlan']);
-    });
-    Route::group([
-        'middleware' =>  ['auth','permission:iso-ncrlist']
-    ],function(){
-        Route::resource('/iso-ncrlist' , App\Http\Controllers\IsoNcrListController::class);
     });
     Route::resource('/asset-inout' , App\Http\Controllers\OtherAssetinoutForm::class);
     Route::post('/confirmDelAssetinoutHd' , [App\Http\Controllers\OtherAssetinoutForm::class , 'confirmDelAssetinoutHd']);
