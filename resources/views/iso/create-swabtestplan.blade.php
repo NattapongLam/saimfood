@@ -18,7 +18,7 @@
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                     <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>
-                                         แผนตรวจหาแบคทีเรียในอากาศ (Test Kit Microbial Compact Dry TC)                
+                                        แผนการ Swab Test (Coliform bacteria)               
                                     </h5>                              
                             </div>
                             <form class="custom-validation" action="{{ route('iso-swabtestplan.store') }}" method="POST" enctype="multipart/form-data" validate>
@@ -58,18 +58,18 @@
                                                 </tr>
                                                 <tr>
                                                     <!-- เดือน -->
-                                                    <th style="width:5%">Jan</th>
-                                                    <th style="width:5%">Feb</th>
-                                                    <th style="width:5%">Mar</th>
-                                                    <th style="width:5%">Apr</th>
-                                                    <th style="width:5%">May</th>
-                                                    <th style="width:5%">Jun</th>
-                                                    <th style="width:5%">Jul</th>
-                                                    <th style="width:5%">Aug</th>
-                                                    <th style="width:5%">Sep</th>
-                                                    <th style="width:5%">Oct</th>
-                                                    <th style="width:5%">Nov</th>
-                                                    <th style="width:5%">Dec</th>
+                                                    <th style="width:3%">Jan</th>
+                                                    <th style="width:3%">Feb</th>
+                                                    <th style="width:3%">Mar</th>
+                                                    <th style="width:3%">Apr</th>
+                                                    <th style="width:3%">May</th>
+                                                    <th style="width:3%">Jun</th>
+                                                    <th style="width:3%">Jul</th>
+                                                    <th style="width:3%">Aug</th>
+                                                    <th style="width:3%">Sep</th>
+                                                    <th style="width:3%">Oct</th>
+                                                    <th style="width:3%">Nov</th>
+                                                    <th style="width:3%">Dec</th>
 
                                                 </tr>
                                             </thead>

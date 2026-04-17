@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('iso_ncr_lists_file2')->nullable();
             $table->boolean('iso_ncr_lists_flag')->default(true); 
             $table->string('person_at');
+            $table->integer('status');  
             $table->timestamps();
         });
     }

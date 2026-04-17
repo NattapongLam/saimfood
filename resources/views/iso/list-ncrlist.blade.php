@@ -42,6 +42,26 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($hd as $key => $item)
+                                                <tr>
+                                                    <td>{{$key+1}}</td>
+                                                    <td>{{$item->iso_ncr_lists_docuno}}</td>
+                                                    <td>{{$item->iso_ncr_lists_date}}</td>
+                                                    <td>{{$item->iso_ncr_lists_problem}}</td>
+                                                    <td>{{$item->iso_ncr_lists_person}}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>
+                                                        @if ($item->status == 1)
+                                                            <a href="{{ route('iso-ncrlist.edit', $item->iso_ncr_lists_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt">การแก้ไข</i></a>
+                                                        @elseif($item->status == 2)
+                                                            <a href="{{ route('iso-ncrlist.edit', $item->iso_ncr_lists_id) }}"class="btn btn-info btn-sm"><i class="bx bx-edit-alt">อนุมัติการแก้ไข</i></a>
+                                                        @elseif($item->status == 3)
+                                                            <a href="{{ route('iso-ncrlist.edit', $item->iso_ncr_lists_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt">การดำเนินการ</i></a>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

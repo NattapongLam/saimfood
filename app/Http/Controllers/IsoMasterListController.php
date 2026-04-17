@@ -137,8 +137,10 @@ class IsoMasterListController extends Controller
             'iso_master_lists_rev' => 'required',
             'iso_master_lists_date' => 'required',
             'iso_master_lists_timeline' => 'required',
+            'iso_master_lists_docuno' => 'required',
         ]);
         $data = [
+            'iso_master_lists_docuno' => $request->iso_master_lists_docuno,
             'iso_master_lists_refdocu' => $request->iso_master_lists_refdocu,
             'iso_master_lists_department' => $request->iso_master_lists_department,
             'iso_master_lists_name' => $request->iso_master_lists_name,

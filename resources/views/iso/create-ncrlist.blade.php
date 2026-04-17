@@ -22,11 +22,11 @@
                             <form class="custom-validation" action="{{ route('iso-ncrlist.store') }}" method="POST" enctype="multipart/form-data" validate>
                             @csrf  
                             <div class="card-body">
-                                <div class="row mt-3"> 
+                                <div class="row mt-2"> 
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">วันที่ออก NCR</label>
-                                            <input class="form-control" type="date" name="iso_ncr_lists_date">
+                                            <input class="form-control" type="date" name="iso_ncr_lists_date" value="{{ old('iso_ncr_lists_date', date('Y-m-d')) }}">
                                         </div>
                                     </div> 
                                     <div class="col-3">
@@ -40,28 +40,28 @@
                                             <label class="form-label">ถึงหน่วยงาน</label>
                                             <input class="form-control" type="text" name="iso_ncr_lists_to">
                                         </div>
-                                    </div>                                   
+                                    </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">สำเนา</label>
                                             <input class="form-control" type="text" name="iso_ncr_lists_copy">
                                         </div>
-                                    </div>                   
+                                    </div>                                                                                                                       
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col-3">
+                                <div class="row mt-2">                                      
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">ผู้พบปัญหา</label>
-                                            <input class="form-control" type="text" name="iso_ncr_lists_person">
+                                            <input class="form-control" type="text" name="iso_ncr_lists_person" value="{{auth()->user()->name}}" readonly>
                                         </div>
                                     </div> 
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">เลขที่ใบสั่งซื้อ/สั่งผลิต</label>
                                             <input class="form-control" name="iso_ncr_lists_refdocu">
                                         </div>
-                                    </div>                     
-                                    <div class="col-3">
+                                    </div> 
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">พบปัญหาที่กระบวนการ</label>
                                             <select class="form-control" name="ms_processtype_name">
@@ -71,9 +71,17 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>                                   
+                                    </div>                                                                                             
                                 </div>
-                                <div class="row mt-3">
+                                <div class="row mt-2">                                  
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">รายละเอียด</label>
+                                            <textarea class="form-control" name="iso_ncr_lists_problem"></textarea>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="row mt-2">
                                      <div class="col-6">
 
                                                 <div class="card-body img-resize">
@@ -106,14 +114,7 @@
                                                 </div>
                                     </div>     
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label class="form-label">ปัญหาที่พบ</label>
-                                            <textarea class="form-control" name="iso_ncr_lists_problem"></textarea>
-                                        </div>
-                                    </div> 
-                                </div>
+                                
                             </div>
                              <br>
                                 <div class="form-group">
