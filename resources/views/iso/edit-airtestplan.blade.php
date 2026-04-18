@@ -49,28 +49,28 @@
                                         <table class="table table-bordered dt-responsive nowrap w-100 text-center table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="2" style="width:5%">ลำดับ</th>
+                                                    <th rowspan="2" style="width:3%">ลำดับ</th>
                                                     <th rowspan="2" style="width:10%">รายละเอียด</th>
                                                     <th rowspan="2" style="width:10%">ความถี่</th>
                                                     <th colspan="12">เดือน</th>
                                                     <th rowspan="2" style="width:10%">ผู้รับผิดชอบ</th>
                                                     <th rowspan="2" style="width:10%">ผู้ทวนสอบ</th>
-                                                    <th rowspan="2"></th>
+                                                    <th rowspan="2" style="width:3%"></th>
                                                 </tr>
                                                 <tr>
                                                     <!-- เดือน -->
-                                                    <th style="width:5%">Jan</th>
-                                                    <th style="width:5%">Feb</th>
-                                                    <th style="width:5%">Mar</th>
-                                                    <th style="width:5%">Apr</th>
-                                                    <th style="width:5%">May</th>
-                                                    <th style="width:5%">Jun</th>
-                                                    <th style="width:5%">Jul</th>
-                                                    <th style="width:5%">Aug</th>
-                                                    <th style="width:5%">Sep</th>
-                                                    <th style="width:5%">Oct</th>
-                                                    <th style="width:5%">Nov</th>
-                                                    <th style="width:5%">Dec</th>
+                                                    <th style="width:3%">Jan</th>
+                                                    <th style="width:3%">Feb</th>
+                                                    <th style="width:3%">Mar</th>
+                                                    <th style="width:3%">Apr</th>
+                                                    <th style="width:3%">May</th>
+                                                    <th style="width:3%">Jun</th>
+                                                    <th style="width:3%">Jul</th>
+                                                    <th style="width:3%">Aug</th>
+                                                    <th style="width:3%">Sep</th>
+                                                    <th style="width:3%">Oct</th>
+                                                    <th style="width:3%">Nov</th>
+                                                    <th style="width:3%">Dec</th>
 
                                                 </tr>
                                             </thead>
@@ -97,148 +97,88 @@
                                                                 value="{{ $item->iso_airtest_plans_frequency }}">
                                                         </td>
                                                          <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][jan]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][jan]" 
-                                                                    value="1">
-                                                            </div>
+                                                            <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][jan]" 
+                                                                value="1"
+                                                                {{ $item->plan_jan ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][feb]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][feb]" 
-                                                                    value="1">
-                                                            </div>
+                                                            <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][feb]" 
+                                                                value="1"
+                                                                {{ $item->plan_feb ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][mar]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][mar]" 
-                                                                    value="1">
-                                                            </div>
+                                                            <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][mar]" 
+                                                                value="1"
+                                                                {{ $item->plan_mar ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][apr]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][apr]" 
-                                                                    value="1">
-                                                            </div>
+                                                            <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][apr]" 
+                                                                value="1"
+                                                                {{ $item->plan_apr ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][may]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][may]" 
-                                                                    value="1">
-                                                            </div>
+                                                            <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][may]" 
+                                                                value="1"
+                                                                {{ $item->plan_may ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][jun]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][jun]" 
-                                                                    value="1">
-                                                            </div>
+                                                            <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][jun]" 
+                                                                value="1"
+                                                                {{ $item->plan_jun ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][jul]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][jul]" 
-                                                                    value="1">
-                                                            </div>
+                                                             <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][jul]" 
+                                                                value="1"
+                                                                {{ $item->plan_jul ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][aug]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][aug]" 
-                                                                    value="1">
-                                                            </div>
+                                                            <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][aug]" 
+                                                                value="1"
+                                                                {{ $item->plan_aug ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][sep]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][sep]" 
-                                                                    value="1">
-                                                            </div>
+                                                            <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][sep]" 
+                                                                value="1"
+                                                                {{ $item->plan_sep ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][oct]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][oct]" 
-                                                                    value="1">
-                                                            </div>
+                                                             <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][oct]" 
+                                                                value="1"
+                                                                {{ $item->plan_oct ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][nov]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][nov]" 
-                                                                    value="1">
-                                                            </div>
+                                                             <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][nov]" 
+                                                                value="1"
+                                                                {{ $item->plan_nov ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <div class="form-check d-flex justify-content-center">
-                                                                <input type="hidden" 
-                                                                    name="plans[{{ $loop->index }}][dec]" 
-                                                                    value="0">
-                                                                    
-                                                                <input type="checkbox" 
-                                                                    class="form-check-input"
-                                                                    name="plans[{{ $loop->index }}][dec]" 
-                                                                    value="1">
-                                                            </div>
+                                                             <input type="checkbox" 
+                                                                class="form-check-input"
+                                                                name="plans[{{ $loop->index }}][dec]" 
+                                                                value="1"
+                                                                {{ $item->plan_dec ? 'checked' : '' }}>
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
@@ -293,121 +233,53 @@ function updateRowNumbers() {
     });
 }
 document.getElementById('addRowBtn').addEventListener('click', function () {
-        const tbody = document.getElementById('tableBody');
+    const tbody = document.getElementById('tableBody');
+    const index = tbody.querySelectorAll('tr').length;
 
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>
-                <span class="row-number"></span>
-                <input type="hidden" name="iso_airtest_plans_listno[]" class="row-number-hidden"/>
-                <input type="hidden" name="iso_airtest_plans_id[]" value="0">
-            </td>
-            <td><input type="text" name="iso_airtest_plans_remark[]" class="form-control"/></td>
-            <td><input type="text" name="iso_airtest_plans_frequency[]" class="form-control"/></td>          
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_jan[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_feb[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_mar[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_apr[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_may[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_jun[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_jul[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_aug[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_sep[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_oct[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_nov[]"
-                    value="1">
-                </div>
-            </td>
-            <td>
-                <div class="form-check d-flex justify-content-center">
-                    <input type="checkbox" 
-                    class="form-check-input scale-checkbox" 
-                    name="plan_dec[]"
-                    value="1">
-                </div>
-            </td>
-            <td><input type="text" name="iso_airtest_plans_person[]" class="form-control"/></td>
-            <td><input type="text" name="iso_airtest_plans_review[]" class="form-control"/></td>
-            <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
-        `;
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td>
+            <span class="row-number"></span>
+            <input type="hidden" name="iso_airtest_plans_listno[]" class="row-number-hidden"/>
+            <input type="hidden" name="iso_airtest_plans_id[]" value="0">
+        </td>
 
-        tbody.appendChild(newRow);
-        updateRowNumbers(); 
+        <td><input type="text" name="iso_airtest_plans_remark[]" class="form-control"/></td>
+        <td><input type="text" name="iso_airtest_plans_frequency[]" class="form-control"/></td>
+
+        ${generateMonth('jan', index)}
+        ${generateMonth('feb', index)}
+        ${generateMonth('mar', index)}
+        ${generateMonth('apr', index)}
+        ${generateMonth('may', index)}
+        ${generateMonth('jun', index)}
+        ${generateMonth('jul', index)}
+        ${generateMonth('aug', index)}
+        ${generateMonth('sep', index)}
+        ${generateMonth('oct', index)}
+        ${generateMonth('nov', index)}
+        ${generateMonth('dec', index)}
+
+        <td><input type="text" name="iso_airtest_plans_person[]" class="form-control"/></td>
+        <td><input type="text" name="iso_airtest_plans_review[]" class="form-control"/></td>
+        <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
+    `;
+
+    tbody.appendChild(newRow);
+    updateRowNumbers();
 });
+
+function generateMonth(month, index) {
+    return `
+        <td>
+            <div class="form-check d-flex justify-content-center">
+                <input type="hidden" name="plans[${index}][${month}]" value="0">
+                <input type="checkbox" class="form-check-input"
+                    name="plans[${index}][${month}]" value="1">
+            </div>
+        </td>
+    `;
+}
 document.getElementById('tableBody').addEventListener('click', function (e) {
     if (e.target.classList.contains('deleteRow')) {
         e.target.closest('tr').remove();

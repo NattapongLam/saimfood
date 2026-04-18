@@ -46,28 +46,28 @@
                                         <table class="table table-bordered dt-responsive nowrap w-100 text-center table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="2" style="width:5%">ลำดับ</th>
+                                                    <th rowspan="2" style="width:3%">ลำดับ</th>
                                                     <th rowspan="2" style="width:10%">รายละเอียด</th>
                                                     <th rowspan="2" style="width:10%">ความถี่</th>
                                                     <th colspan="12">เดือน</th>
                                                     <th rowspan="2" style="width:10%">ผู้รับผิดชอบ</th>
                                                     <th rowspan="2" style="width:10%">ผู้ทวนสอบ</th>
-                                                    <th rowspan="2"></th>
+                                                    <th rowspan="2" style="width:3%"></th>
                                                 </tr>
                                                 <tr>
                                                     <!-- เดือน -->
-                                                    <th style="width:5%">Jan</th>
-                                                    <th style="width:5%">Feb</th>
-                                                    <th style="width:5%">Mar</th>
-                                                    <th style="width:5%">Apr</th>
-                                                    <th style="width:5%">May</th>
-                                                    <th style="width:5%">Jun</th>
-                                                    <th style="width:5%">Jul</th>
-                                                    <th style="width:5%">Aug</th>
-                                                    <th style="width:5%">Sep</th>
-                                                    <th style="width:5%">Oct</th>
-                                                    <th style="width:5%">Nov</th>
-                                                    <th style="width:5%">Dec</th>
+                                                    <th style="width:3%">Jan</th>
+                                                    <th style="width:3%">Feb</th>
+                                                    <th style="width:3%">Mar</th>
+                                                    <th style="width:3%">Apr</th>
+                                                    <th style="width:3%">May</th>
+                                                    <th style="width:3%">Jun</th>
+                                                    <th style="width:3%">Jul</th>
+                                                    <th style="width:3%">Aug</th>
+                                                    <th style="width:3%">Sep</th>
+                                                    <th style="width:3%">Oct</th>
+                                                    <th style="width:3%">Nov</th>
+                                                    <th style="width:3%">Dec</th>
 
                                                 </tr>
                                             </thead>

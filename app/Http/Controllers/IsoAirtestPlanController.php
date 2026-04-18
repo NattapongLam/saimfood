@@ -136,87 +136,87 @@ class IsoAirtestPlanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-{
-    //dd($request->all());
-    try {
-        DB::beginTransaction();
+    {
+        //dd($request->all());
+        try {
+            DB::beginTransaction();
 
-        foreach ($request->iso_airtest_plans_id as $key => $value) {
+            foreach ($request->iso_airtest_plans_id as $key => $value) {
 
-            // 🔥 รองรับ 2 format
-            $plan = $request->plans[$key] ?? [];
+                // 🔥 รองรับ 2 format
+                $plan = $request->plans[$key] ?? [];
 
-            $data = [
-                'iso_airtest_plans_remark' => $request->iso_airtest_plans_remark[$key] ?? null,
-                'iso_airtest_plans_frequency' => $request->iso_airtest_plans_frequency[$key] ?? null,
+                $data = [
+                    'iso_airtest_plans_remark' => $request->iso_airtest_plans_remark[$key] ?? null,
+                    'iso_airtest_plans_frequency' => $request->iso_airtest_plans_frequency[$key] ?? null,
 
-                // ✅ priority: plans[index][month] ก่อน
-                // ถ้าไม่มี → fallback ไป plan_xxx[]
-                'plan_jan' => $plan['jan'] ?? (isset($request->plan_jan[$key]) ? 1 : 0),
-                'plan_feb' => $plan['feb'] ?? (isset($request->plan_feb[$key]) ? 1 : 0),
-                'plan_mar' => $plan['mar'] ?? (isset($request->plan_mar[$key]) ? 1 : 0),
-                'plan_apr' => $plan['apr'] ?? (isset($request->plan_apr[$key]) ? 1 : 0),
-                'plan_may' => $plan['may'] ?? (isset($request->plan_may[$key]) ? 1 : 0),
-                'plan_jun' => $plan['jun'] ?? (isset($request->plan_jun[$key]) ? 1 : 0),
-                'plan_jul' => $plan['jul'] ?? (isset($request->plan_jul[$key]) ? 1 : 0),
-                'plan_aug' => $plan['aug'] ?? (isset($request->plan_aug[$key]) ? 1 : 0),
-                'plan_sep' => $plan['sep'] ?? (isset($request->plan_sep[$key]) ? 1 : 0),
-                'plan_oct' => $plan['oct'] ?? (isset($request->plan_oct[$key]) ? 1 : 0),
-                'plan_nov' => $plan['nov'] ?? (isset($request->plan_nov[$key]) ? 1 : 0),
-                'plan_dec' => $plan['dec'] ?? (isset($request->plan_dec[$key]) ? 1 : 0),
+                    // ✅ priority: plans[index][month] ก่อน
+                    // ถ้าไม่มี → fallback ไป plan_xxx[]
+                    'plan_jan' => $plan['jan'] ?? (isset($request->plan_jan[$key]) ? 1 : 0),
+                    'plan_feb' => $plan['feb'] ?? (isset($request->plan_feb[$key]) ? 1 : 0),
+                    'plan_mar' => $plan['mar'] ?? (isset($request->plan_mar[$key]) ? 1 : 0),
+                    'plan_apr' => $plan['apr'] ?? (isset($request->plan_apr[$key]) ? 1 : 0),
+                    'plan_may' => $plan['may'] ?? (isset($request->plan_may[$key]) ? 1 : 0),
+                    'plan_jun' => $plan['jun'] ?? (isset($request->plan_jun[$key]) ? 1 : 0),
+                    'plan_jul' => $plan['jul'] ?? (isset($request->plan_jul[$key]) ? 1 : 0),
+                    'plan_aug' => $plan['aug'] ?? (isset($request->plan_aug[$key]) ? 1 : 0),
+                    'plan_sep' => $plan['sep'] ?? (isset($request->plan_sep[$key]) ? 1 : 0),
+                    'plan_oct' => $plan['oct'] ?? (isset($request->plan_oct[$key]) ? 1 : 0),
+                    'plan_nov' => $plan['nov'] ?? (isset($request->plan_nov[$key]) ? 1 : 0),
+                    'plan_dec' => $plan['dec'] ?? (isset($request->plan_dec[$key]) ? 1 : 0),
 
-                'iso_airtest_plans_person' => $request->iso_airtest_plans_person[$key] ?? null,
-                'iso_airtest_plans_review' => $request->iso_airtest_plans_review[$key] ?? null,
+                    'iso_airtest_plans_person' => $request->iso_airtest_plans_person[$key] ?? null,
+                    'iso_airtest_plans_review' => $request->iso_airtest_plans_review[$key] ?? null,
 
-                'iso_airtest_plans_flag' => true,
-                'person_at' => Auth::user()->name,
-                'updated_at' => now(),
-            ];
-
-            // 🔥 update / insert
-            if ($value != 0) {
-
-                IsoAirtestPlan::where('iso_airtest_plans_id', $value)
-                    ->update($data);
-
-            } else {
-
-                $data['iso_airtest_plans_listno'] = $request->iso_airtest_plans_listno[$key] ?? ($key + 1);
-                $data['iso_airtest_plans_date'] = $request->iso_airtest_plans_date;
-
-                // default action = false
-                $data += [
-                    'action_jan' => false,
-                    'action_feb' => false,
-                    'action_mar' => false,
-                    'action_apr' => false,
-                    'action_may' => false,
-                    'action_jun' => false,
-                    'action_jul' => false,
-                    'action_aug' => false,
-                    'action_sep' => false,
-                    'action_oct' => false,
-                    'action_nov' => false,
-                    'action_dec' => false,
-                    'created_at' => now(),
+                    'iso_airtest_plans_flag' => true,
+                    'person_at' => Auth::user()->name,
+                    'updated_at' => now(),
                 ];
 
-                IsoAirtestPlan::create($data);
+                // 🔥 update / insert
+                if ($value != 0) {
+
+                    IsoAirtestPlan::where('iso_airtest_plans_id', $value)
+                        ->update($data);
+
+                } else {
+
+                    $data['iso_airtest_plans_listno'] = $request->iso_airtest_plans_listno[$key] ?? ($key + 1);
+                    $data['iso_airtest_plans_date'] = $request->iso_airtest_plans_date;
+
+                    // default action = false
+                    $data += [
+                        'action_jan' => false,
+                        'action_feb' => false,
+                        'action_mar' => false,
+                        'action_apr' => false,
+                        'action_may' => false,
+                        'action_jun' => false,
+                        'action_jul' => false,
+                        'action_aug' => false,
+                        'action_sep' => false,
+                        'action_oct' => false,
+                        'action_nov' => false,
+                        'action_dec' => false,
+                        'created_at' => now(),
+                    ];
+
+                    IsoAirtestPlan::create($data);
+                }
             }
+
+            DB::commit();
+
+            return redirect()->route('iso-airtestplan.index')
+                ->with('success', 'บันทึกข้อมูลเรียบร้อย');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->route('iso-airtestplan.index')
+                ->with('error', 'บันทึกข้อมูลไม่สำเร็จ : ' . $e->getMessage());
         }
-
-        DB::commit();
-
-        return redirect()->route('iso-airtestplan.index')
-            ->with('success', 'บันทึกข้อมูลเรียบร้อย');
-
-    } catch (\Exception $e) {
-        DB::rollBack();
-
-        return redirect()->route('iso-airtestplan.index')
-            ->with('error', 'บันทึกข้อมูลไม่สำเร็จ : ' . $e->getMessage());
     }
-}
 
     /**
      * Remove the specified resource from storage.
