@@ -79,7 +79,8 @@ class IsoCarListController extends Controller
      */
     public function show($id)
     {
-        //
+        $hd = IsoCarList::find($id);
+        return view('iso.update-carlist',compact('hd'));
     }
 
     /**
@@ -103,7 +104,76 @@ class IsoCarListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $hd = IsoCarList::find($id);
+        if($request->checktype == "update")
+        {
+            try {
+                DB::beginTransaction();
+                IsoCarList::where('iso_car_lists_id',$id)
+                ->update([
+                    'iso_car_lists_docuno' => $request->iso_car_lists_docuno,
+                    'iso_car_lists_refno' => $request->iso_car_lists_refno,
+                    'type_name' => $request->type_name,
+                    'type_remark' => $request->type_remark,
+                    'iso_car_lists_problem' => $request->iso_car_lists_problem,
+                    'iso_car_lists_requirement' => $request->iso_car_lists_requirement,
+                    'iso_car_lists_person' => $request->iso_car_lists_person,
+                    'iso_car_lists_position' => $request->iso_car_lists_position,
+                    'iso_car_lists_date' => $request->iso_car_lists_date,
+                    'cause_name' => $request->cause_name,
+                    'cause_remark' => $request->cause_remark,
+                    'cause_analysis' => $request->cause_analysis,
+                    'cause_actions' => $request->cause_actions,
+                    'cause_recurrence' => $request->cause_recurrence,
+                    'cause_duedate' => $request->cause_duedate,
+                    'cause_person' => $request->cause_person,
+                    'cause_position' => $request->cause_position,
+                    'cause_date' => $request->cause_date,
+                    'cause_correction_person' => $request->cause_correction_person,
+                    'cause_correction_position' => $request->cause_correction_position,
+                    'cause_correction_date' => $request->cause_correction_date,
+                    'cause_management_person' => $request->cause_management_person,
+                    'cause_management_date'=> $request->cause_management_date,
+                    'measuresone_check' => $request->measuresone_check,
+                    'measuresone_next' => $request->measuresone_next,
+                    'measuresone_date' => $request->measuresone_date,
+                    'measuresone_remark' => $request->measuresone_remark,
+                    'measuresone_person' => $request->measuresone_person,
+                    'measuresone_position' => $request->measuresone_position,
+                    'measuresone_persondate' => $request->measuresone_persondate,
+                    'measuresone_correction_person' => $request->measuresone_correction_person,
+                    'measuresone_correction_position' => $request->measuresone_correction_position,
+                    'measuresone_correction_date' => $request->measuresone_correction_date,
+                    'measuresone_management_person' => $request->measuresone_management_person,
+                    'measuresone_management_date' => $request->measuresone_management_date,
+                    'measurestwo_check' => $request->measurestwo_check,
+                    'measurestwo_next' => $request->measurestwo_next,
+                    'measurestwo_remark' => $request->measurestwo_remark,
+                    'measurestwo_person' => $request->measurestwo_person,
+                    'measurestwo_position' => $request->measurestwo_position,
+                    'measurestwo_date' => $request->measurestwo_date,
+                    'measurestwo_correction_person' => $request->measurestwo_correction_person,
+                    'measurestwo_correction_position' => $request->measurestwo_correction_position,
+                    'measurestwo_correction_date' => $request->measurestwo_correction_date,
+                    'measurestwo_management_person' => $request->measurestwo_management_person,
+                    'measurestwo_management_date' => $request->measurestwo_management_date,
+                    'close_car' => $request->close_car,
+                    'new_car' => $request->new_car,
+                    'new_docuno' => $request->new_docuno,
+                    'car_remark' => $request->car_remark,
+                    'car_management_person' => $request->car_management_person,
+                    'car_management_date' => $request->car_management_date,
+                    'updated_at' => now()
+                ]);
+                DB::commit();
+                return redirect()->route('iso-carlist.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('iso-carlist.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            }    
+        }
+        $hd = IsoCarList::find($id);       
         if($hd->status == 1){
             try {
                 DB::beginTransaction();

@@ -52,6 +52,9 @@
                                                         {{$item->iso_car_lists_date}}
                                                     </td>
                                                     <td>
+                                                        @if (auth()->user()->username == "660223125" || auth()->user()->username == "admin")
+                                                             <a href="{{ route('iso-carlist.show', $item->iso_car_lists_id) }}"class="btn btn-danger btn-sm"><i class="bx bx-edit-alt">แก้ไข</i></a>
+                                                        @endif
                                                         @if ($item->status == 1)
                                                             <a href="{{ route('iso-carlist.edit', $item->iso_car_lists_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt">วิเคราะห์</i></a>
                                                         @elseif($item->status == 2)
