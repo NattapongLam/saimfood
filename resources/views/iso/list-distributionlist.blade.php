@@ -49,9 +49,12 @@
                                                     <td>{{$item->iso_master_lists_listno}}</td>
                                                     <td>{{$item->iso_master_lists_refdocu}}</td>
                                                     <td>
-                                                        <a href="{{ asset($item->iso_master_lists_file1)}}" target="_blank" class="text-dark">
-                                                            {{$item->iso_master_lists_docuno}}
-                                                        </a>
+                                                        {{$item->iso_master_lists_docuno}}<br>
+                                                        @if ($item->iso_master_lists_file1)
+                                                            <a href="{{ asset($item->iso_master_lists_file1)}}" target="_blank" class="text-dark">
+                                                                <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                            </a>  
+                                                        @endif       
                                                     </td>
                                                     <td>{{$item->iso_master_lists_name}}</td>
                                                     <td>{{$item->iso_master_lists_department}}</td>
