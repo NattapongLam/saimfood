@@ -157,7 +157,7 @@ class ClbMeasuringPlanController extends Controller
             DB::beginTransaction();
            
             foreach ($request->clb_measuring_plans_id as $key => $value) {
-                ClbMeasuringPlan::where('clb_measuring_plans_id',$value)->update([
+                $data = [
                     'clb_measuring_lists_id' => $request->clb_measuring_lists_id[$key],
                     'clb_measuring_lists_listno' => $request->clb_measuring_lists_listno[$key],
                     'clb_measuring_lists_code' => $request->clb_measuring_lists_code[$key],
@@ -180,18 +180,18 @@ class ClbMeasuringPlanController extends Controller
                     'plan_nov' => isset($request->plan_nov[$key]) ? 1 : 0,
                     'plan_dec' => isset($request->plan_dec[$key]) ? 1 : 0,
 
-                    'action_jan' => false,
-                    'action_feb' => false,
-                    'action_mar' => false,
-                    'action_apr' => false,
-                    'action_may' => false,
-                    'action_jun' => false,
-                    'action_jul' => false,
-                    'action_aug' => false,
-                    'action_sep' => false,
-                    'action_oct' => false,
-                    'action_nov' => false,
-                    'action_dec' => false,
+                    'action_jan' => isset($request->action_jan[$key]) ? 1 : 0,
+                    'action_feb' => isset($request->action_feb[$key]) ? 1 : 0,
+                    'action_mar' => isset($request->action_mar[$key]) ? 1 : 0,
+                    'action_apr' => isset($request->action_apr[$key]) ? 1 : 0,
+                    'action_may' => isset($request->action_may[$key]) ? 1 : 0,
+                    'action_jun' => isset($request->action_jun[$key]) ? 1 : 0,
+                    'action_jul' => isset($request->action_jul[$key]) ? 1 : 0,
+                    'action_aug' => isset($request->action_aug[$key]) ? 1 : 0,
+                    'action_sep' => isset($request->action_sep[$key]) ? 1 : 0,
+                    'action_oct' => isset($request->action_oct[$key]) ? 1 : 0,
+                    'action_nov' => isset($request->action_nov[$key]) ? 1 : 0,
+                    'action_dec' => isset($request->action_dec[$key]) ? 1 : 0,
 
                     'clb_measuring_lists_inside' => $request->clb_measuring_lists_inside[$key],
                     'clb_measuring_lists_external' => $request->clb_measuring_lists_external[$key],
@@ -202,8 +202,117 @@ class ClbMeasuringPlanController extends Controller
                     'clb_measuring_lists_date' => $request->clb_measuring_lists_date,
 
                     'updated_at' => now(),
-                ]);
+                ];
+                if ($request->hasFile("file_jan.$key")) {
+                    $file = $request->file("file_jan.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_jan_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_jan'] = $path;
                 }
+                if ($request->hasFile("file_feb.$key")) {
+                    $file = $request->file("file_feb.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_feb_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_feb'] = $path;
+                }
+                if ($request->hasFile("file_mar.$key")) {
+                    $file = $request->file("file_mar.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_mar_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_mar'] = $path;
+                }
+                if ($request->hasFile("file_apr.$key")) {
+                    $file = $request->file("file_apr.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_apr_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_apr'] = $path;
+                }
+                if ($request->hasFile("file_may.$key")) {
+                    $file = $request->file("file_may.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_may_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_may'] = $path;
+                }
+                if ($request->hasFile("file_jun.$key")) {
+                    $file = $request->file("file_jun.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_jun_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_jun'] = $path;
+                }
+                if ($request->hasFile("file_jul.$key")) {
+                    $file = $request->file("file_jul.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_jul_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_jul'] = $path;
+                }
+                if ($request->hasFile("file_aug.$key")) {
+                    $file = $request->file("file_aug.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_aug_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_aug'] = $path;
+                }
+                if ($request->hasFile("file_sep.$key")) {
+                    $file = $request->file("file_sep.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_sep_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_sep'] = $path;
+                }
+                if ($request->hasFile("file_oct.$key")) {
+                    $file = $request->file("file_oct.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_oct_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_oct'] = $path;
+                }
+                if ($request->hasFile("file_nov.$key")) {
+                    $file = $request->file("file_nov.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_nov_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_nov'] = $path;
+                }
+                if ($request->hasFile("file_dec.$key")) {
+                    $file = $request->file("file_dec.$key");
+                    // ตั้งชื่อไฟล์
+                    $filename = time() . "_dec_" . $key . "." . $file->getClientOriginalExtension();
+                    // save
+                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
+                    // เก็บลง DB
+                    $data['file_dec'] = $path;
+                }
+                ClbMeasuringPlan::where('clb_measuring_plans_id',$value)->update($data);
+            }
 
                 DB::commit();
                 return redirect()->route('clb-measuringplan.index')

@@ -13,6 +13,30 @@
 .table-month td{
     min-width: 45px;
 }
+.plan-box{
+    background: #eef4ff;
+    border: 1px solid #cfe2ff;
+}
+.action-box{
+    background: #eaffea;
+    border: 1px solid #b7f5b7;
+}
+/* PLAN = น้ำเงิน */
+.chk-plan{
+    accent-color: #0d6efd; /* bootstrap primary */
+}
+
+/* ACTION = เขียว */
+.chk-action{
+    accent-color: #198754; /* bootstrap success */
+}
+.chk-plan:checked{
+    box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
+}
+
+.chk-action:checked{
+    box-shadow: 0 0 0 2px rgba(25,135,84,0.25);
+}
 </style>
 <div class="row">
     <div class="col-12">
@@ -146,137 +170,426 @@
                                                     <th colspan="12">การดำเนินการตามแผนเดือน</th>
                                                 </tr>
                                                 <tr>
-                                                    <td>
-                                                        ม.ค.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_jan[{{ $key }}]" value="0">
-                                                            <input type="checkbox"
-                                                                class="form-check-input scale-checkbox"
-                                                                name="plan_jan[{{ $key }}]"
-                                                                value="{{$item->plan_jan}}"
-                                                                {{ $item->plan_jan ? 'checked' : '' }}>
-                                                        </div>
+                                                    <td style="min-width:100px;">
+                                                            <div class="text-center fw-bold mb-1">ม.ค.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_jan[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_jan[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_jan == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_jan[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_jan[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_jan == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- FILE -->
+                                                            @if ($item->file_jan)
+                                                                <a href="{{ asset($item->file_jan)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_jan[{{ $key }}]">
+                                                                </div>
+                                                            @endif
+                                                           
+                                                    </td>
+                                                    <td style="min-width:100px;">
+                                                            <div class="text-center fw-bold mb-1">ก.พ.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_feb[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_feb[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_feb == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_feb[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_feb[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_feb == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                              <!-- FILE -->
+                                                            @if ($item->file_feb)
+                                                                <a href="{{ asset($item->file_feb)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_feb[{{ $key }}]">
+                                                                </div>
+                                                            @endif
+                                                    </td>
+                                                    <td style="min-width:100px;">
+                                                            <div class="text-center fw-bold mb-1">มี.ค.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_mar[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_mar[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_mar == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_mar[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_mar[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_mar == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                              <!-- FILE -->
+                                                            @if ($item->file_mar)
+                                                                <a href="{{ asset($item->file_mar)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_mar[{{ $key }}]">
+                                                                </div>
+                                                            @endif
+                                                    </td>
+                                                    <td style="min-width:100px;">
+                                                            <div class="text-center fw-bold mb-1">เม.ย.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_apr[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_apr[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_apr == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_apr[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_apr[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_apr == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                             <!-- FILE -->
+                                                            @if ($item->file_apr)
+                                                                <a href="{{ asset($item->file_apr)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_apr[{{ $key }}]">
+                                                                </div>
+                                                            @endif
+                                                    </td>
+                                                    <td style="min-width:100px;">
+                                                            <div class="text-center fw-bold mb-1">พ.ค.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_may[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_may[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_may == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_may[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_may[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_may == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                              <!-- FILE -->
+                                                            @if ($item->file_may)
+                                                                <a href="{{ asset($item->file_may)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_may[{{ $key }}]">
+                                                                </div>
+                                                            @endif
+                                                    </td>
+                                                    <td style="min-width:100px;">
+                                                            <div class="text-center fw-bold mb-1">มิ.ย.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_jun[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_jun[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_jun == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_jun[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_jun[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_jun == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                                 <!-- FILE -->
+                                                            @if ($item->file_jun)
+                                                                <a href="{{ asset($item->file_jun)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_jun[{{ $key }}]">
+                                                                </div>
+                                                            @endif
                                                     </td>
                                                     <td>
-                                                        ก.พ.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_feb[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_feb[{{ $key }}]"
-                                                            value="1"
-                                                             {{ $item->plan_feb ? 'checked' : '' }}>
+                                                        <div class="text-center fw-bold mb-1">ก.ค.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_jul[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_jul[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_jul == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_jul[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_jul[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_jul == 1 ? 'checked' : '' }}>
                                                         </div>
+                                                             <!-- FILE -->
+                                                            @if ($item->file_jul)
+                                                                <a href="{{ asset($item->file_jul)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_jul[{{ $key }}]">
+                                                                </div>
+                                                            @endif
                                                     </td>
                                                     <td>
-                                                        มี.ค.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_mar[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_mar[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_mar ? 'checked' : '' }}>
+                                                        <div class="text-center fw-bold mb-1">ส.ค.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_aug[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_aug[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_aug == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_aug[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_aug[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_aug == 1 ? 'checked' : '' }}>
                                                         </div>
+                                                            <!-- FILE -->
+                                                            @if ($item->file_aug)
+                                                                <a href="{{ asset($item->file_aug)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_aug[{{ $key }}]">
+                                                                </div>
+                                                            @endif                                                        
                                                     </td>
                                                     <td>
-                                                        เม.ย.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_apr[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_apr[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_apr ? 'checked' : '' }}>
+                                                        <div class="text-center fw-bold mb-1">ก.ย.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_sep[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_sep[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_sep == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_sep[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_sep[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_sep == 1 ? 'checked' : '' }}>
                                                         </div>
+                                                         <!-- FILE -->
+                                                            @if ($item->file_sep)
+                                                                <a href="{{ asset($item->file_sep)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_sep[{{ $key }}]">
+                                                                </div>
+                                                            @endif             
                                                     </td>
                                                     <td>
-                                                        พ.ค.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_may[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_may[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_may ? 'checked' : '' }}>
+                                                        <div class="text-center fw-bold mb-1">ต.ค.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_oct[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_oct[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_oct == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_oct[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_oct[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_oct == 1 ? 'checked' : '' }}>
                                                         </div>
+                                                          <!-- FILE -->
+                                                            @if ($item->file_oct)
+                                                                <a href="{{ asset($item->file_oct)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_oct[{{ $key }}]">
+                                                                </div>
+                                                            @endif                                                            
                                                     </td>
                                                     <td>
-                                                        มิ.ย.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_jun[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_jun[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_jun ? 'checked' : '' }}>
+                                                         <div class="text-center fw-bold mb-1">พ.ย.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_nov[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_nov[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_nov == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_nov[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_nov[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_nov == 1 ? 'checked' : '' }}>
                                                         </div>
+                                                           <!-- FILE -->
+                                                            @if ($item->file_nov)
+                                                                <a href="{{ asset($item->file_nov)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_nov[{{ $key }}]">
+                                                                </div>
+                                                            @endif                                                                    
                                                     </td>
                                                     <td>
-                                                        ก.ค.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_jul[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_jul[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_jul ? 'checked' : '' }}>
+                                                          <div class="text-center fw-bold mb-1">ธ.ค.</div>
+                                                            <!-- PLAN -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                                                                <span class="small fw-bold text-primary">PLAN</span>
+                                                                <input type="hidden" name="plan_dec[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-plan m-0"
+                                                                    name="plan_dec[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->plan_dec == 1 ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- ACTION -->
+                                                            <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                                                                <span class="small fw-bold text-success">ACTION</span>
+                                                                <input type="hidden" name="action_dec[{{ $key }}]" value="0">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input scale-checkbox chk-action m-0"
+                                                                    name="action_dec[{{ $key }}]"
+                                                                    value="1"
+                                                                    {{ $item->action_dec == 1 ? 'checked' : '' }}>
                                                         </div>
-                                                    </td>
-                                                    <td>
-                                                        ส.ค.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_aug[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_aug[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_aug ? 'checked' : '' }}>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        ก.ย.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_sep[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_sep[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_sep ? 'checked' : '' }}>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        ต.ค.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_oct[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_oct[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_oct ? 'checked' : '' }}>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        พ.ย.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_nov[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_nov[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_nov ? 'checked' : '' }}>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        ธ.ค.
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input type="hidden" name="plan_dec[{{ $key }}]" value="0">
-                                                            <input type="checkbox" 
-                                                            class="form-check-input scale-checkbox" 
-                                                            name="plan_dec[{{ $key }}]"
-                                                            value="1"
-                                                            {{ $item->plan_dec ? 'checked' : '' }}>
-                                                        </div>
+                                                         <!-- FILE -->
+                                                            @if ($item->file_dec)
+                                                                <a href="{{ asset($item->file_dec)}}" target="_blank" class="text-dark">
+                                                                    <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                            @else
+                                                                <div class="file-box text-center">
+                                                                    <input type="file"
+                                                                        class="form-control form-control-sm"
+                                                                        name="file_dec[{{ $key }}]">
+                                                                </div>
+                                                            @endif                                                                   
                                                     </td>
                                                 </tr>
                                             @endforeach
