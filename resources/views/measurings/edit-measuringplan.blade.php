@@ -117,52 +117,52 @@
                                                     <td>
                                                         {{$item->clb_measuring_lists_listno }}
                                                         <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->clb_measuring_plans_id }}')"><i class="fas fa-trash"></i></a>    
-                                                        <input type="hidden" name="clb_measuring_plans_id[]" value="{{$item->clb_measuring_plans_id}}">
-                                                        <input type="hidden" name="clb_measuring_lists_id[]" value="{{$item->clb_measuring_lists_id}}">
-                                                        <input type="hidden" name="clb_measuring_lists_listno[]" value="{{$item->clb_measuring_lists_listno}}">
+                                                        <input type="hidden" name="clb_measuring_plans_id[{{ $key }}]" value="{{$item->clb_measuring_plans_id}}">
+                                                        <input type="hidden" name="clb_measuring_lists_id[{{ $key }}]" value="{{$item->clb_measuring_lists_id}}">
+                                                        <input type="hidden" name="clb_measuring_lists_listno[{{ $key }}]" value="{{$item->clb_measuring_lists_listno}}">
                                                     </td>
                                                     <td>
                                                         {{$item->clb_measuring_lists_code}}
-                                                        <input type="hidden" name="clb_measuring_lists_code[]" value="{{$item->clb_measuring_lists_code}}">
+                                                        <input type="hidden" name="clb_measuring_lists_code[{{ $key }}]" value="{{$item->clb_measuring_lists_code}}">
                                                     </td>
                                                     <td>
                                                         {{$item->clb_measuring_lists_name}}
-                                                        <input type="hidden" name="clb_measuring_lists_name[]" value="{{$item->clb_measuring_lists_name}}">
+                                                        <input type="hidden" name="clb_measuring_lists_name[{{ $key }}]" value="{{$item->clb_measuring_lists_name}}">
                                                     </td>
                                                     <td>
                                                         {{$item->clb_measuring_lists_department}}
-                                                        <input type="hidden" name="clb_measuring_lists_department[]" value="{{$item->clb_measuring_lists_department}}">
+                                                        <input type="hidden" name="clb_measuring_lists_department[{{ $key }}]" value="{{$item->clb_measuring_lists_department}}">
                                                     </td>
                                                     <td colspan="2">
                                                         <input class="form-control form-control-sm input-auto"
                                                         oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" 
-                                                        name="clb_measuring_lists_frequency[]"
+                                                        name="clb_measuring_lists_frequency[{{ $key }}]"
                                                         value="{{$item->clb_measuring_lists_frequency}}">
                                                     </td>
                                                     <td>
                                                         {{$item->actualuseperiod}}
-                                                        <input type="hidden" name="actualuseperiod[]" value="{{$item->actualuseperiod}}">
+                                                        <input type="hidden" name="actualuseperiod[{{ $key }}]" value="{{$item->actualuseperiod}}">
                                                     </td>
                                                     <td>
                                                         {{$item->acceptancecriteria}}
-                                                        <input type="hidden" name="acceptancecriteria[]" value="{{$item->acceptancecriteria}}">
+                                                        <input type="hidden" name="acceptancecriteria[{{ $key }}]" value="{{$item->acceptancecriteria}}">
                                                     </td>                                                  
                                                     <td>
                                                         <input class="form-control form-control-sm input-auto"
                                                         oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" 
-                                                        name="clb_measuring_lists_inside[]"
+                                                        name="clb_measuring_lists_inside[{{ $key }}]"
                                                         value="{{$item->clb_measuring_lists_inside}}">
                                                     </td>
                                                     <td>
                                                         <input class="form-control form-control-sm input-auto"
                                                         oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" 
-                                                        name="clb_measuring_lists_external[]"
+                                                        name="clb_measuring_lists_external[{{ $key }}]"
                                                         value="{{$item->clb_measuring_lists_external}}">
                                                     </td>
                                                     <td colspan="2">
                                                         <input class="form-control form-control-sm input-auto"
                                                         oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" 
-                                                        name="clb_measuring_lists_remark[]"
+                                                        name="clb_measuring_lists_remark[{{ $key }}]"
                                                         value="{{$item->clb_measuring_lists_remark}}">
                                                     </td>
                                                 </tr>
@@ -194,7 +194,7 @@
                                                             </div>
                                                             <!-- FILE -->
                                                             @if ($item->file_jan)
-                                                                <a href="{{ asset($item->file_jan)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_jan)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -230,7 +230,7 @@
                                                             </div>
                                                               <!-- FILE -->
                                                             @if ($item->file_feb)
-                                                                <a href="{{ asset($item->file_feb)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_feb)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -265,7 +265,7 @@
                                                             </div>
                                                               <!-- FILE -->
                                                             @if ($item->file_mar)
-                                                                <a href="{{ asset($item->file_mar)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_mar)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -300,7 +300,7 @@
                                                             </div>
                                                              <!-- FILE -->
                                                             @if ($item->file_apr)
-                                                                <a href="{{ asset($item->file_apr)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_apr)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -335,7 +335,7 @@
                                                             </div>
                                                               <!-- FILE -->
                                                             @if ($item->file_may)
-                                                                <a href="{{ asset($item->file_may)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_may)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -370,7 +370,7 @@
                                                             </div>
                                                                  <!-- FILE -->
                                                             @if ($item->file_jun)
-                                                                <a href="{{ asset($item->file_jun)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_jun)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -405,7 +405,7 @@
                                                         </div>
                                                              <!-- FILE -->
                                                             @if ($item->file_jul)
-                                                                <a href="{{ asset($item->file_jul)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_jul)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -440,7 +440,7 @@
                                                         </div>
                                                             <!-- FILE -->
                                                             @if ($item->file_aug)
-                                                                <a href="{{ asset($item->file_aug)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_aug)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -475,7 +475,7 @@
                                                         </div>
                                                          <!-- FILE -->
                                                             @if ($item->file_sep)
-                                                                <a href="{{ asset($item->file_sep)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_sep)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -510,7 +510,7 @@
                                                         </div>
                                                           <!-- FILE -->
                                                             @if ($item->file_oct)
-                                                                <a href="{{ asset($item->file_oct)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_oct)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -545,7 +545,7 @@
                                                         </div>
                                                            <!-- FILE -->
                                                             @if ($item->file_nov)
-                                                                <a href="{{ asset($item->file_nov)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_nov)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else
@@ -580,7 +580,7 @@
                                                         </div>
                                                          <!-- FILE -->
                                                             @if ($item->file_dec)
-                                                                <a href="{{ asset($item->file_dec)}}" target="_blank" class="text-dark">
+                                                                <a href="{{ asset('storage/' .$item->file_dec)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
                                                             @else

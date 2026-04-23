@@ -151,178 +151,100 @@ class ClbMeasuringPlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $hd = ClbMeasuringPlan::where('clb_measuring_lists_date',$id)->first();
-        if($hd){
-            try {
+        $hd = ClbMeasuringPlan::where('clb_measuring_lists_date', $id)->first();
+
+        if (!$hd) {
+            return redirect()->back()->with('error', 'ไม่พบข้อมูล');
+        }
+
+        try {
             DB::beginTransaction();
-           
-            foreach ($request->clb_measuring_plans_id as $key => $value) {
+
+            $plans = $request->clb_measuring_plans_id ?? [];
+
+            foreach ($plans as $key => $value) {
+
                 $data = [
-                    'clb_measuring_lists_id' => $request->clb_measuring_lists_id[$key],
-                    'clb_measuring_lists_listno' => $request->clb_measuring_lists_listno[$key],
-                    'clb_measuring_lists_code' => $request->clb_measuring_lists_code[$key],
-                    'clb_measuring_lists_name' => $request->clb_measuring_lists_name[$key],
-                    'clb_measuring_lists_department' => $request->clb_measuring_lists_department[$key],
-                    'clb_measuring_lists_frequency' => $request->clb_measuring_lists_frequency[$key],
-                    'actualuseperiod' => $request->actualuseperiod[$key],
-                    'acceptancecriteria' => $request->acceptancecriteria[$key],
+                    'clb_measuring_lists_id' => $request->clb_measuring_lists_id[$key] ?? null,
+                    'clb_measuring_lists_listno' => $request->clb_measuring_lists_listno[$key] ?? null,
+                    'clb_measuring_lists_code' => $request->clb_measuring_lists_code[$key] ?? null,
+                    'clb_measuring_lists_name' => $request->clb_measuring_lists_name[$key] ?? null,
+                    'clb_measuring_lists_department' => $request->clb_measuring_lists_department[$key] ?? null,
+                    'clb_measuring_lists_frequency' => $request->clb_measuring_lists_frequency[$key] ?? null,
+                    'actualuseperiod' => $request->actualuseperiod[$key] ?? null,
+                    'acceptancecriteria' => $request->acceptancecriteria[$key] ?? null,
 
-                    'plan_jan' => isset($request->plan_jan[$key]) ? 1 : 0,
-                    'plan_feb' => isset($request->plan_feb[$key]) ? 1 : 0,
-                    'plan_mar' => isset($request->plan_mar[$key]) ? 1 : 0,
-                    'plan_apr' => isset($request->plan_apr[$key]) ? 1 : 0,
-                    'plan_may' => isset($request->plan_may[$key]) ? 1 : 0,
-                    'plan_jun' => isset($request->plan_jun[$key]) ? 1 : 0,
-                    'plan_jul' => isset($request->plan_jul[$key]) ? 1 : 0,
-                    'plan_aug' => isset($request->plan_aug[$key]) ? 1 : 0,
-                    'plan_sep' => isset($request->plan_sep[$key]) ? 1 : 0,
-                    'plan_oct' => isset($request->plan_oct[$key]) ? 1 : 0,
-                    'plan_nov' => isset($request->plan_nov[$key]) ? 1 : 0,
-                    'plan_dec' => isset($request->plan_dec[$key]) ? 1 : 0,
+                    // PLAN
+                    'plan_jan' => $request->plan_jan[$key] ?? 0,
+                    'plan_feb' => $request->plan_feb[$key] ?? 0,
+                    'plan_mar' => $request->plan_mar[$key] ?? 0,
+                    'plan_apr' => $request->plan_apr[$key] ?? 0,
+                    'plan_may' => $request->plan_may[$key] ?? 0,
+                    'plan_jun' => $request->plan_jun[$key] ?? 0,
+                    'plan_jul' => $request->plan_jul[$key] ?? 0,
+                    'plan_aug' => $request->plan_aug[$key] ?? 0,
+                    'plan_sep' => $request->plan_sep[$key] ?? 0,
+                    'plan_oct' => $request->plan_oct[$key] ?? 0,
+                    'plan_nov' => $request->plan_nov[$key] ?? 0,
+                    'plan_dec' => $request->plan_dec[$key] ?? 0,
 
-                    'action_jan' => isset($request->action_jan[$key]) ? 1 : 0,
-                    'action_feb' => isset($request->action_feb[$key]) ? 1 : 0,
-                    'action_mar' => isset($request->action_mar[$key]) ? 1 : 0,
-                    'action_apr' => isset($request->action_apr[$key]) ? 1 : 0,
-                    'action_may' => isset($request->action_may[$key]) ? 1 : 0,
-                    'action_jun' => isset($request->action_jun[$key]) ? 1 : 0,
-                    'action_jul' => isset($request->action_jul[$key]) ? 1 : 0,
-                    'action_aug' => isset($request->action_aug[$key]) ? 1 : 0,
-                    'action_sep' => isset($request->action_sep[$key]) ? 1 : 0,
-                    'action_oct' => isset($request->action_oct[$key]) ? 1 : 0,
-                    'action_nov' => isset($request->action_nov[$key]) ? 1 : 0,
-                    'action_dec' => isset($request->action_dec[$key]) ? 1 : 0,
+                    // ACTION
+                    'action_jan' => $request->action_jan[$key] ?? 0,
+                    'action_feb' => $request->action_feb[$key] ?? 0,
+                    'action_mar' => $request->action_mar[$key] ?? 0,
+                    'action_apr' => $request->action_apr[$key] ?? 0,
+                    'action_may' => $request->action_may[$key] ?? 0,
+                    'action_jun' => $request->action_jun[$key] ?? 0,
+                    'action_jul' => $request->action_jul[$key] ?? 0,
+                    'action_aug' => $request->action_aug[$key] ?? 0,
+                    'action_sep' => $request->action_sep[$key] ?? 0,
+                    'action_oct' => $request->action_oct[$key] ?? 0,
+                    'action_nov' => $request->action_nov[$key] ?? 0,
+                    'action_dec' => $request->action_dec[$key] ?? 0,
 
-                    'clb_measuring_lists_inside' => $request->clb_measuring_lists_inside[$key],
-                    'clb_measuring_lists_external' => $request->clb_measuring_lists_external[$key],
-                    'clb_measuring_lists_remark' => $request->clb_measuring_lists_remark[$key],
+                    'clb_measuring_lists_inside' => $request->clb_measuring_lists_inside[$key] ?? null,
+                    'clb_measuring_lists_external' => $request->clb_measuring_lists_external[$key] ?? null,
+                    'clb_measuring_lists_remark' => $request->clb_measuring_lists_remark[$key] ?? null,
 
                     'clb_measuring_lists_flag' => true,
                     'person_at' => Auth::user()->name,
                     'clb_measuring_lists_date' => $request->clb_measuring_lists_date,
-
                     'updated_at' => now(),
                 ];
-                if ($request->hasFile("file_jan.$key")) {
-                    $file = $request->file("file_jan.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_jan_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_jan'] = $path;
+
+                // ================= FILE UPLOAD =================
+                $months = [
+                    'jan','feb','mar','apr','may','jun',
+                    'jul','aug','sep','oct','nov','dec'
+                ];
+
+                foreach ($months as $m) {
+                    if ($request->hasFile("file_{$m}.$key")) {
+
+                        $file = $request->file("file_{$m}.$key");
+
+                        $filename = time() . "_{$m}_{$key}." . $file->getClientOriginalExtension();
+
+                        $path = $file->storeAs('measuringplan_img', $filename, 'public');
+
+                        $data["file_{$m}"] = $path;
+                    }
                 }
-                if ($request->hasFile("file_feb.$key")) {
-                    $file = $request->file("file_feb.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_feb_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_feb'] = $path;
-                }
-                if ($request->hasFile("file_mar.$key")) {
-                    $file = $request->file("file_mar.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_mar_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_mar'] = $path;
-                }
-                if ($request->hasFile("file_apr.$key")) {
-                    $file = $request->file("file_apr.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_apr_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_apr'] = $path;
-                }
-                if ($request->hasFile("file_may.$key")) {
-                    $file = $request->file("file_may.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_may_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_may'] = $path;
-                }
-                if ($request->hasFile("file_jun.$key")) {
-                    $file = $request->file("file_jun.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_jun_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_jun'] = $path;
-                }
-                if ($request->hasFile("file_jul.$key")) {
-                    $file = $request->file("file_jul.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_jul_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_jul'] = $path;
-                }
-                if ($request->hasFile("file_aug.$key")) {
-                    $file = $request->file("file_aug.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_aug_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_aug'] = $path;
-                }
-                if ($request->hasFile("file_sep.$key")) {
-                    $file = $request->file("file_sep.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_sep_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_sep'] = $path;
-                }
-                if ($request->hasFile("file_oct.$key")) {
-                    $file = $request->file("file_oct.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_oct_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_oct'] = $path;
-                }
-                if ($request->hasFile("file_nov.$key")) {
-                    $file = $request->file("file_nov.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_nov_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_nov'] = $path;
-                }
-                if ($request->hasFile("file_dec.$key")) {
-                    $file = $request->file("file_dec.$key");
-                    // ตั้งชื่อไฟล์
-                    $filename = time() . "_dec_" . $key . "." . $file->getClientOriginalExtension();
-                    // save
-                    $path = $file->storeAs('measuringplan_img', $filename, 'public');
-                    // เก็บลง DB
-                    $data['file_dec'] = $path;
-                }
-                ClbMeasuringPlan::where('clb_measuring_plans_id',$value)->update($data);
+
+                ClbMeasuringPlan::where('clb_measuring_plans_id', $value)->update($data);
             }
 
-                DB::commit();
-                return redirect()->route('clb-measuringplan.index')
-                    ->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            DB::commit();
 
-            } catch (\Exception $e) {
-                DB::rollBack();
-                return redirect()->route('clb-measuringplan.index')
-                    ->with('error', 'บันทึกข้อมูลไม่สำเร็จ : ' . $e->getMessage());
-            }
+            return redirect()->route('clb-measuringplan.index')
+                ->with('success', 'บันทึกข้อมูลเรียบร้อย');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return redirect()->back()
+                ->with('error', 'บันทึกข้อมูลไม่สำเร็จ : ' . $e->getMessage());
         }
     }
 
