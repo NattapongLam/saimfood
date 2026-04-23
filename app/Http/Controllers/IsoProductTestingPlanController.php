@@ -135,75 +135,100 @@ class IsoProductTestingPlanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        try {
-            DB::beginTransaction();
+{
+    try {
+        DB::beginTransaction();
 
-            $months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+        $months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
 
-            foreach ($request->iso_product_testing_plans_id as $key => $value) {
+        foreach ($request->iso_product_testing_plans_id as $key => $value) {
 
-                // เตรียม data พื้นฐาน
-                $data = [
-                    'iso_product_testing_plans_name'  => $request->iso_product_testing_plans_name[$key],
-                    'iso_product_testing_plans_code'  => $request->iso_product_testing_plans_code[$key],
-                    'iso_product_testing_plans_group' => $request->iso_product_testing_plans_group[$key],
-                    'iso_product_testing_plans_flag'  => true,
-                    'person_at' => Auth::user()->name,
-                    'updated_at' => now(),
-                ];
+            $data = [
+                'iso_product_testing_plans_name'  => $request->iso_product_testing_plans_name[$key] ?? null,
+                'iso_product_testing_plans_code'  => $request->iso_product_testing_plans_code[$key] ?? null,
+                'iso_product_testing_plans_group' => $request->iso_product_testing_plans_group[$key] ?? null,
+                'iso_product_testing_plans_flag'  => true,
+                'person_at' => Auth::user()->name,
+                'updated_at' => now(),
+            ];
 
-                // loop เดือน
-                foreach ($months as $m) {
+            foreach ($months as $m) {
 
-                    // PLAN / ACTION
-                    $data["plan_$m"]   = $request->plans[$key]["plan_$m"] ?? 0;
-                    $data["action_$m"] = $request->plans[$key]["action_$m"] ?? 0;
+                // =========================
+                // ✅ PLAN (รองรับ 2 format)
+                // =========================
+                $plan = 0;
 
-                    // FILE UPLOAD
-                    if ($request->hasFile("plans.$key.file_$m")) {
-
-                        $file = $request->file("plans.$key.file_$m");
-
-                        // ตั้งชื่อไฟล์
-                        $filename = time() . "_{$m}_" . $file->getClientOriginalName();
-
-                        // เก็บไฟล์
-                        $path = $file->storeAs('producttestingplan_img', $filename, 'public');
-
-                        $data["file_$m"] = $path;
-                    }
+                if (isset($request->plans[$key]["plan_$m"])) {
+                    $plan = $request->plans[$key]["plan_$m"];
+                } elseif (isset($request->{"plan_$m"}[$key])) {
+                    $plan = $request->{"plan_$m"}[$key];
                 }
 
-                // UPDATE หรือ CREATE
-                if ($value != 0) {
+                $data["plan_$m"] = $plan ? 1 : 0;
 
-                    IsoProductTestingPlan::where('iso_product_testing_plans_id', $value)
-                        ->update($data);
+                // =========================
+                // ✅ ACTION
+                // =========================
+                $action = 0;
 
-                } else {
+                if (isset($request->plans[$key]["action_$m"])) {
+                    $action = $request->plans[$key]["action_$m"];
+                } elseif (isset($request->{"action_$m"}[$key])) {
+                    $action = $request->{"action_$m"}[$key];
+                }
 
-                    $data['iso_product_testing_plans_date'] = $request->iso_product_testing_plans_date;
-                    $data['created_at'] = now();
+                $data["action_$m"] = $action ? 1 : 0;
 
-                    IsoProductTestingPlan::create($data);
+                // =========================
+                // ✅ FILE (รองรับ 2 format)
+                // =========================
+                $file = null;
+
+                if ($request->hasFile("plans.$key.file_$m")) {
+                    $file = $request->file("plans.$key.file_$m");
+                } elseif ($request->hasFile("file_$m.$key")) {
+                    $file = $request->file("file_$m.$key");
+                }
+
+                if ($file) {
+                    $filename = time() . "_{$m}_" . $file->getClientOriginalName();
+                    $path = $file->storeAs('producttestingplan_img', $filename, 'public');
+
+                    $data["file_$m"] = $path;
                 }
             }
 
-            DB::commit();
+            // =========================
+            // ✅ UPDATE / CREATE
+            // =========================
+            if ($value != 0) {
 
-            return redirect()->route('iso-producttestingplan.index')
-                ->with('success', 'บันทึกข้อมูลเรียบร้อย');
+                IsoProductTestingPlan::where('iso_product_testing_plans_id', $value)
+                    ->update($data);
 
-        } catch (\Exception $e) {
+            } else {
 
-            DB::rollBack();
+                $data['iso_product_testing_plans_date'] = $request->iso_product_testing_plans_date;
+                $data['created_at'] = now();
 
-            return redirect()->route('iso-producttestingplan.index')
-                ->with('error', 'บันทึกข้อมูลไม่สำเร็จ : ' . $e->getMessage());
+                IsoProductTestingPlan::create($data);
+            }
         }
-    }
 
+        DB::commit();
+
+        return redirect()->route('iso-producttestingplan.index')
+            ->with('success', 'บันทึกข้อมูลเรียบร้อย');
+
+    } catch (\Exception $e) {
+
+        DB::rollBack();
+
+        return redirect()->route('iso-producttestingplan.index')
+            ->with('error', 'บันทึกข้อมูลไม่สำเร็จ : ' . $e->getMessage());
+    }
+}
     /**
      * Remove the specified resource from storage.
      *
