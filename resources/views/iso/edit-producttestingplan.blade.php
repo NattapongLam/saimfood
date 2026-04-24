@@ -40,10 +40,10 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3"> 
-                                    <div class="col-12" style="text-align: right;">
+                                    {{-- <div class="col-12" style="text-align: right;">
                                         <a href="javascript:void(0);" class="btn btn-secondary" id="addRowBtn">เพิ่มรายการ</a>
                                     </div>
-                                    <hr>
+                                    <hr> --}}
                                     <div class="col-12">
                                         <div class="table-responsive">
                                         <table class="table table-bordered nowrap w-100 text-center">
@@ -104,11 +104,11 @@
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
 
-                                                                <input type="hidden" name="plans[{{ $key }}][plan_jan]" value="0">
+                                                                <input type="hidden" name="plan_jan[{{ $key }}]" value="0">
 
                                                                 <input type="checkbox"
                                                                     class="form-check-input scale-checkbox m-0"
-                                                                    name="plans[{{ $key }}][plan_jan]"
+                                                                    name="plan_jan[{{ $key }}]"
                                                                     value="1"
                                                                     {{ $item->plan_jan == 1 ? 'checked' : '' }}>
                                                             </div>
@@ -117,11 +117,11 @@
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
 
-                                                                <input type="hidden" name="plans[{{ $key }}][action_jan]" value="0">
+                                                                <input type="hidden" name="action_jan[{{ $key }}]" value="0">
 
                                                                 <input type="checkbox"
                                                                     class="form-check-input scale-checkbox m-0"
-                                                                    name="plans[{{ $key }}][action_jan]"
+                                                                    name="action_jan[{{ $key }}]"
                                                                     value="1"
                                                                     {{ $item->action_jan == 1 ? 'checked' : '' }}>
                                                             </div>
@@ -135,7 +135,7 @@
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
                                                                         class="form-control form-control-sm"
-                                                                        name="plans[{{ $key }}][file_jan]">
+                                                                        name="file_jan[{{ $key }}]">
                                                                 </div>
                                                             @endif
                                                         </td>
