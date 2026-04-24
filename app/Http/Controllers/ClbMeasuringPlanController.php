@@ -151,6 +151,7 @@ class ClbMeasuringPlanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($request->all());
         $hd = ClbMeasuringPlan::where('clb_measuring_lists_date', $id)->first();
 
         if (!$hd) {
@@ -173,35 +174,6 @@ class ClbMeasuringPlanController extends Controller
                     'clb_measuring_lists_frequency' => $request->clb_measuring_lists_frequency[$key] ?? null,
                     'actualuseperiod' => $request->actualuseperiod[$key] ?? null,
                     'acceptancecriteria' => $request->acceptancecriteria[$key] ?? null,
-
-                    // PLAN
-                    'plan_jan' => $request->plan_jan[$key] ?? 0,
-                    'plan_feb' => $request->plan_feb[$key] ?? 0,
-                    'plan_mar' => $request->plan_mar[$key] ?? 0,
-                    'plan_apr' => $request->plan_apr[$key] ?? 0,
-                    'plan_may' => $request->plan_may[$key] ?? 0,
-                    'plan_jun' => $request->plan_jun[$key] ?? 0,
-                    'plan_jul' => $request->plan_jul[$key] ?? 0,
-                    'plan_aug' => $request->plan_aug[$key] ?? 0,
-                    'plan_sep' => $request->plan_sep[$key] ?? 0,
-                    'plan_oct' => $request->plan_oct[$key] ?? 0,
-                    'plan_nov' => $request->plan_nov[$key] ?? 0,
-                    'plan_dec' => $request->plan_dec[$key] ?? 0,
-
-                    // ACTION
-                    'action_jan' => $request->action_jan[$key] ?? 0,
-                    'action_feb' => $request->action_feb[$key] ?? 0,
-                    'action_mar' => $request->action_mar[$key] ?? 0,
-                    'action_apr' => $request->action_apr[$key] ?? 0,
-                    'action_may' => $request->action_may[$key] ?? 0,
-                    'action_jun' => $request->action_jun[$key] ?? 0,
-                    'action_jul' => $request->action_jul[$key] ?? 0,
-                    'action_aug' => $request->action_aug[$key] ?? 0,
-                    'action_sep' => $request->action_sep[$key] ?? 0,
-                    'action_oct' => $request->action_oct[$key] ?? 0,
-                    'action_nov' => $request->action_nov[$key] ?? 0,
-                    'action_dec' => $request->action_dec[$key] ?? 0,
-
                     'clb_measuring_lists_inside' => $request->clb_measuring_lists_inside[$key] ?? null,
                     'clb_measuring_lists_external' => $request->clb_measuring_lists_external[$key] ?? null,
                     'clb_measuring_lists_remark' => $request->clb_measuring_lists_remark[$key] ?? null,
@@ -211,25 +183,6 @@ class ClbMeasuringPlanController extends Controller
                     'clb_measuring_lists_date' => $request->clb_measuring_lists_date,
                     'updated_at' => now(),
                 ];
-
-                // ================= FILE UPLOAD =================
-                $months = [
-                    'jan','feb','mar','apr','may','jun',
-                    'jul','aug','sep','oct','nov','dec'
-                ];
-
-                foreach ($months as $m) {
-                    if ($request->hasFile("file_{$m}.$key")) {
-
-                        $file = $request->file("file_{$m}.$key");
-
-                        $filename = time() . "_{$m}_{$key}." . $file->getClientOriginalExtension();
-
-                        $path = $file->storeAs('measuringplan_img', $filename, 'public');
-
-                        $data["file_{$m}"] = $path;
-                    }
-                }
 
                 ClbMeasuringPlan::where('clb_measuring_plans_id', $value)->update($data);
             }
@@ -283,4 +236,64 @@ class ClbMeasuringPlanController extends Controller
             ]);
         }
     }
+    public function autoUpdate(Request $request)
+{
+    try {
+
+        \Log::info('AUTO UPDATE:', $request->all());
+
+        $plan = ClbMeasuringPlan::find($request->id);
+
+        if (!$plan) {
+            return response()->json(['status' => false, 'msg' => 'not found']);
+        }
+
+        if ($request->has('field') && $request->has('value')) {
+
+            $field = $request->field;
+            $value = $request->value;
+
+            $allowedFields = [
+                'plan_jan','plan_feb','plan_mar','plan_apr','plan_may','plan_jun',
+                'plan_jul','plan_aug','plan_sep','plan_oct','plan_nov','plan_dec',
+                'action_jan','action_feb','action_mar','action_apr','action_may','action_jun',
+                'action_jul','action_aug','action_sep','action_oct','action_nov','action_dec',
+            ];
+
+            if (in_array($field, $allowedFields)) {
+                $plan->$field = $value;
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'msg' => 'field not allowed'
+                ]);
+            }
+        }
+
+        if ($request->hasFile('file')) {
+
+            $field = $request->field;
+            $file = $request->file('file');
+
+            $filename = time().'_'.$field.'.'.$file->getClientOriginalExtension();
+
+            $path = $file->storeAs('measuringplan_img', $filename, 'public');
+
+            $plan->$field = $path;
+        }
+
+        $plan->updated_at = now();
+        $plan->person_at = auth()->user()->name ?? 'system';
+        $plan->save();
+
+        return response()->json(['status' => true]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'status' => false,
+            'msg' => $e->getMessage()
+        ]);
+    }
+}
 }

@@ -200,7 +200,8 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:clb-measuringplan']
     ],function(){
         Route::resource('/clb-measuringplan' , App\Http\Controllers\ClbMeasuringPlanController::class);
-         Route::post('/confirmDelMeasuringPlan' , [App\Http\Controllers\ClbMeasuringPlanController::class , 'confirmDelMeasuringPlan']);
+        Route::post('/confirmDelMeasuringPlan' , [App\Http\Controllers\ClbMeasuringPlanController::class , 'confirmDelMeasuringPlan']);
+        Route::post('/clb-measuringplan/auto-update', [App\Http\Controllers\ClbMeasuringPlanController::class, 'autoUpdate']);
     });
     Route::resource('/asset-inout' , App\Http\Controllers\OtherAssetinoutForm::class);
     Route::post('/confirmDelAssetinoutHd' , [App\Http\Controllers\OtherAssetinoutForm::class , 'confirmDelAssetinoutHd']);

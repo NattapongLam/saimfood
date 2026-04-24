@@ -37,6 +37,9 @@
 .chk-action:checked{
     box-shadow: 0 0 0 2px rgba(25,135,84,0.25);
 }
+input[type="file"] {
+    color: transparent;
+}
 </style>
 <div class="row">
     <div class="col-12">
@@ -170,27 +173,25 @@
                                                     <th colspan="12">การดำเนินการตามแผนเดือน</th>
                                                 </tr>
                                                 <tr>
-                                                    <td style="min-width:100px;">
+                                                   <td style="min-width:100px; max-width:100px;">
                                                             <div class="text-center fw-bold mb-1">ม.ค.</div>
                                                             <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_jan[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_jan[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_jan == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_jan"
+                                                                {{ $item->plan_jan ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_jan[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_jan[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_jan == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_jan"
+                                                                {{ $item->action_jan ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- FILE -->
                                                             @if ($item->file_jan)
@@ -200,35 +201,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_jan[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_jan">
                                                                 </div>
-                                                            @endif
-                                                           
+                                                            @endif                                                          
                                                     </td>
-                                                    <td style="min-width:100px;">
+                                                    <td style="min-width:100px; max-width:100px;">
                                                             <div class="text-center fw-bold mb-1">ก.พ.</div>
-                                                            <!-- PLAN -->
+                                                             <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_feb[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_feb[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_feb == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_feb"
+                                                                {{ $item->plan_feb ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_feb[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_feb[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_feb == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_feb"
+                                                                {{ $item->action_feb ? 'checked' : '' }}>
                                                             </div>
-                                                              <!-- FILE -->
+                                                            <!-- FILE -->
                                                             @if ($item->file_feb)
                                                                 <a href="{{ asset('storage/' .$item->file_feb)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -236,34 +235,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_feb[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_feb">
                                                                 </div>
                                                             @endif
                                                     </td>
-                                                    <td style="min-width:100px;">
+                                                    <td style="min-width:100px; max-width:100px;">
                                                             <div class="text-center fw-bold mb-1">มี.ค.</div>
-                                                            <!-- PLAN -->
+                                                             <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_mar[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_mar[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_mar == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_mar"
+                                                                {{ $item->plan_mar ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_mar[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_mar[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_mar == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_mar"
+                                                                {{ $item->action_mar ? 'checked' : '' }}>
                                                             </div>
-                                                              <!-- FILE -->
+                                                            <!-- FILE -->
                                                             @if ($item->file_mar)
                                                                 <a href="{{ asset('storage/' .$item->file_mar)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -271,34 +269,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_mar[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_mar">
                                                                 </div>
                                                             @endif
                                                     </td>
-                                                    <td style="min-width:100px;">
+                                                  <td style="min-width:100px; max-width:100px;">
                                                             <div class="text-center fw-bold mb-1">เม.ย.</div>
-                                                            <!-- PLAN -->
+                                                              <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_apr[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_apr[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_apr == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_apr"
+                                                                {{ $item->plan_apr ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_apr[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_apr[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_apr == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_apr"
+                                                                {{ $item->action_apr ? 'checked' : '' }}>
                                                             </div>
-                                                             <!-- FILE -->
+                                                            <!-- FILE -->
                                                             @if ($item->file_apr)
                                                                 <a href="{{ asset('storage/' .$item->file_apr)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -306,34 +303,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_apr[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_apr">
                                                                 </div>
                                                             @endif
                                                     </td>
-                                                    <td style="min-width:100px;">
+                                                    <td style="min-width:100px; max-width:100px;">
                                                             <div class="text-center fw-bold mb-1">พ.ค.</div>
-                                                            <!-- PLAN -->
+                                                               <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_may[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_may[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_may == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_may"
+                                                                {{ $item->plan_may ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_may[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_may[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_may == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_may"
+                                                                {{ $item->action_may ? 'checked' : '' }}>
                                                             </div>
-                                                              <!-- FILE -->
+                                                            <!-- FILE -->
                                                             @if ($item->file_may)
                                                                 <a href="{{ asset('storage/' .$item->file_may)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -341,34 +337,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_may[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_may">
                                                                 </div>
                                                             @endif
                                                     </td>
-                                                    <td style="min-width:100px;">
+                                                     <td style="min-width:100px; max-width:100px;">
                                                             <div class="text-center fw-bold mb-1">มิ.ย.</div>
-                                                            <!-- PLAN -->
+                                                                <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_jun[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_jun[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_jun == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_jun"
+                                                                {{ $item->plan_jun ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_jun[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_jun[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_jun == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_jun"
+                                                                {{ $item->action_jun ? 'checked' : '' }}>
                                                             </div>
-                                                                 <!-- FILE -->
+                                                            <!-- FILE -->
                                                             @if ($item->file_jun)
                                                                 <a href="{{ asset('storage/' .$item->file_jun)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -376,34 +371,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_jun[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_jun">
                                                                 </div>
                                                             @endif
                                                     </td>
-                                                    <td>
+                                                   <td style="min-width:100px; max-width:100px;">
                                                         <div class="text-center fw-bold mb-1">ก.ค.</div>
-                                                            <!-- PLAN -->
+                                                              <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_jul[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_jul[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_jul == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_jul"
+                                                                {{ $item->plan_jul ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_jul[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_jul[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_jul == 1 ? 'checked' : '' }}>
-                                                        </div>
-                                                             <!-- FILE -->
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_jul"
+                                                                {{ $item->action_jul ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- FILE -->
                                                             @if ($item->file_jul)
                                                                 <a href="{{ asset('storage/' .$item->file_jul)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -411,33 +405,32 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_jul[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_jul">
                                                                 </div>
-                                                            @endif
+                                                            @endif   
                                                     </td>
-                                                    <td>
-                                                        <div class="text-center fw-bold mb-1">ส.ค.</div>
-                                                            <!-- PLAN -->
+                                                    <td style="min-width:100px; max-width:100px;">
+                                                        <div class="text-center fw-bold mb-1">ส.ค.</div>    
+                                                         <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_aug[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_aug[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_aug == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_aug"
+                                                                {{ $item->plan_aug ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_aug[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_aug[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_aug == 1 ? 'checked' : '' }}>
-                                                        </div>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_aug"
+                                                                {{ $item->action_aug ? 'checked' : '' }}>
+                                                            </div>
                                                             <!-- FILE -->
                                                             @if ($item->file_aug)
                                                                 <a href="{{ asset('storage/' .$item->file_aug)}}" target="_blank" class="text-dark">
@@ -446,34 +439,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_aug[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_aug">
                                                                 </div>
-                                                            @endif                                                        
+                                                            @endif                                                     
                                                     </td>
-                                                    <td>
-                                                        <div class="text-center fw-bold mb-1">ก.ย.</div>
-                                                            <!-- PLAN -->
+                                                    <td style="min-width:100px; max-width:100px;">
+                                                        <div class="text-center fw-bold mb-1">ก.ย.</div>   
+                                                        <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_sep[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_sep[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_sep == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_sep"
+                                                                {{ $item->plan_sep ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_sep[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_sep[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_sep == 1 ? 'checked' : '' }}>
-                                                        </div>
-                                                         <!-- FILE -->
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_sep"
+                                                                {{ $item->action_sep ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- FILE -->
                                                             @if ($item->file_sep)
                                                                 <a href="{{ asset('storage/' .$item->file_sep)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -481,34 +473,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_sep[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_sep">
                                                                 </div>
-                                                            @endif             
+                                                            @endif                  
                                                     </td>
-                                                    <td>
-                                                        <div class="text-center fw-bold mb-1">ต.ค.</div>
-                                                            <!-- PLAN -->
+                                                    <td style="min-width:100px; max-width:100px;">
+                                                        <div class="text-center fw-bold mb-1">ต.ค.</div>  
+                                                         <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_oct[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_oct[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_oct == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_oct"
+                                                                {{ $item->plan_oct ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_oct[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_oct[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_oct == 1 ? 'checked' : '' }}>
-                                                        </div>
-                                                          <!-- FILE -->
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_oct"
+                                                                {{ $item->action_oct ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- FILE -->
                                                             @if ($item->file_oct)
                                                                 <a href="{{ asset('storage/' .$item->file_oct)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -516,34 +507,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_oct[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_oct">
                                                                 </div>
-                                                            @endif                                                            
+                                                            @endif                                                                            
                                                     </td>
-                                                    <td>
-                                                         <div class="text-center fw-bold mb-1">พ.ย.</div>
-                                                            <!-- PLAN -->
+                                                    <td style="min-width:100px; max-width:100px;">
+                                                        <div class="text-center fw-bold mb-1">พ.ย.</div> 
+                                                        <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_nov[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_nov[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_nov == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_nov"
+                                                                {{ $item->plan_nov ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_nov[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_nov[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_nov == 1 ? 'checked' : '' }}>
-                                                        </div>
-                                                           <!-- FILE -->
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_nov"
+                                                                {{ $item->action_nov ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- FILE -->
                                                             @if ($item->file_nov)
                                                                 <a href="{{ asset('storage/' .$item->file_nov)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -551,34 +541,33 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_nov[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_nov">
                                                                 </div>
-                                                            @endif                                                                    
+                                                            @endif                                                                                     
                                                     </td>
-                                                    <td>
-                                                          <div class="text-center fw-bold mb-1">ธ.ค.</div>
-                                                            <!-- PLAN -->
+                                                    <td style="min-width:100px; max-width:100px;">
+                                                        <div class="text-center fw-bold mb-1">ธ.ค.</div>   
+                                                        <!-- PLAN -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
                                                                 <span class="small fw-bold text-primary">PLAN</span>
-                                                                <input type="hidden" name="plan_dec[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-plan m-0"
-                                                                    name="plan_dec[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->plan_dec == 1 ? 'checked' : '' }}>
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="plan_dec"
+                                                                {{ $item->plan_dec ? 'checked' : '' }}>
                                                             </div>
                                                             <!-- ACTION -->
                                                             <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
                                                                 <span class="small fw-bold text-success">ACTION</span>
-                                                                <input type="hidden" name="action_dec[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input scale-checkbox chk-action m-0"
-                                                                    name="action_dec[{{ $key }}]"
-                                                                    value="1"
-                                                                    {{ $item->action_dec == 1 ? 'checked' : '' }}>
-                                                        </div>
-                                                         <!-- FILE -->
+                                                                class="auto-save"
+                                                                data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                data-field="action_dec"
+                                                                {{ $item->action_dec ? 'checked' : '' }}>
+                                                            </div>
+                                                            <!-- FILE -->
                                                             @if ($item->file_dec)
                                                                 <a href="{{ asset('storage/' .$item->file_dec)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
@@ -586,10 +575,11 @@
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
-                                                                        class="form-control form-control-sm"
-                                                                        name="file_dec[{{ $key }}]">
+                                                                    class="auto-upload"
+                                                                    data-id="{{ $item->clb_measuring_plans_id }}"
+                                                                    data-field="file_dec">
                                                                 </div>
-                                                            @endif                                                                   
+                                                            @endif                                                               
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -674,5 +664,94 @@ Swal.fire({
     }
 });
 }
+$(document).on('change', '.auto-save', function () {
+
+    $.ajax({
+        url: '/clb-measuringplan/auto-update',
+        type: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            id: $(this).data('id'),
+            field: $(this).data('field'),
+            value: $(this).is(':checked') ? 1 : 0
+        },
+        success: function (res) {
+            console.log('RESPONSE:', res);
+
+            if (res.status) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'บันทึกสำเร็จ',
+                    timer: 800,
+                    showConfirmButton: false
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: res.msg ?? 'ไม่สำเร็จ'
+                });
+            }
+        },
+        error: function (xhr) {
+            console.error('AJAX ERROR:', xhr.responseText);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Server error',
+                text: xhr.responseText
+            });
+        }
+    });
+
+});
+$(document).on('change', '.auto-upload', function () {
+
+    let el = $(this);
+    let file = this.files[0];
+
+    if (!file) return;
+
+    let formData = new FormData();
+
+    formData.append('_token', '{{ csrf_token() }}');
+    formData.append('id', el.data('id'));
+    formData.append('field', el.data('field'));
+    formData.append('file', file);
+
+    $.ajax({
+        url: "{{ url('/clb-measuringplan/auto-update') }}",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+
+            console.log(res);
+
+            if (res.status) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'อัปโหลดสำเร็จ',
+                    timer: 800,
+                    showConfirmButton: false
+                });
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: res.msg ?? 'อัปโหลดไม่สำเร็จ'
+                });
+            }
+        },
+        error: function (xhr) {
+            console.log(xhr.responseText);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Upload error'
+            });
+        }
+    });
+});
 </script>
 @endsection
