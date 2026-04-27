@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Models\ClbMeasuringList;
+use App\Models\ClbMeasuringRecord;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ClbMeasuringListController extends Controller
 {
@@ -130,7 +131,8 @@ class ClbMeasuringListController extends Controller
     public function edit($id)
     {
         $hd = ClbMeasuringList::find($id);
-        return view('measurings.edit-measuringlist',compact('hd'));
+        $list = ClbMeasuringRecord::where('clb_measuring_lists_id',$id)->where('flag',true)->get();
+        return view('measurings.edit-measuringlist',compact('hd','list'));
     }
 
     /**
@@ -185,6 +187,47 @@ class ClbMeasuringListController extends Controller
         {
             DB::beginTransaction();
             ClbMeasuringList::where('clb_measuring_lists_id',$id)->update($data); 
+            foreach ($request->clb_measuring_records_id as $key => $value) {
+               if($value == 0){
+                    ClbMeasuringRecord::insert([
+                        'clb_measuring_lists_id' => $id,
+                        'clb_measuring_records_listno' => $request->clb_measuring_records_listno[$key],
+                        'clb_measuring_records_date' => $request->clb_measuring_records_date[$key],
+                        'clb_measuring_records_remark' => $request->clb_measuring_records_remark[$key],
+                        'clb_measuring_records_timeline' => $request->clb_measuring_records_timeline[$key],
+                        'clb_measuring_records_calibate' => isset($request->clb_measuring_records_calibate[$key]) ? 1 : 0,
+                        'clb_measuring_records_certno' => $request->clb_measuring_records_certno[$key],
+                        'clb_measuring_records_repaircheck' => isset($request->clb_measuring_records_repaircheck[$key]) ? 1 : 0,
+                        'clb_measuring_records_repairdocu'  => $request->clb_measuring_records_repairdocu[$key],
+                        'clb_measuring_records_repairdocu'  => $request->clb_measuring_records_repairdocu[$key],
+                        'clb_measuring_records_person' => $request->clb_measuring_records_person[$key],
+                        'clb_measuring_records_review' => $request->clb_measuring_records_review[$key],
+                        'clb_measuring_records_location' => $request->clb_measuring_records_location[$key],
+                        'clb_measuring_records_status'=> $request->clb_measuring_records_status[$key],
+                        'clb_measuring_records_note'=> $request->clb_measuring_records_note[$key],
+                        'flag' => true,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+               }else{                  
+                    ClbMeasuringRecord::where('clb_measuring_records_id',$request->clb_measuring_records_id)
+                    ->update([
+                        'clb_measuring_records_date' => $request->clb_measuring_records_date[$key],
+                        'clb_measuring_records_remark' => $request->clb_measuring_records_remark[$key],
+                        'clb_measuring_records_timeline' => $request->clb_measuring_records_timeline[$key],
+                        'clb_measuring_records_calibate' => isset($request->clb_measuring_records_calibate[$key]) ? 1 : 0,
+                        'clb_measuring_records_certno' => $request->clb_measuring_records_certno[$key],
+                        'clb_measuring_records_repaircheck' => isset($request->clb_measuring_records_repaircheck[$key]) ? 1 : 0,
+                        'clb_measuring_records_repairdocu'  => $request->clb_measuring_records_repairdocu[$key],
+                        'clb_measuring_records_person' => $request->clb_measuring_records_person[$key],
+                        'clb_measuring_records_review' => $request->clb_measuring_records_review[$key],
+                        'clb_measuring_records_location' => $request->clb_measuring_records_location[$key],
+                        'clb_measuring_records_status'=> $request->clb_measuring_records_status[$key],
+                        'clb_measuring_records_note'=> $request->clb_measuring_records_note[$key],
+                        'updated_at' => now(),
+                    ]);
+               }
+            }
             DB::commit();
             return redirect()->route('clb-measuringlist.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
         } catch (\Exception $e) {
@@ -229,5 +272,29 @@ class ClbMeasuringListController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+    }
+
+    public function confirmDelMeasuringrec(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            ClbMeasuringRecord::where('clb_measuring_records_id',$id)->update([
+                'flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }      
     }
 }

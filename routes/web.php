@@ -195,6 +195,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
     ],function(){
         Route::resource('/clb-measuringlist' , App\Http\Controllers\ClbMeasuringListController::class);
         Route::post('/confirmDelMeasuringlis' , [App\Http\Controllers\ClbMeasuringListController::class , 'confirmDelMeasuringlis']);
+        Route::post('/confirmDelMeasuringrec' , [App\Http\Controllers\ClbMeasuringListController::class , 'confirmDelMeasuringrec']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:clb-measuringplan']

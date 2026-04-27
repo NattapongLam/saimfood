@@ -49,7 +49,7 @@
                                                     <th rowspan="2" style="width:3%">ลำดับ</th>
                                                     <th rowspan="2" style="width:10%">ชื่อสินค้า</th>
                                                     <th rowspan="2" style="width:10%">รหัสสินค้า</th>
-                                                     <th rowspan="2" style="width:10%">กลุ่มผลิตภัณฑ์</th>
+                                                    <th rowspan="2" style="width:10%">กลุ่มผลิตภัณฑ์</th>
                                                     <th colspan="12">เดือน</th>
                                                     <th rowspan="2" style="width:3%"></th>
                                                 </tr>
