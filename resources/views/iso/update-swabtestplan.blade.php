@@ -28,7 +28,7 @@
                                 <div class="row mt-3">
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">วันที่</label>
+                                            <label class="form-label">วันที่รายงานผล</label>
                                             <input class="form-control" type="date" name="" value="{{ old('iso_dar_lists_date', date('Y-m-d')) }}">
                                         </div>
                                     </div>
@@ -66,11 +66,53 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">ชื่อพนักงาน/ชื่อเครื่องจักร-อุปกรณ์</label>
+                                            <label class="form-label">รายละเอียดการ Swab Test</label>
                                             <input class="form-control" type="text" name="">
                                         </div>
                                     </div>
-                                </div>                                  
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">สีสารละลายที่ปรากฎ</label>
+                                            <input class="form-control" type="text" name="">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">สรุปผล</label>
+                                            <select class="form-control">
+                                                <option value="">กรุณาเลือก</option>
+                                                <option value="ผ่าน">ผ่าน</option>
+                                                <option value="ไม่ผ่าน">ไม่ผ่าน</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="row mt-3">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">ผู้ตรวจสอบ</label>
+                                            <input class="form-control" type="text" name="">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">ผู้ทวนสอบ</label>
+                                            <input class="form-control" type="text" name="">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">ผู้รับทราบ</label>
+                                            <input class="form-control" type="text" name="">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">หมายเหตุ</label>
+                                            <input class="form-control" type="text" name="">
+                                        </div>
+                                    </div>
+                                </div>                                 
                             </div>
                             <br>
                                 <div class="form-group">
