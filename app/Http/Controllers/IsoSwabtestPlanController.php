@@ -112,7 +112,8 @@ class IsoSwabtestPlanController extends Controller
      */
     public function show($id)
     {
-        //
+        $hd = IsoSwabtestPlan::find($id);
+        return view('iso.update-swabtestplan',compact('hd'));
     }
 
     /**

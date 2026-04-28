@@ -41,10 +41,10 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3"> 
-                                    <div class="col-12" style="text-align: right;">
+                                    {{-- <div class="col-12" style="text-align: right;">
                                         <a href="javascript:void(0);" class="btn btn-secondary" id="addRowBtn">เพิ่มรายการ</a>
                                     </div>
-                                    <hr>
+                                    <hr> --}}
                                     <div class="col-12">
                                         <div class="table-responsive">
                                         <table class="table table-bordered nowrap w-100 text-center table-sm">
@@ -58,7 +58,7 @@
                                                     <th colspan="12">เดือน</th>
                                                     <th rowspan="2" style="min-width:200px;">ผู้รับผิดชอบ</th>
                                                     <th rowspan="2" style="min-width:200px;">ผู้ทวนสอบ</th>
-                                                    <th rowspan="2"></th>
+                                                    <th rowspan="2">บันทึก</th>
                                                 </tr>
                                                 <tr>
                                                     <!-- เดือน -->
@@ -385,7 +385,9 @@
                                                         <td>
                                                             <input type="text" name="iso_swabtest_plans_review[]" class="form-control" value="{{$item->iso_swabtest_plans_review}}"/>
                                                         </td>
-                                                        <td></td>
+                                                        <td>
+                                                            <a href="{{ route('iso-swabtestplan.show', $item->iso_swabtest_plans_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i></a>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
