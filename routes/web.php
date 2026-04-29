@@ -174,6 +174,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:iso-swabtestplan']
     ],function(){
         Route::resource('/iso-swabtestplan' , App\Http\Controllers\IsoSwabtestPlanController::class);
+        Route::post('/iso-swabtestplan/store-record/{planId}',[App\Http\Controllers\IsoSwabtestPlanController::class, 'storeRecord'])->name('iso-swabtestplan.storeRecord');
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-ncrlist']

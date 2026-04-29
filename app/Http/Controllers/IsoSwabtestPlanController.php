@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\IsoSwabtestPlan;
+use App\Models\IsoSwabtestRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -113,7 +114,8 @@ class IsoSwabtestPlanController extends Controller
     public function show($id)
     {
         $hd = IsoSwabtestPlan::find($id);
-        return view('iso.update-swabtestplan',compact('hd'));
+        $list = IsoSwabtestRecord::where('flag',true)->where('iso_swabtest_plans_id',$id)->get();
+        return view('iso.update-swabtestplan',compact('hd','list'));
     }
 
     /**
@@ -235,5 +237,42 @@ class IsoSwabtestPlanController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function storeRecord(Request $request, $planId)
+    {
+        try {
+
+            $request->validate([
+                'iso_swabtest_records_date' => 'required|date',
+                'iso_swabtest_records_department' => 'required',
+                'iso_swabtest_records_test' => 'required',
+                'iso_swabtest_records_status' => 'required',
+            ]);
+
+            $record = new \App\Models\IsoSwabtestRecord();
+
+            $record->iso_swabtest_plans_id = $planId;
+            $record->iso_swabtest_records_date = $request->iso_swabtest_records_date;
+            $record->iso_swabtest_records_department = $request->iso_swabtest_records_department;
+            $record->iso_swabtest_records_area = $request->iso_swabtest_records_area;
+            $record->iso_swabtest_records_name = $request->iso_swabtest_records_name;
+            $record->iso_swabtest_records_test = $request->iso_swabtest_records_test;
+            $record->iso_swabtest_records_remark = $request->iso_swabtest_records_remark;
+            $record->iso_swabtest_records_result = $request->iso_swabtest_records_result;
+            $record->iso_swabtest_records_status = $request->iso_swabtest_records_status;
+            $record->iso_swabtest_records_review = $request->iso_swabtest_records_review;
+            $record->iso_swabtest_records_recheck = $request->iso_swabtest_records_recheck;
+            $record->iso_swabtest_records_acknowledge = $request->iso_swabtest_records_acknowledge;
+            $record->iso_swabtest_records_note = $request->iso_swabtest_records_note;
+            $record->created_at = now();
+            $record->updated_at = now();
+            $record->save();
+
+            return redirect()->back()->with('success', 'บันทึกข้อมูลเรียบร้อยแล้ว');
+
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

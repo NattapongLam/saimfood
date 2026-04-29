@@ -21,33 +21,32 @@
                                           แผนการ Swab Test (Coliform bacteria)                
                                     </h5>                              
                             </div>
-                            <form class="custom-validation" action="{{ route('iso-swabtestplan.update',$hd->iso_swabtest_plans_id) }}" method="POST" enctype="multipart/form-data" validate>
-                            @csrf  
-                            @method('PUT')
+                            <form action="{{ route('iso-swabtestplan.storeRecord', $hd->iso_swabtest_plans_id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="card-body">
                                 <div class="row mt-3">
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">วันที่รายงานผล</label>
-                                            <input class="form-control" type="date" name="" value="{{ old('iso_dar_lists_date', date('Y-m-d')) }}">
+                                            <input class="form-control" type="date" name="iso_swabtest_records_date" value="{{ old('iso_dar_lists_date', date('Y-m-d')) }}" required>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">แผนก</label>
-                                            <input class="form-control" type="text" name="">
+                                            <input class="form-control" type="text" name="iso_swabtest_records_department" required>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">จุดปฏิบัติงาน/จุดประจำ</label>
-                                            <input class="form-control" type="text" name="" value="{{$hd->iso_swabtest_plans_area}}" readonly>
+                                            <input class="form-control" type="text" name="iso_swabtest_records_area" value="{{$hd->iso_swabtest_plans_area}}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ชื่อพนักงาน/ชื่อเครื่องจักร-อุปกรณ์</label>
-                                            <input class="form-control" type="text" name="">
+                                            <input class="form-control" type="text" name="iso_swabtest_records_name">
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +54,7 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">จุดที่ Swab Test</label>
-                                            <select class="form-control">
+                                            <select class="form-control" name="iso_swabtest_records_test" required>
                                                 <option value="">กรุณาเลือก</option>
                                                 <option value="มือ">มือ</option>
                                                 <option value="ชุดยูนิฟอร์ม">ชุดยูนิฟอร์ม</option>
@@ -67,19 +66,19 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">รายละเอียดการ Swab Test</label>
-                                            <input class="form-control" type="text" name="">
+                                            <input class="form-control" type="text" name="iso_swabtest_records_remark">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">สีสารละลายที่ปรากฎ</label>
-                                            <input class="form-control" type="text" name="">
+                                            <input class="form-control" type="text" name="iso_swabtest_records_result">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">สรุปผล</label>
-                                            <select class="form-control">
+                                            <select class="form-control" name="iso_swabtest_records_status" required>
                                                 <option value="">กรุณาเลือก</option>
                                                 <option value="ผ่าน">ผ่าน</option>
                                                 <option value="ไม่ผ่าน">ไม่ผ่าน</option>
@@ -91,25 +90,25 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ผู้ตรวจสอบ</label>
-                                            <input class="form-control" type="text" name="">
+                                            <input class="form-control" type="text" name="iso_swabtest_records_review">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ผู้ทวนสอบ</label>
-                                            <input class="form-control" type="text" name="">
+                                            <input class="form-control" type="text" name="iso_swabtest_records_recheck">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ผู้รับทราบ</label>
-                                            <input class="form-control" type="text" name="">
+                                            <input class="form-control" type="text" name="iso_swabtest_records_acknowledge">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">หมายเหตุ</label>
-                                            <input class="form-control" type="text" name="">
+                                            <input class="form-control" type="text" name="iso_swabtest_records_note">
                                         </div>
                                     </div>
                                 </div>                                 
