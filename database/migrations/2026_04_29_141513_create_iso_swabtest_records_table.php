@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('iso_swabtest_records_test')->nullable();
             $table->string('iso_swabtest_records_remark')->nullable();
             $table->string('iso_swabtest_records_result')->nullable();
+            $table->string('iso_swabtest_records_observed')->nullable();
             $table->string('iso_swabtest_records_status')->nullable();
             $table->string('iso_swabtest_records_review')->nullable();
             $table->string('iso_swabtest_records_recheck')->nullable();

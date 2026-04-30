@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\IsoSwabtestPlan;
 use App\Models\IsoSwabtestRecord;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class IsoSwabtestPlanController extends Controller
 {
@@ -264,6 +266,7 @@ class IsoSwabtestPlanController extends Controller
             $record->iso_swabtest_records_recheck = $request->iso_swabtest_records_recheck;
             $record->iso_swabtest_records_acknowledge = $request->iso_swabtest_records_acknowledge;
             $record->iso_swabtest_records_note = $request->iso_swabtest_records_note;
+            $record->iso_swabtest_records_observed = $request->iso_swabtest_records_observed;
             $record->created_at = now();
             $record->updated_at = now();
             $record->save();
@@ -274,5 +277,29 @@ class IsoSwabtestPlanController extends Controller
 
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function confirmDelSwabtestRecord(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoSwabtestRecord::where('iso_swabtest_records_id',$id)->update([
+                'flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }      
     }
 }
