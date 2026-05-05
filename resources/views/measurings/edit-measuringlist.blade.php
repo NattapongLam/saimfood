@@ -239,7 +239,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tableBody">
-                                                    @foreach ($list as $item)
+                                                    @foreach ($list as $key => $item)
                                                         <tr>
                                                             <td>
                                                                 <span class="row-number">{{ $loop->iteration }}</span>
@@ -260,10 +260,10 @@
                                                                 <input type="text" class="form-control" name="clb_measuring_records_timeline[]" value="{{$item->clb_measuring_records_timeline}}">
                                                             </td>
                                                             <td>
-                                                                <input type="hidden" name="clb_measuring_records_calibate[]" value="0">
+                                                                <input type="hidden" name="clb_measuring_records_calibate[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
                                                                     class="form-check-input scale-checkbox m-0"
-                                                                    name="clb_measuring_records_calibate[]"
+                                                                    name="clb_measuring_records_calibate[{{ $key }}]"
                                                                     value="1"
                                                                     {{ $item->clb_measuring_records_calibate == 1 ? 'checked' : '' }}>
                                                             </td>
@@ -271,10 +271,10 @@
                                                                 <input type="text" class="form-control" name="clb_measuring_records_certno[]" value="{{$item->clb_measuring_records_certno}}">
                                                             </td>
                                                             <td>
-                                                                <input type="hidden" name="clb_measuring_records_repaircheck[]" value="0">
+                                                                <input type="hidden" name="clb_measuring_records_repaircheck[{{ $key }}]" value="0">
                                                                 <input type="checkbox"
                                                                     class="form-check-input scale-checkbox m-0"
-                                                                    name="clb_measuring_records_repaircheck[]"
+                                                                    name="clb_measuring_records_repaircheck[{{ $key }}]"
                                                                     value="1"
                                                                     {{ $item->clb_measuring_records_repaircheck == 1 ? 'checked' : '' }}>
                                                             </td>
@@ -342,9 +342,15 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
             <td><input type="date" name="clb_measuring_records_date[]" class="form-control"/></td>
             <td><input type="text" name="clb_measuring_records_remark[]" class="form-control"/></td>
             <td><input type="text" name="clb_measuring_records_timeline[]" class="form-control"/></td>
-            <td><input type="checkbox" name="clb_measuring_records_calibate[]" class="form-check-input scale-checkbox m-0"/></td>
+            <td>
+                <input type="hidden" name="clb_measuring_records_calibate[${index}]" value="0">
+                <input type="checkbox" name="clb_measuring_records_calibate[${index}]" value="1" class="form-check-input m-0"/>
+            </td>
             <td><input type="text" name="clb_measuring_records_certno[]" class="form-control"/></td>
-            <td><input type="checkbox" name="clb_measuring_records_repaircheck[]" class="form-check-input scale-checkbox m-0"/></td>
+            <td>
+                <input type="hidden" name="clb_measuring_records_repaircheck[${index}]" value="0">
+                <input type="checkbox" name="clb_measuring_records_repaircheck[${index}]" value="1" class="form-check-input m-0"/>
+            </td>
             <td><input type="text" name="clb_measuring_records_repairdocu[]" class="form-control"/></td>
             <td><input type="text" name="clb_measuring_records_person[]" class="form-control"/></td>
             <td><input type="text" name="clb_measuring_records_review[]" class="form-control"/></td>

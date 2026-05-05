@@ -199,7 +199,6 @@ class ClbMeasuringListController extends Controller
                         'clb_measuring_records_certno' => $request->clb_measuring_records_certno[$key],
                         'clb_measuring_records_repaircheck' => isset($request->clb_measuring_records_repaircheck[$key]) ? 1 : 0,
                         'clb_measuring_records_repairdocu'  => $request->clb_measuring_records_repairdocu[$key],
-                        'clb_measuring_records_repairdocu'  => $request->clb_measuring_records_repairdocu[$key],
                         'clb_measuring_records_person' => $request->clb_measuring_records_person[$key],
                         'clb_measuring_records_review' => $request->clb_measuring_records_review[$key],
                         'clb_measuring_records_location' => $request->clb_measuring_records_location[$key],
@@ -210,14 +209,14 @@ class ClbMeasuringListController extends Controller
                         'updated_at' => now(),
                     ]);
                }else{                  
-                    ClbMeasuringRecord::where('clb_measuring_records_id',$request->clb_measuring_records_id)
+                    ClbMeasuringRecord::where('clb_measuring_records_id',$value)
                     ->update([
                         'clb_measuring_records_date' => $request->clb_measuring_records_date[$key],
                         'clb_measuring_records_remark' => $request->clb_measuring_records_remark[$key],
                         'clb_measuring_records_timeline' => $request->clb_measuring_records_timeline[$key],
-                        'clb_measuring_records_calibate' => isset($request->clb_measuring_records_calibate[$key]) ? 1 : 0,
+                        'clb_measuring_records_calibate' =>  $request->clb_measuring_records_calibate[$key] ?? 0,
                         'clb_measuring_records_certno' => $request->clb_measuring_records_certno[$key],
-                        'clb_measuring_records_repaircheck' => isset($request->clb_measuring_records_repaircheck[$key]) ? 1 : 0,
+                        'clb_measuring_records_repaircheck' => $request->clb_measuring_records_repaircheck[$key] ?? 0,
                         'clb_measuring_records_repairdocu'  => $request->clb_measuring_records_repairdocu[$key],
                         'clb_measuring_records_person' => $request->clb_measuring_records_person[$key],
                         'clb_measuring_records_review' => $request->clb_measuring_records_review[$key],
