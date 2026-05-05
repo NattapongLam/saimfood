@@ -237,63 +237,63 @@ class ClbMeasuringPlanController extends Controller
         }
     }
     public function autoUpdate(Request $request)
-{
-    try {
+    {
+        try {
 
-        \Log::info('AUTO UPDATE:', $request->all());
+            \Log::info('AUTO UPDATE:', $request->all());
 
-        $plan = ClbMeasuringPlan::find($request->id);
+            $plan = ClbMeasuringPlan::find($request->id);
 
-        if (!$plan) {
-            return response()->json(['status' => false, 'msg' => 'not found']);
-        }
-
-        if ($request->has('field') && $request->has('value')) {
-
-            $field = $request->field;
-            $value = $request->value;
-
-            $allowedFields = [
-                'plan_jan','plan_feb','plan_mar','plan_apr','plan_may','plan_jun',
-                'plan_jul','plan_aug','plan_sep','plan_oct','plan_nov','plan_dec',
-                'action_jan','action_feb','action_mar','action_apr','action_may','action_jun',
-                'action_jul','action_aug','action_sep','action_oct','action_nov','action_dec',
-            ];
-
-            if (in_array($field, $allowedFields)) {
-                $plan->$field = $value;
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'msg' => 'field not allowed'
-                ]);
+            if (!$plan) {
+                return response()->json(['status' => false, 'msg' => 'not found']);
             }
+
+            if ($request->has('field') && $request->has('value')) {
+
+                $field = $request->field;
+                $value = $request->value;
+
+                $allowedFields = [
+                    'plan_jan','plan_feb','plan_mar','plan_apr','plan_may','plan_jun',
+                    'plan_jul','plan_aug','plan_sep','plan_oct','plan_nov','plan_dec',
+                    'action_jan','action_feb','action_mar','action_apr','action_may','action_jun',
+                    'action_jul','action_aug','action_sep','action_oct','action_nov','action_dec',
+                ];
+
+                if (in_array($field, $allowedFields)) {
+                    $plan->$field = $value;
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'msg' => 'field not allowed'
+                    ]);
+                }
+            }
+
+            if ($request->hasFile('file')) {
+
+                $field = $request->field;
+                $file = $request->file('file');
+
+                $filename = time().'_'.$field.'.'.$file->getClientOriginalExtension();
+
+                $path = $file->storeAs('measuringplan_img', $filename, 'public');
+
+                $plan->$field = $path;
+            }
+
+            $plan->updated_at = now();
+            $plan->person_at = auth()->user()->name ?? 'system';
+            $plan->save();
+
+            return response()->json(['status' => true]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => false,
+                'msg' => $e->getMessage()
+            ]);
         }
-
-        if ($request->hasFile('file')) {
-
-            $field = $request->field;
-            $file = $request->file('file');
-
-            $filename = time().'_'.$field.'.'.$file->getClientOriginalExtension();
-
-            $path = $file->storeAs('measuringplan_img', $filename, 'public');
-
-            $plan->$field = $path;
-        }
-
-        $plan->updated_at = now();
-        $plan->person_at = auth()->user()->name ?? 'system';
-        $plan->save();
-
-        return response()->json(['status' => true]);
-
-    } catch (\Exception $e) {
-
-        return response()->json([
-            'status' => false,
-            'msg' => $e->getMessage()
-        ]);
     }
-}
 }

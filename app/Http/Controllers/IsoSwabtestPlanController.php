@@ -143,7 +143,6 @@ class IsoSwabtestPlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
         try {
 
             DB::beginTransaction();
@@ -157,31 +156,6 @@ class IsoSwabtestPlanController extends Controller
                     'iso_swabtest_plans_list' => $request->iso_swabtest_plans_list[$key],
                     'iso_swabtest_plans_qty' => $request->iso_swabtest_plans_qty[$key],
                     'iso_swabtest_plans_frequency' => $request->iso_swabtest_plans_frequency[$key],
-
-                    'plan_jan' => $request->plan_jan[$key] ?? 0,
-                    'plan_feb' => $request->plan_feb[$key] ?? 0,
-                    'plan_mar' => $request->plan_mar[$key] ?? 0,
-                    'plan_apr' => $request->plan_apr[$key] ?? 0,
-                    'plan_may' => $request->plan_may[$key] ?? 0,
-                    'plan_jun' => $request->plan_jun[$key] ?? 0,
-                    'plan_jul' => $request->plan_jul[$key] ?? 0,
-                    'plan_aug' => $request->plan_aug[$key] ?? 0,
-                    'plan_sep' => $request->plan_sep[$key] ?? 0,
-                    'plan_oct' => $request->plan_oct[$key] ?? 0,
-                    'plan_nov' => $request->plan_nov[$key] ?? 0,
-                    'plan_dec' => $request->plan_dec[$key] ?? 0,
-                    'action_jan' => $request->action_jan[$key] ?? 0,
-                    'action_feb' => $request->action_feb[$key] ?? 0,
-                    'action_mar' => $request->action_mar[$key] ?? 0,
-                    'action_apr' => $request->action_apr[$key] ?? 0,
-                    'action_may' => $request->action_may[$key] ?? 0,
-                    'action_jun' => $request->action_jun[$key] ?? 0,
-                    'action_jul' => $request->action_jul[$key] ?? 0,
-                    'action_aug' => $request->action_aug[$key] ?? 0,
-                    'action_sep' => $request->action_sep[$key] ?? 0,
-                    'action_oct' => $request->action_oct[$key] ?? 0,
-                    'action_nov' => $request->action_nov[$key] ?? 0,
-                    'action_dec' => $request->action_dec[$key] ?? 0,
                     'iso_swabtest_plans_flag' => true,
                     'person_at' => Auth::user()->name,
                     'iso_swabtest_plans_date' => $request->iso_swabtest_plans_date,
@@ -301,5 +275,50 @@ class IsoSwabtestPlanController extends Controller
                 'message' => $e->getMessage()
             ]);
         }      
+    }
+    public function autoUpdate(Request $request)
+    {
+        try {
+
+            $plan = IsoSwabtestPlan::find($request->id);
+
+            if (!$plan) {
+                return response()->json([
+                    'status' => false,
+                    'msg' => 'not found'
+                ]);
+            }
+
+            $allowedFields = [
+                'plan_jan','plan_feb','plan_mar','plan_apr','plan_may','plan_jun',
+                'plan_jul','plan_aug','plan_sep','plan_oct','plan_nov','plan_dec',
+                'action_jan','action_feb','action_mar','action_apr','action_may','action_jun',
+                'action_jul','action_aug','action_sep','action_oct','action_nov','action_dec',
+                // 🔥 FIX
+                'iso_swabtest_plans_person',
+                'iso_swabtest_plans_review',
+            ];
+
+            if (!in_array($request->field, $allowedFields)) {
+                return response()->json([
+                    'status' => false,
+                    'msg' => 'field not allowed'
+                ]);
+            }
+
+            $plan->{$request->field} = $request->value;
+            $plan->person_at = auth()->user()->name ?? 'system';
+            $plan->updated_at = now();
+            $plan->save();
+
+            return response()->json(['status' => true]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => false,
+                'msg' => $e->getMessage()
+            ]);
+        }
     }
 }

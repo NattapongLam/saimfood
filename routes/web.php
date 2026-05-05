@@ -176,6 +176,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::resource('/iso-swabtestplan' , App\Http\Controllers\IsoSwabtestPlanController::class);
         Route::post('/iso-swabtestplan/store-record/{planId}',[App\Http\Controllers\IsoSwabtestPlanController::class, 'storeRecord'])->name('iso-swabtestplan.storeRecord');
         Route::post('/confirmDelSwabtestRecord' , [App\Http\Controllers\IsoSwabtestPlanController::class , 'confirmDelSwabtestRecord']);
+        Route::post('/iso-swabtestplan/auto-update', [App\Http\Controllers\IsoSwabtestPlanController::class, 'autoUpdate'])->name('iso-swabtestplan.autoupdate');
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-ncrlist']
