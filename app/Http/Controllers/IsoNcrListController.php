@@ -166,6 +166,98 @@ class IsoNcrListController extends Controller
                 dd($message);
                 return redirect()->route('iso-ncrlist.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
             }     
+        }elseif($hd->status == 3){
+            try 
+            {
+                DB::beginTransaction();
+                $hd = IsoNcrList::where('iso_ncr_lists_id',$id)
+                ->update([
+                    'rework_check' => $request->has('rework_check') ? 1 : 0,
+                    'rework_qty' => $request->rework_qty,
+                    'rework_correct' => $request->rework_correct,
+                    'reprocess_check' => $request->has('reprocess_check') ? 1 : 0,
+                    'reprocess_qty' => $request->reprocess_qty,
+                    'reprocess_correct' => $request->reprocess_correct,
+                    'acceptance_check' => $request->has('acceptance_check') ? 1 : 0,
+                    'acceptance_qty' => $request->acceptance_qty,
+                    'acceptance_correct' => $request->acceptance_correct,
+                    'reject_check' => $request->has('reject_check') ? 1 : 0,
+                    'reject_qty' => $request->reject_qty,
+                    'scrap_check' => $request->has('scrap_check') ? 1 : 0,
+                    'scrap_qty' => $request->scrap_qty,
+                    'return_check' => $request->has('return_check') ? 1 : 0,
+                    'return_qty' => $request->return_qty,
+                    'change_check' => $request->has('change_check') ? 1 : 0,
+                    'change_qty' => $request->change_qty,
+                    'corrective_person' => $request->corrective_person,
+                    'corrective_position' => $request->corrective_position,
+                    'corrective_date' => $request->corrective_date,
+                    'corrective_duedate' => $request->corrective_duedate,
+                    'corrective_approved' => $request->corrective_approved,
+                    'corrective_approvedposition' => $request->corrective_approvedposition,
+                    'corrective_approveddate' => $request->corrective_approveddate,
+                    'status' => 4
+                ]);
+                DB::commit();
+                return redirect()->route('iso-ncrlist.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('iso-ncrlist.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            }     
+        }elseif($hd->status == 4){
+            try 
+            {
+                $data = [
+                    'following_note' => $request->following_note,
+                    'following_person' => $request->following_person,
+                    'following_date' => $request->following_date,
+                    'following_productname' => $request->following_productname,
+                    'following_productcode' => $request->following_productcode,
+                    'following_productlot' => $request->following_productlot,
+                    'following_productqty' => $request->following_productqty,
+                    'following_productnote' => $request->following_productnote,
+                    'status' => 5
+                ];
+                if ($request->hasFile('following_file') && $request->file('following_file')->isValid()) {
+                    $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('following_file')->getClientOriginalExtension();
+                    $request->file('following_file')->storeAs('ncr_img', $filename, 'public');
+                    $data['following_file'] = 'storage/ncr_img/' . $filename;
+                }
+                DB::beginTransaction();
+                $hd = IsoNcrList::where('iso_ncr_lists_id',$id)->update($data);
+                DB::commit();
+                return redirect()->route('iso-ncrlist.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('iso-ncrlist.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            }     
+        }elseif($hd->status == 5){
+            try 
+            {
+                DB::beginTransaction();
+                $hd = IsoNcrList::where('iso_ncr_lists_id',$id)
+                ->update([
+                    'accept_proposed1' => $request->has('accept_proposed1') ? 1 : 0,
+                    'accept_proposed2' => $request->has('accept_proposed2') ? 1 : 0,
+                    'accept_proposed3' => $request->has('accept_proposed3') ? 1 : 0,
+                    'proposed_person' => $request->proposed_person,
+                    'proposed_approved' => $request->proposed_approved,
+                    'accept_proposed2_note' => $request->accept_proposed2_note,
+                    'accept_proposed3_note' => $request->accept_proposed3_note, 
+                    'status' => 6
+                ]);
+                DB::commit();
+                return redirect()->route('iso-ncrlist.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = $e->getMessage();
+                dd($message);
+                return redirect()->route('iso-ncrlist.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
+            }     
         }
     }
 

@@ -58,6 +58,12 @@
                                                             <a href="{{ route('iso-ncrlist.edit', $item->iso_ncr_lists_id) }}"class="btn btn-info btn-sm"><i class="bx bx-edit-alt">อนุมัติการแก้ไข</i></a>
                                                         @elseif($item->status == 3)
                                                             <a href="{{ route('iso-ncrlist.edit', $item->iso_ncr_lists_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt">การดำเนินการ</i></a>
+                                                        @elseif($item->status == 4)
+                                                            <a href="{{ route('iso-ncrlist.edit', $item->iso_ncr_lists_id) }}"class="btn btn-danger btn-sm"><i class="bx bx-edit-alt">เอกสารแนบปิด</i></a>
+                                                        @elseif($item->status == 5)
+                                                            <a href="{{ route('iso-ncrlist.edit', $item->iso_ncr_lists_id) }}"class="btn btn-primary btn-sm"><i class="bx bx-edit-alt">ติดตามและปิด</i></a>
+                                                        @elseif($item->status == 6)
+                                                            <a href="{{ route('iso-ncrlist.edit', $item->iso_ncr_lists_id) }}"class="btn btn-success btn-sm"><i class="bx bx-edit-alt">รายละเอียด</i></a>
                                                         @endif
                                                     </td>
                                                 </tr>
