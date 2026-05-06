@@ -90,23 +90,31 @@
                                                                 value="{{ $item->iso_swabtest_plans_id }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control auto-save"
                                                                 name="iso_swabtest_plans_area[]" 
+                                                                data-id="{{ $item->iso_swabtest_plans_id }}"
+                                                                data-field="iso_swabtest_plans_area"
                                                                 value="{{ $item->iso_swabtest_plans_area }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control auto-save"
                                                                 name="iso_swabtest_plans_list[]" 
+                                                                data-id="{{ $item->iso_swabtest_plans_id }}"
+                                                                data-field="iso_swabtest_plans_list"
                                                                 value="{{ $item->iso_swabtest_plans_list }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control auto-save"
                                                                 name="iso_swabtest_plans_qty[]" 
+                                                                data-id="{{ $item->iso_swabtest_plans_id }}"
+                                                                data-field="iso_swabtest_plans_qty"
                                                                 value="{{ $item->iso_swabtest_plans_qty }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control auto-save"
                                                                 name="iso_swabtest_plans_frequency[]" 
+                                                                data-id="{{ $item->iso_swabtest_plans_id }}"
+                                                                data-field="iso_swabtest_plans_frequency"
                                                                 value="{{ $item->iso_swabtest_plans_frequency }}">
                                                         </td>
                                                         <td>
@@ -472,11 +480,12 @@
 @endsection
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 $(function () {
 
     // =========================
-    // 🔐 CSRF SETUP (สำคัญมาก)
+    // 🔐 CSRF SETUP
     // =========================
     $.ajaxSetup({
         headers: {
@@ -489,7 +498,7 @@ $(function () {
     // =========================
     const debounceMap = new Map();
 
-    function debounce(el, callback, delay = 700) {
+    function debounce(el, callback, delay = 800) {
         const key = el.get(0);
 
         if (debounceMap.has(key)) {
@@ -501,7 +510,29 @@ $(function () {
     }
 
     // =========================
-    // 🧠 AUTO SAVE FUNCTION
+    // 🔕 TOAST CONTROL (กันเด้งรัว)
+    // =========================
+    let lastToastTime = 0;
+
+    function showToast() {
+        let now = Date.now();
+
+        if (now - lastToastTime < 1200) return;
+
+        lastToastTime = now;
+
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'บันทึกแล้ว',
+            showConfirmButton: false,
+            timer: 1200
+        });
+    }
+
+    // =========================
+    // 🎯 AUTO SAVE FUNCTION
     // =========================
     function autoSave(el) {
 
@@ -517,7 +548,7 @@ $(function () {
             ? (el.is(':checked') ? 1 : 0)
             : el.val();
 
-        // 🔥 loading state (optional)
+        // 🟡 loading
         el.addClass('saving');
 
         $.ajax({
@@ -529,8 +560,23 @@ $(function () {
                 el.removeClass('saving');
 
                 if (!res.status) {
-                    console.error('Save fail:', res.msg);
+
+                    // ❌ ERROR POPUP
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'บันทึกไม่สำเร็จ',
+                        text: res.msg || 'เกิดข้อผิดพลาด'
+                    });
+
                 } else {
+
+                    // ✅ SUCCESS
+                    showToast();
+
+                    // 💡 highlight success
+                    el.addClass('saved');
+                    setTimeout(() => el.removeClass('saved'), 800);
+
                     console.log('saved:', field);
                 }
             },
@@ -538,13 +584,20 @@ $(function () {
             error: function (xhr) {
                 el.removeClass('saving');
 
+                // ❌ SERVER ERROR
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Server Error',
+                    text: xhr.responseText
+                });
+
                 console.error('ERROR:', xhr.responseText);
             }
         });
     }
 
     // =========================
-    // 🟢 INPUT (TEXT) → debounce
+    // 🟢 INPUT TEXT (debounce)
     // =========================
     $(document).on('input', '.auto-save', function () {
 
@@ -556,14 +609,14 @@ $(function () {
     });
 
     // =========================
-    // 🔵 CHECKBOX → instant save
+    // 🔵 CHECKBOX (instant)
     // =========================
     $(document).on('change', '.auto-save[type="checkbox"]', function () {
         autoSave($(this));
     });
 
     // =========================
-    // 🟡 BLUR (กันกรณีพิมพ์แล้วออก)
+    // 🟡 BLUR (fallback)
     // =========================
     $(document).on('blur', '.auto-save', function () {
 
@@ -576,9 +629,16 @@ $(function () {
 
 });
 </script>
+
 <style>
+/* ⏳ กำลัง save */
 .saving {
     background-color: #fff3cd !important;
+}
+
+/* ✅ save สำเร็จ */
+.saved {
+    background-color: #d1e7dd !important;
 }
 </style>
 @endsection

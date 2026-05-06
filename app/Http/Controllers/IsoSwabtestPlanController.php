@@ -297,6 +297,10 @@ class IsoSwabtestPlanController extends Controller
                 // 🔥 FIX
                 'iso_swabtest_plans_person',
                 'iso_swabtest_plans_review',
+                'iso_swabtest_plans_area',
+                'iso_swabtest_plans_list',
+                'iso_swabtest_plans_qty',
+                'iso_swabtest_plans_frequency',
             ];
 
             if (!in_array($request->field, $allowedFields)) {
