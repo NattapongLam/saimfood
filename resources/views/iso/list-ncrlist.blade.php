@@ -52,6 +52,9 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td>
+                                                        @if (auth()->user()->username == "660223125" || auth()->user()->username == "admin")
+                                                             <a href="{{ route('iso-ncrlist.show', $item->iso_ncr_lists_id) }}"class="btn btn-danger btn-sm"><i class="bx bx-edit-alt">แก้ไข</i></a>
+                                                        @endif
                                                         @if ($item->status == 1)
                                                             <a href="{{ route('iso-ncrlist.edit', $item->iso_ncr_lists_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt">การแก้ไข</i></a>
                                                         @elseif($item->status == 2)
@@ -88,7 +91,7 @@ $(document).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "order": [[1, "desc"]], // <-- เรียงวันที่ล่าสุดก่อน
+        "order": [[0, "asc"]], // <-- เรียงวันที่ล่าสุดก่อน
         "language": {
             "lengthMenu": "แสดง _MENU_ รายการต่อหน้า",
             "zeroRecords": "ไม่พบข้อมูล",
