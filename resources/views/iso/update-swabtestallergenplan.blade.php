@@ -18,75 +18,81 @@
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                     <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>
-                                          บันทึก Swab Test (Coliform bacteria)                
+                                          บันทึก Swab Test (Allergen)                
                                     </h5>                              
                             </div>
-                            <form action="{{ route('iso-swabtestplan.storeRecord', $hd->iso_swabtest_plans_id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('iso-swabtestplanallergen.storeRecord', $hd->iso_swabtest_plans_id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="row mt-3">
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">วันที่รายงานผล</label>
-                                            <input class="form-control" type="date" name="iso_swabtest_records_date" value="{{ old('iso_dar_lists_date', date('Y-m-d')) }}" required>
+                                            <label class="form-label">วัน-เวลารายงานผล</label>
+                                            <input class="form-control" type="datetime" name="iso_swabtest_allergen_records_datetime" value="{{ old('iso_swabtest_allergen_records_datetime', date('Y-m-d H:i')) }}" required>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">ฝ่าย/แผนก</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_department" required>
+                                            <label class="form-label">พื้นที่/ห้อง/บริเวณ</label>
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_area" value="{{$hd->iso_swabtest_plans_area}}" required>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">จุดปฏิบัติงาน/จุดประจำ</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_area" value="{{$hd->iso_swabtest_plans_area}}" readonly>
+                                            <label class="form-label">ชื่อผลิตภัณฑ์</label>
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_productname">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">ชื่อพนักงาน/ชื่อเครื่องจักร-อุปกรณ์</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_name">
+                                            <label class="form-label">รหัสสินค้า</label>
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_productcode">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">จุดที่ Swab Test</label>
-                                            <select class="form-control" name="iso_swabtest_records_test" required>
-                                                <option value="">กรุณาเลือก</option>
-                                                <option value="มือ">มือ</option>
-                                                <option value="ชุดยูนิฟอร์ม">ชุดยูนิฟอร์ม</option>
-                                                <option value="หมวก">หมวก</option>
-                                                <option value="เครื่องจักร/อุปกรณ์">เครื่องจักร/อุปกรณ์</option>
-                                            </select>
+                                            <label class="form-label">Lot No.</label>
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_lotno">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">รายละเอียดการ Swab Test</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_remark">
+                                            <label class="form-label">Batch No.</label>
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_bactchno">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">สีสารละลายที่ปรากฎ</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_observed">
+                                            <label class="form-label">ชื่อเครื่องจักร/อุปกรณ์</label>
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_name">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-label">ผลการ Swab Test</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_result">
+                                            <label class="form-label">รายละเอียดการ Swab Allergen</label>
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_remark">
                                         </div>
                                     </div>                                   
                                 </div> 
                                 <div class="row mt-3">
                                     <div class="col-3">
                                         <div class="form-group">
+                                            <label class="form-label">สีสารละลายที่ปรากฏ</label>
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_color">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="form-label">ผลการ Swab Allergen</label>
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_result">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                         <div class="form-group">
                                             <label class="form-label">สรุปผล</label>
-                                            <select class="form-control" name="iso_swabtest_records_status" required>
+                                            <select class="form-control" name="iso_swabtest_allergen_records_status" required>
                                                 <option value="">กรุณาเลือก</option>
                                                 <option value="ผ่าน">ผ่าน</option>
                                                 <option value="ไม่ผ่าน">ไม่ผ่าน</option>
@@ -96,27 +102,27 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ผู้ตรวจสอบ</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_review">
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_review">
                                         </div>
-                                    </div>
+                                    </div>                                   
+                                </div>
+                                <div class="row mt-3">
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ผู้ทวนสอบ</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_recheck">
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_recheck">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label class="form-label">ผู้รับทราบ</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_acknowledge">
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_acknowledge">
                                         </div>
-                                    </div>                                   
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-12">
+                                    </div>
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label class="form-label">หมายเหตุ</label>
-                                            <input class="form-control" type="text" name="iso_swabtest_records_note">
+                                            <input class="form-control" type="text" name="iso_swabtest_allergen_records_note">
                                         </div>
                                     </div>
                                 </div>                                 
@@ -143,15 +149,17 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th style="min-width:120px;">ฝ่าย/แผนก</th>
-                                    <th style="min-width:200px;">จุดปฏิบัติงาน/จุดประจำ</th>
-                                    <th style="min-width:250px;">ชื่อพนักงาน/ชื่อเครื่องจักร-อุปกรณ์</th>
-                                    <th style="min-width:200px;">จุดที่ Swab Test</th>
-                                    <th style="min-width:250px;">รายละเอียดการ Swab Test</th>
-                                    <th style="min-width:200px;">สีสารละลายที่ปรากฎ</th>
-                                    <th style="min-width:200px;">ผลการ Swab Test</th>
-                                    <th style="min-width:120px;">สรุปผล</th>
-                                    <th style="min-width:120px;">วันที่รายงานผล</th>
+                                    <th style="min-width:120px;">พื้นที่/ห้อง/บริเวณ</th>
+                                    <th style="min-width:200px;">ชื่อผลิตภัณฑ์</th>
+                                    <th style="min-width:250px;">รหัสสินค้า</th>
+                                    <th style="min-width:200px;">Lot No.</th>
+                                    <th style="min-width:250px;">Batch No.</th>
+                                    <th style="min-width:200px;">ชื่อเครื่องจักร/อุปกรณ์</th>
+                                    <th style="min-width:200px;">รายละเอียดการ Swab Allergen</th>
+                                    <th style="min-width:120px;">สีสารละลายที่ปรากฏ</th>
+                                    <th style="min-width:120px;">ผลการ Swab Allergen</th>
+                                    <th style="min-width:200px;">สรุปผล</th>
+                                    <th style="min-width:200px;">วัน-เวลารายงานผล</th>
                                     <th style="min-width:200px;">ผู้ตรวจสอบ</th>
                                     <th style="min-width:200px;">ผู้ทวนสอบ</th>
                                     <th style="min-width:200px;">ผู้รับทราบ</th>
@@ -159,21 +167,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($list as $key => $item)
+                                @foreach ($list as $item)
                                     <tr>
-                                        <td>{{$key +1}}</td>
-                                        <td>{{$item->iso_swabtest_records_department}}</td>
-                                        <td>{{$item->iso_swabtest_records_area}}</td>
-                                        <td>{{$item->iso_swabtest_records_name}}</td>
-                                        <td>{{$item->iso_swabtest_records_test}}</td>
-                                        <td>{{$item->iso_swabtest_records_remark}}</td>
-                                        <td>{{$item->iso_swabtest_records_observed}}</td>
-                                        <td>{{$item->iso_swabtest_records_result}}</td>
-                                        <td>{{$item->iso_swabtest_records_status}}</td>
-                                        <td>{{$item->iso_swabtest_records_date}}</td>
-                                        <td>{{$item->iso_swabtest_records_review}}</td>
-                                        <td>{{$item->iso_swabtest_records_recheck}}</td>
-                                        <td>{{$item->iso_swabtest_records_acknowledge}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_area}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_productname}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_productcode}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_lotno}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_bactchno}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_name}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_remark}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_color}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_result}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_status}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_datetime}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_review}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_recheck}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_acknowledge}}</td>
+                                        <td>{{$item->iso_swabtest_allergen_records_note}}</td>
                                         <td>
                                             <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_swabtest_records_id }}')"><i class="fas fa-trash"></i></a>  
                                         </td>
@@ -204,7 +214,7 @@ Swal.fire({
 }).then(function(result) {
     if (result.value) {
         $.ajax({
-            url: `{{ url('/confirmDelSwabtestRecord') }}`,
+            url: `{{ url('/confirmDelSwabtestallergenRecord') }}`,
             type: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",

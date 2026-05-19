@@ -162,7 +162,8 @@
                                     <li><a href="{{route('iso-darlist.index')}}" key="t-starter-page">Dar</a></li>
                                     @endcan
                                     @can('iso-swabtestplan')
-                                    <li><a href="{{route('iso-swabtestplan.index')}}" key="t-starter-page">แผนการ Swab Test</a></li>
+                                    <li><a href="{{route('iso-swabtestplan.index')}}" key="t-starter-page">แผนการ Swab Test (Coliform bacteris)</a></li>
+                                    <li><a href="{{route('iso-swabtestplanallergen.index')}}" key="t-starter-page">แผนการ Swab Test (Allergen)</a></li>
                                     @endcan
                                     @can('iso-airtestplan')
                                     <li><a href="{{route('iso-airtestplan.index')}}" key="t-starter-page">แผนตรวจหาแบคทีเรียในอากาศ</a></li>
