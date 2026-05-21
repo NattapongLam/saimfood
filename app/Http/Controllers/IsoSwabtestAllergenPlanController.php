@@ -252,7 +252,7 @@ class IsoSwabtestAllergenPlanController extends Controller
         try 
         {
             DB::beginTransaction();
-            IsoSwabtestAllergenRecord::where('iso_swabtest_records_id',$id)->update([
+            IsoSwabtestAllergenRecord::where('iso_swabtest_allergen_records_id',$id)->update([
                 'flag' => false,
                 'updated_at'=> Carbon::now(),
             ]);

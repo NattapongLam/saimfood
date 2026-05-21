@@ -185,7 +185,7 @@
                                         <td>{{$item->iso_swabtest_allergen_records_acknowledge}}</td>
                                         <td>{{$item->iso_swabtest_allergen_records_note}}</td>
                                         <td>
-                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_swabtest_records_id }}')"><i class="fas fa-trash"></i></a>  
+                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_swabtest_allergen_records_id }}')"><i class="fas fa-trash"></i></a>  
                                         </td>
                                     </tr>
                                 @endforeach
