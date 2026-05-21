@@ -167,8 +167,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($list as $item)
+                                @foreach ($list as $key => $item)
                                     <tr>
+                                        <td>{{$key+1}}</td>
                                         <td>{{$item->iso_swabtest_allergen_records_area}}</td>
                                         <td>{{$item->iso_swabtest_allergen_records_productname}}</td>
                                         <td>{{$item->iso_swabtest_allergen_records_productcode}}</td>
