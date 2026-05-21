@@ -142,6 +142,7 @@ class IsoNcrListController extends Controller
                 'environment_check' => $request->has('environment_check') ? 1 : 0,
                 'other_check' => $request->has('other_check') ? 1 : 0,
                 'cause_remark' => $request->cause_remark,
+                'cause_prevent' => $request->cause_prevent,
                 'cause_person' => $request->cause_person,
                 'cause_position' => $request->cause_position,
                 'cause_persondate' => $request->cause_persondate,
@@ -233,6 +234,7 @@ class IsoNcrListController extends Controller
                     'cause_person' => $request->cause_person,
                     'cause_position' => $request->cause_position,
                     'cause_persondate' => $request->cause_persondate,
+                    'cause_prevent' => $request->cause_prevent,
                     'status' => 2
                 ]);
                 DB::commit();

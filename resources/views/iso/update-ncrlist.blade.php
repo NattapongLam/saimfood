@@ -210,6 +210,14 @@
                     </div>
                 </div>
                 <div class="row mt-2">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">แนวทางป้องกัน :</label>
+                            <textarea class="form-control" name="cause_prevent">{{$hd->cause_prevent}}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
                     <div class="col-4">
                         <div class="form-group">
                             <label class="form-label">ผู้รับผิดชอบ</label>
@@ -249,7 +257,7 @@
                             </div>
                         </div>
                     </div> 
-                <h6>หมายเหตุ : เมื่อทางแผนกผู้รับผิดชอบปัญหา</h6>  
+                <h6>หมายเหตุ : เมื่อทางแผนกผู้รับผิดชอบปัญหา ได้รับเอกสารใบ NCR กรุณาระบุสาเหตุ-การป้องกัน และตอบกลับมายังฝ่ายควบคุมคุณภาพภายใน 7 วัน</h6>  
             </div>
         </div>
         <div class="card">
