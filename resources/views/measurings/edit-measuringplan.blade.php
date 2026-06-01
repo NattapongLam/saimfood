@@ -198,6 +198,9 @@ input[type="file"] {
                                                                 <a href="{{ asset('storage/' .$item->file_jan)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile01('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
@@ -232,13 +235,16 @@ input[type="file"] {
                                                                 <a href="{{ asset('storage/' .$item->file_feb)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile02('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
                                                             @else
-                                                                <div class="file-box text-center">
+                                                                <div class="file-box text-center">                                                                  
                                                                     <input type="file"
                                                                     class="auto-upload"
                                                                     data-id="{{ $item->clb_measuring_plans_id }}"
-                                                                    data-field="file_feb">
-                                                                </div>
+                                                                    data-field="file_feb">                                                                    
+                                                                </div>                                                              
                                                             @endif
                                                     </td>
                                                     <td style="min-width:100px; max-width:100px;">
@@ -265,6 +271,9 @@ input[type="file"] {
                                                             @if ($item->file_mar)
                                                                 <a href="{{ asset('storage/' .$item->file_mar)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile03('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
                                                                 </a>
                                                             @else
                                                                 <div class="file-box text-center">
@@ -300,6 +309,9 @@ input[type="file"] {
                                                                 <a href="{{ asset('storage/' .$item->file_apr)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile04('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
@@ -333,6 +345,9 @@ input[type="file"] {
                                                             @if ($item->file_may)
                                                                 <a href="{{ asset('storage/' .$item->file_may)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile05('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
                                                                 </a>
                                                             @else
                                                                 <div class="file-box text-center">
@@ -368,6 +383,9 @@ input[type="file"] {
                                                                 <a href="{{ asset('storage/' .$item->file_jun)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile06('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
@@ -401,6 +419,9 @@ input[type="file"] {
                                                             @if ($item->file_jul)
                                                                 <a href="{{ asset('storage/' .$item->file_jul)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile07('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
                                                                 </a>
                                                             @else
                                                                 <div class="file-box text-center">
@@ -436,6 +457,9 @@ input[type="file"] {
                                                                 <a href="{{ asset('storage/' .$item->file_aug)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile08('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
@@ -469,6 +493,9 @@ input[type="file"] {
                                                             @if ($item->file_sep)
                                                                 <a href="{{ asset('storage/' .$item->file_sep)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile09('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
                                                                 </a>
                                                             @else
                                                                 <div class="file-box text-center">
@@ -504,6 +531,9 @@ input[type="file"] {
                                                                 <a href="{{ asset('storage/' .$item->file_oct)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile10('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
@@ -538,6 +568,9 @@ input[type="file"] {
                                                                 <a href="{{ asset('storage/' .$item->file_nov)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
                                                                 </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile11('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
                                                             @else
                                                                 <div class="file-box text-center">
                                                                     <input type="file"
@@ -571,6 +604,9 @@ input[type="file"] {
                                                             @if ($item->file_dec)
                                                                 <a href="{{ asset('storage/' .$item->file_dec)}}" target="_blank" class="text-dark">
                                                                     <i class="fa fa-file-alt"> ไฟล์แนบ</i>
+                                                                </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelFile12('{{ $item->clb_measuring_plans_id }}')">
+                                                                    <i class="fas fa-trash"></i>
                                                                 </a>
                                                             @else
                                                                 <div class="file-box text-center">
@@ -753,5 +789,701 @@ $(document).on('change', '.auto-upload', function () {
         }
     });
 });
+confirmDelFile01 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile01') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile02 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile02') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile03 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile03') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile04 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile04') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile05 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile05') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile06 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile06') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile07 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile07') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile08 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile08') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile09 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile09') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile10 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile10') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile11 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile11') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
+confirmDelFile12 = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelMeasuringPlanFile12') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
 </script>
 @endsection
