@@ -73,7 +73,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class="form-label">ผู้รับเรื่อง</label>
-                                            <select class="form-control select2" name="iso_distribution_lists_empcode">
+                                            <select class="form-control select2" name="iso_distribution_lists_empcode" required>
                                                 <option value="">กรุณาเลือก</option>
                                                 @foreach ($emp as $item)
                                                         <option value="">กรุณาเลือก</option>
@@ -127,7 +127,7 @@
                                         </td>
                                         <td>{{$item->ms_documenttype_name}}</td>
                                         <td>{{$item->iso_distribution_lists_date}}</td>
-                                        <td>{{$item->iso_distribution_lists_person}}</td>
+                                        <td>{{$item->personfullname}}</td>
                                         <td>
                                             @if($item->iso_distribution_lists_status == "N")
                                                 @if ($item->iso_distribution_lists_empcode == auth()->user()->username)

@@ -238,10 +238,6 @@ class IsoAirtestPlanController extends Controller
     {
         try {
 
-            $request->validate([
-                'iso_swabtest_allergen_records_area' => 'required',
-            ]);
-
             $record = new \App\Models\IsoAirtestRecord();
 
             $record->iso_airtest_plans_id = $planId;

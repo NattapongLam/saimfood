@@ -104,8 +104,15 @@ class IsoDistributionListController extends Controller
         $hd = IsoMasterList::find($id);
         $sta = DB::table('ms_documenttype')->get();
         $emp = DB::table('tg_employee_list')->get();
-        $list = IsoDistributionList::where('iso_distribution_lists_flag',true)
-        ->where('iso_master_lists_id',$id)
+        $list = IsoDistributionList::where('iso_distribution_lists_flag', true)
+        ->leftJoin('tg_employee_list', function($join) {
+            $join->on(
+                DB::raw('iso_distribution_lists.iso_distribution_lists_empcode COLLATE SQL_Latin1_General_CP1_CI_AS'), 
+                '=', 
+                DB::raw('tg_employee_list.personcode COLLATE SQL_Latin1_General_CP1_CI_AS')
+            );
+        })
+        ->where('iso_master_lists_id', $id)
         ->get();
         return view('iso.create-distributionlist',compact('hd','sta','emp','list'));
     }
