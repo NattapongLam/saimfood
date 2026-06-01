@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\IsoAirtestPlan;
+use App\Models\IsoAirtestRecord;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class IsoAirtestPlanController extends Controller
 {
@@ -112,7 +115,9 @@ class IsoAirtestPlanController extends Controller
      */
     public function show($id)
     {
-        //
+        $hd = IsoAirtestPlan::find($id);
+        $list = IsoAirtestRecord::where('flag',true)->where('iso_airtest_plans_id',$id)->get();
+        return view('iso.update-airtestplan',compact('hd','list'));
     }
 
     /**
@@ -227,5 +232,62 @@ class IsoAirtestPlanController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function storeRecord(Request $request, $planId)
+    {
+        try {
+
+            $request->validate([
+                'iso_swabtest_allergen_records_area' => 'required',
+            ]);
+
+            $record = new \App\Models\IsoAirtestRecord();
+
+            $record->iso_airtest_plans_id = $planId;
+            $record->iso_airtest_records_date = $request->iso_airtest_records_date;
+            $record->iso_airtest_records_department = $request->iso_airtest_records_department;
+            $record->iso_airtest_records_area = $request->iso_airtest_records_area;
+            $record->iso_airtest_records_qty = $request->iso_airtest_records_qty;
+            $record->iso_airtest_records_result = $request->iso_airtest_records_result;
+            $record->iso_airtest_records_status = $request->iso_airtest_records_status;
+            $record->iso_airtest_records_review = $request->iso_airtest_records_review;
+            $record->iso_airtest_records_recheck = $request->iso_airtest_records_recheck;
+            $record->iso_airtest_records_acknowledge = $request->iso_airtest_records_acknowledge;
+            $record->iso_airtest_records_note = $request->iso_airtest_records_note;
+            $record->created_at = now();
+            $record->updated_at = now();
+            $record->save();
+
+            return redirect()->back()->with('success', 'บันทึกข้อมูลเรียบร้อยแล้ว');
+
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function confirmDelAirtestnRecord(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoAirtestRecord::where('iso_airtest_records_id',$id)->update([
+                'flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }      
     }
 }

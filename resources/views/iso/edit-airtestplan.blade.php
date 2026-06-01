@@ -55,7 +55,7 @@
                                                     <th colspan="12">เดือน</th>
                                                     <th rowspan="2" style="width:10%">ผู้รับผิดชอบ</th>
                                                     <th rowspan="2" style="width:10%">ผู้ทวนสอบ</th>
-                                                    <th rowspan="2" style="width:3%"></th>
+                                                    <th rowspan="2" style="width:3%">บันทึก</th>
                                                 </tr>
                                                 <tr>
                                                     <!-- เดือน -->
@@ -190,7 +190,9 @@
                                                                 name="iso_airtest_plans_review[]" 
                                                                 value="{{ $item->iso_airtest_plans_review }}">
                                                         </td>
-                                                        <td></td>
+                                                        <td>
+                                                            <a href="{{ route('iso-airtestplan.show', $item->iso_airtest_plans_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i></a>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

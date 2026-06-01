@@ -169,6 +169,8 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:iso-airtestplan']
     ],function(){
         Route::resource('/iso-airtestplan' , App\Http\Controllers\IsoAirtestPlanController::class);
+        Route::post('/iso-airtestplan/store-record/{planId}',[App\Http\Controllers\IsoAirtestPlanController::class, 'storeRecord'])->name('iso-airtestplan.storeRecord');
+        Route::post('/confirmDelAirtestnRecord' , [App\Http\Controllers\IsoAirtestPlanController::class , 'confirmDelAirtestnRecord']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-swabtestplan']
