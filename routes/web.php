@@ -199,6 +199,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:iso-darlist']
     ],function(){
         Route::resource('/iso-darlist' , App\Http\Controllers\IsoDarListController::class);
+        Route::post('/confirmDelDarlist' , [App\Http\Controllers\IsoDarListController::class , 'confirmDelDarlist']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:clb-measuringlist']

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class IsoDarListController extends Controller
@@ -23,7 +24,7 @@ class IsoDarListController extends Controller
      */
     public function index()
     {
-        $hd = IsoDarList::get();
+        $hd = IsoDarList::where('flag',true)->get();
         return view('iso.list-darlist',compact('hd'));
     }
 
@@ -204,5 +205,28 @@ class IsoDarListController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function confirmDelDarlist(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoDarList::where('iso_dar_lists_id',$id)->update([
+                'flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }
