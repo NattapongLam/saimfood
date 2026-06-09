@@ -31,6 +31,7 @@
                                     <th>สถานะ</th>
                                     <th>ประเภท</th>
                                     <th>วันที่แจกจ่าย</th>
+                                    <th>รายละเอียด</th>
                                     <th>ผู้รับเรื่อง</th>
                                     <th>รับทราบ</th>
                                     <th>ยกเลิก</th>
@@ -48,7 +49,13 @@
                                         </td>
                                         <td>{{$item->ms_documenttype_name}}</td>
                                         <td>{{$item->iso_distribution_lists_date}}</td>
-                                        <td>{{$item->iso_distribution_lists_person}}</td>
+                                        <td>
+                                            {{$item->iso_master_lists_docuno}}/{{$item->iso_master_lists_name}}
+                                            <br>
+                                            <h5 class="fs-17 mb-2"><a href="{{ asset($item->iso_master_lists_file1)}}" target="_blank" class="text-dark">ไฟล์แนบที่ 1</a></h5> 
+                                            <h5 class="fs-17 mb-2"><a href="{{ asset($item->iso_master_lists_file1)}}" target="_blank" class="text-dark">ไฟล์แนบที่ 2</a></h5>  
+                                        </td>
+                                        <td>{{$item->personfullname}}</td>
                                         <td>
                                             @if($item->iso_distribution_lists_status == "N")
                                                 @if ($item->iso_distribution_lists_empcode == auth()->user()->username)

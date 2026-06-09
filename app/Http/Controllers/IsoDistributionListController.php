@@ -88,6 +88,14 @@ class IsoDistributionListController extends Controller
     public function show($id)
     {
         $list = IsoDistributionList::where('iso_distribution_lists_flag',true)
+        ->leftjoin('iso_master_lists','iso_distribution_lists.iso_master_lists_id','=','iso_master_lists.iso_master_lists_id')
+        ->leftJoin('tg_employee_list', function($join) {
+            $join->on(
+                DB::raw('iso_distribution_lists.iso_distribution_lists_empcode COLLATE SQL_Latin1_General_CP1_CI_AS'), 
+                '=', 
+                DB::raw('tg_employee_list.personcode COLLATE SQL_Latin1_General_CP1_CI_AS')
+            );
+        })
         ->where('iso_distribution_lists_empcode',$id)
         ->get();
         return view('iso.view-distributionlist',compact('list'));
