@@ -23,8 +23,13 @@ class IsoDistributionListController extends Controller
      */
     public function index()
     {
-        $hd = IsoMasterList::where('iso_master_lists_flag',true)->get();
-        return view('iso.list-distributionlist',compact('hd'));
+        if(auth()->user()->username == "admin" || auth()->user()->username == "660223125" ){
+             $hd = IsoMasterList::where('iso_master_lists_flag',true)->get();
+            return view('iso.list-distributionlist',compact('hd'));
+        }else {
+           return redirect()->route('iso-distributionlist.show', auth()->user()->username);
+        }
+       
     }
 
     /**
