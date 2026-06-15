@@ -41,10 +41,10 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3"> 
-                                    {{-- <div class="col-12" style="text-align: right;">
+                                    <div class="col-12" style="text-align: right;">
                                         <a href="javascript:void(0);" class="btn btn-secondary" id="addRowBtn">เพิ่มรายการ</a>
                                     </div>
-                                    <hr> --}}
+                                    <hr>
                                     <div class="col-12">
                                         <div class="table-responsive">
                                         <table class="table table-bordered nowrap w-100 text-center table-sm">
@@ -59,6 +59,7 @@
                                                     <th rowspan="2" style="min-width:200px;">ผู้รับผิดชอบ</th>
                                                     <th rowspan="2" style="min-width:200px;">ผู้ทวนสอบ</th>
                                                     <th rowspan="2">บันทึก</th>
+                                                    <th rowspan="2">ลบ</th>
                                                 </tr>
                                                 <tr>
                                                     <!-- เดือน -->
@@ -454,6 +455,9 @@
                                                         <td>
                                                             <a href="{{ route('iso-swabtestplanallergen.show', $item->iso_swabtest_plans_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i></a>
                                                         </td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_swabtest_plans_id }}')"><i class="fas fa-trash"></i></a> 
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -628,6 +632,159 @@ $(function () {
     });
 
 });
+// =========================
+// ➕ ปุ่มเพิ่มรายการ (แก้ไขปัญหาลำดับและโครงสร้างตาราง)
+// =========================
+$('#addRowBtn').on('click', function() {
+    let btn = $(this);
+    btn.prop('disabled', true).text('กำลังเพิ่ม...');
+
+    let planYear = $('select[name="iso_swabtest_plans_date"]').val(); 
+
+    $.ajax({
+        url: '/iso-swabtestplanallergen/create-row',
+        type: 'POST',
+        data: { year: planYear },
+        success: function(res) {
+            btn.prop('disabled', false).text('เพิ่มรายการ');
+
+            if (res.status && res.id) {
+                let keyIndex = $('#tableBody tr').length; // ใช้สำหรับกำหนด index Array ของ Checkbox
+
+                // กำหนดชื่อเดือนทั้งหมดเพื่อสร้าง Loop วนลูปสร้างช่องตารางให้ครบ 12 เดือน
+                const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+                let monthCellsHtml = '';
+
+                months.forEach(function(mon) {
+                    monthCellsHtml += `
+                    <td>
+                        <div class="d-flex align-items-center justify-content-between px-2 py-1 mb-1 rounded plan-box">
+                            <span class="small fw-bold text-primary" style="font-size: 10px;">PLAN</span>
+                            <input type="hidden" name="plan_${mon}[${keyIndex}]" value="0">
+                            <input type="checkbox" class="form-check-input scale-checkbox auto-save" data-id="${res.id}" data-field="plan_${mon}" name="plan_${mon}[${keyIndex}]" value="1">
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between px-2 py-1 rounded action-box">
+                            <span class="small fw-bold text-success" style="font-size: 10px;">ACTION</span>
+                            <input type="hidden" name="action_${mon}[${keyIndex}]" value="0">
+                            <input type="checkbox" class="form-check-input scale-checkbox auto-save" data-id="${res.id}" data-field="action_${mon}" name="action_${mon}[${keyIndex}]" value="1">
+                        </div>
+                    </td>`;
+                });
+
+                // ประกอบร่างแถวตารางใหม่ทั้งหมด
+                let newRow = `
+                <tr>
+                    <td>
+                        ${res.listno}
+                        <input type="hidden" name="iso_swabtest_plans_listno[]" value="${res.listno}">
+                        <input type="hidden" name="iso_swabtest_plans_id[]" value="${res.id}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control auto-save" name="iso_swabtest_plans_area[]" data-id="${res.id}" data-field="iso_swabtest_plans_area" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control auto-save" name="iso_swabtest_plans_list[]" data-id="${res.id}" data-field="iso_swabtest_plans_list" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control auto-save" name="iso_swabtest_plans_qty[]" data-id="${res.id}" data-field="iso_swabtest_plans_qty" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control auto-save" name="iso_swabtest_plans_frequency[]" data-id="${res.id}" data-field="iso_swabtest_plans_frequency" value="">
+                    </td>
+                    
+                    ${monthCellsHtml}
+
+                    <td>
+                        <input type="text" name="iso_swabtest_plans_person[]" data-id="${res.id}" data-field="iso_swabtest_plans_person" class="form-control auto-save" value="" />
+                    </td>
+                    <td>
+                        <input type="text" name="iso_swabtest_plans_review[]" data-id="${res.id}" data-field="iso_swabtest_plans_review" class="form-control auto-save" value="" />
+                    </td>
+                    <td>
+                        <span class="text-muted small">เซฟอัตโนมัติ</span>
+                    </td>
+                </tr>`;
+
+                // ต่อท้ายแถวใหม่เข้าไปในตาราง
+                $('#tableBody').append(newRow);
+                
+                // แจ้งเตือนสถานะสำเร็จ
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'เพิ่มแถวลำดับที่ ' + res.listno + ' สำเร็จ',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } else {
+                Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด', text: res.msg || 'ไม่สามารถเพิ่มแถวได้' });
+            }
+        },
+        error: function(xhr) {
+            btn.prop('disabled', false).text('เพิ่มรายการ');
+            Swal.fire({ icon: 'error', title: 'Server Error', text: 'ไม่สามารถติดต่อเซิร์ฟเวอร์ได้' });
+        }
+    });
+});
+confirmDel = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelSwabtestallergenPlan') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
 </script>
 
 <style>
