@@ -196,6 +196,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
     ],function(){
         Route::resource('/iso-ncrlist' , App\Http\Controllers\IsoNcrListController::class);
         Route::post('/confirmDelNcrlist' , [App\Http\Controllers\IsoNcrListController::class , 'confirmDelNcrlist']);
+        Route::post('/confirmDelNcrProduct' , [App\Http\Controllers\IsoNcrListController::class , 'confirmDelNcrProduct']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-carlist']

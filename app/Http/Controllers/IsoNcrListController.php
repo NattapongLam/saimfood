@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\IsoNcrList;
+use App\Models\IsoNcrProduct;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -113,7 +114,8 @@ class IsoNcrListController extends Controller
     public function edit($id)
     {
         $hd = IsoNcrList::find($id);
-        return view('iso.edit-ncrlist',compact('hd'));
+        $dt = IsoNcrProduct::where('iso_ncr_lists_id',$id)->where('flag',true)->get();
+        return view('iso.edit-ncrlist',compact('hd','dt'));
     }
 
     /**
@@ -314,11 +316,11 @@ class IsoNcrListController extends Controller
                     'following_note' => $request->following_note,
                     'following_person' => $request->following_person,
                     'following_date' => $request->following_date,
-                    'following_productname' => $request->following_productname,
-                    'following_productcode' => $request->following_productcode,
-                    'following_productlot' => $request->following_productlot,
-                    'following_productqty' => $request->following_productqty,
-                    'following_productnote' => $request->following_productnote,
+                    // 'following_productname' => $request->following_productname,
+                    // 'following_productcode' => $request->following_productcode,
+                    // 'following_productlot' => $request->following_productlot,
+                    // 'following_productqty' => $request->following_productqty,
+                    // 'following_productnote' => $request->following_productnote,
                     'status' => 5
                 ];
                 if ($request->hasFile('following_file') && $request->file('following_file')->isValid()) {
@@ -328,6 +330,26 @@ class IsoNcrListController extends Controller
                 }
                 DB::beginTransaction();
                 $hd = IsoNcrList::where('iso_ncr_lists_id',$id)->update($data);
+                if ($request->has('following_productname')) {
+                    foreach ($request->following_productname as $key => $value) {
+                        // ตรวจสอบว่ามีข้อมูลชื่อผลิตภัณฑ์ในแถวนั้นๆ หรือไม่
+                        if (!empty($value)) {
+                            // เขียนคำสั่งสร้าง Model หรือ Insert DB ตรงนี้
+                            IsoNcrProduct::create([
+                                'following_productname' => $value,
+                                'following_productcode' => $request->following_productcode[$key] ?? null,
+                                'following_productlot'  => $request->following_productlot[$key] ?? null,
+                                'following_productqty'  => $request->following_productqty[$key] ?? null,
+                                'following_productnote' => $request->following_productnote[$key] ?? null,
+                                'iso_ncr_lists_id' => $id,
+                                'person_at' => Auth::user()->name,
+                                'created_at' => Carbon::now(),
+                                'updated_at' => Carbon::now(),
+                                'flag' => 1
+                            ]);
+                        }
+                    }
+                }
                 DB::commit();
                 return redirect()->route('iso-ncrlist.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
             } catch (\Exception $e) {
@@ -381,6 +403,30 @@ class IsoNcrListController extends Controller
             IsoNcrList::where('iso_ncr_lists_id',$id)->update([
                 'iso_ncr_lists_flag' => false,
                 'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    public function confirmDelNcrProduct(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoNcrProduct::where('iso_ncr_products_id',$id)->update([
+                'flag' => false,
+                'updated_at'=> Carbon::now(),
+                'person_at' => Auth::user()->name,
             ]);
             DB::commit();
             return response()->json([
