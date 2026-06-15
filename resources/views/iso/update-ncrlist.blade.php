@@ -517,7 +517,79 @@
                         </div> 
                     </div>
                     <hr>
-                    <div class="row mt-2">
+                    <div class="row mt-4">
+                    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="my-0">เอกสารแนบ: รายงานผลิตภัณฑ์ที่ไม่เป็นไปตามข้อกำหนด (Non-conformity Report : NCR)</h5>
+                        <button type="button" class="btn btn-success btn-sm" id="addNcrRowBtn">
+                            <i class="fas fa-plus me-1"></i> เพิ่มรายการผลิตภัณฑ์ NCR
+                        </button>
+                    </div>
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-centered align-middle" id="ncrTable">
+                                <thead class="table-light text-center">
+                                    <tr>
+                                        <th style="width: 5%;">ลำดับ</th>
+                                        <th style="width: 25%;">ชื่อผลิตภัณฑ์</th>
+                                        <th style="width: 15%;">รหัสผลิตภัณฑ์</th>
+                                        <th style="width: 15%;">Lot/Batch No</th>
+                                        <th style="width: 15%;">จำนวนทั้งหมด</th>
+                                        <th style="width: 20%;">หมายเหตุ</th>
+                                        <th style="width: 5%;">ลบ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ncrTableBody">
+                                    @if(count($dt) > 0)
+                                        @foreach ($dt as $key => $item)
+                                        <tr>
+                                            <td class="text-center ncr-row-number">
+                                                {{$key + 1}}
+                                                <input type="hidden" name="iso_ncr_products_id[{{$key}}]" value="{{$item->iso_ncr_products_id}}">
+                                            </td>
+                                            <td>
+                                                <input class="form-control form-control-sm" type="text" name="following_productname[{{$key}}]" value="{{$item->following_productname}}" required >
+                                            </td>
+                                            <td>
+                                                <input class="form-control form-control-sm" type="text" name="following_productcode[{{$key}}]" value="{{$item->following_productcode}}" required >
+                                            </td>
+                                            <td>
+                                                <input class="form-control form-control-sm" type="text" name="following_productlot[{{$key}}]" value="{{$item->following_productlot}}" >
+                                            </td>
+                                            <td>
+                                                <input class="form-control form-control-sm" type="text" name="following_productqty[{{$key}}]" value="{{$item->following_productqty}}">
+                                            </td>
+                                            <td>
+                                                <textarea class="form-control form-control-sm" rows="1" name="following_productnote[{{$key}}]">{{$item->following_productnote}}</textarea>
+                                            </td>
+                                            <td class="text-center">
+    
+                                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_ncr_products_id }}')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    @else
+                                        @if ($hd->status == 4)
+                                        <tr>
+                                            <td class="text-center ncr-row-number">1</td>
+                                            <td><input class="form-control form-control-sm" type="text" name="following_productname[0]" required></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="following_productcode[0]" required></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="following_productlot[0]"></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="following_productqty[0]"></td>
+                                            <td><textarea class="form-control form-control-sm" rows="1" name="following_productnote[0]"></textarea></td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-secondary btn-sm" disabled><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        @endif
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                    {{-- <div class="row mt-2">
                         <h5 class="text-center">เอกสารแนบ:รายงานผลิตภัณฑ์ที่ไม่เป็นไปตามข้อกำหนด (Non-conformity Report :NCR)</h5>
                         <div class="col-6">
                             <div class="form-group">
@@ -549,7 +621,7 @@
                                 <textarea class="form-control" rows="3" name="following_productnote">{{$hd->following_productnote}}</textarea>
                             </div>
                         </div>
-                    </div>                     
+                    </div>                      --}}
             </div>
         </div>
         <div class="card">
@@ -631,5 +703,86 @@
 @endsection
 @section('script')
 <script>
+const ncrTbody = document.getElementById('ncrTableBody');
+
+function updateNcrRowNumbers() {
+    if (!ncrTbody) return;
+    ncrTbody.querySelectorAll('tr').forEach((row, index) => {
+        const numberTd = row.querySelector('.ncr-row-number');
+        if (numberTd) numberTd.textContent = index + 1;
+    });
+}
+
+const addBtn = document.getElementById('addNcrRowBtn');
+if (addBtn && ncrTbody) {
+    addBtn.addEventListener('click', function () {
+        const uniqueIndex = Date.now();
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td class="text-center ncr-row-number">
+                <input type="hidden" name="iso_ncr_products_id[${uniqueIndex}]" value="0">
+            </td>
+            <td><input class="form-control form-control-sm" type="text" name="following_productname[${uniqueIndex}]" required></td>
+            <td><input class="form-control form-control-sm" type="text" name="following_productcode[${uniqueIndex}]" required></td>
+            <td><input class="form-control form-control-sm" type="text" name="following_productlot[${uniqueIndex}]"></td>
+            <td><input class="form-control form-control-sm" type="text" name="following_productqty[${uniqueIndex}]"></td>
+            <td><textarea class="form-control form-control-sm" rows="1" name="following_productnote[${uniqueIndex}]"></textarea></td>
+            <td class="text-center">
+                <button type="button" class="btn btn-danger btn-sm deleteNcrRow">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        `;
+        ncrTbody.appendChild(newRow);
+        updateNcrRowNumbers();
+    });
+
+    ncrTbody.addEventListener('click', function (e) {
+        const btn = e.target.closest('.deleteNcrRow');
+        if (btn) {
+            btn.closest('tr').remove();
+            updateNcrRowNumbers();
+        }
+    });
+}
+
+confirmDel = (refid) => {
+    Swal.fire({
+        title: 'คุณแน่ใจหรือไม่ !',
+        text: 'คุณต้องการลบรายการนี้หรือไม่ ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'ยืนยัน',
+        cancelButtonText: 'ยกเลิก',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false
+    }).then(function(result) {
+        if (result.value) {
+            $.ajax({
+                url: '{{ url("/confirmDelNcrProduct") }}',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'refid': refid,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == true) {
+                        Swal.fire({ title: 'สำเร็จ', text: 'ยกเลิกรายการเรียบร้อยแล้ว', icon: 'success' })
+                            .then(function() { location.reload(); });
+                    } else {
+                        Swal.fire({ title: 'ไม่สำเร็จ', text: 'ยกเลิกรายการไม่สำเร็จ', icon: 'error' });
+                    }
+                },
+                error: function() {
+                    Swal.fire({ title: 'ไม่สำเร็จ', text: 'ยกเลิกรายการไม่สำเร็จ', icon: 'error' });
+                }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire({ title: 'ยกเลิก', text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)', icon: 'error' });
+        }
+    });
+}
 </script>
 @endsection
