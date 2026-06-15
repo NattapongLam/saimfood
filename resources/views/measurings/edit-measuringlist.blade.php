@@ -327,41 +327,55 @@ function updateRowNumbers() {
     rows.forEach((row, index) => {
         row.querySelector('.row-number').textContent = index + 1;
         row.querySelector('.row-number-hidden').value = index + 1;
+        
+        // ช่วยอัปเดต index ของ checkbox และ hidden input ให้ตรงตามลำดับปัจจุบันหลังการลบหรือเพิ่มแถว
+        const calibateInputs = row.querySelectorAll('[name^="clb_measuring_records_calibate"]');
+        calibateInputs.forEach(input => {
+            input.setAttribute('name', `clb_measuring_records_calibate[${index}]`);
+        });
+
+        const repairInputs = row.querySelectorAll('[name^="clb_measuring_records_repaircheck"]');
+        repairInputs.forEach(input => {
+            input.setAttribute('name', `clb_measuring_records_repaircheck[${index}]`);
+        });
     });
 }
 document.getElementById('addRowBtn').addEventListener('click', function () {
-        const tbody = document.getElementById('tableBody');
+    const tbody = document.getElementById('tableBody');
+    
+    // ค้นหาจำนวนแถวทั้งหมดที่มีอยู่ในตาราง ณ ปัจจุบัน เพื่อใช้เป็นค่า index สำหรับแถวใหม่
+    const currentIndex = tbody.querySelectorAll('tr').length;
 
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>
-                <span class="row-number"></span>
-                <input type="hidden" name="clb_measuring_records_listno[]" class="row-number-hidden"/>
-                <input type="hidden" name="clb_measuring_records_id[]" value="0">
-            </td>
-            <td><input type="date" name="clb_measuring_records_date[]" class="form-control"/></td>
-            <td><input type="text" name="clb_measuring_records_remark[]" class="form-control"/></td>
-            <td><input type="text" name="clb_measuring_records_timeline[]" class="form-control"/></td>
-            <td>
-                <input type="hidden" name="clb_measuring_records_calibate[${index}]" value="0">
-                <input type="checkbox" name="clb_measuring_records_calibate[${index}]" value="1" class="form-check-input m-0"/>
-            </td>
-            <td><input type="text" name="clb_measuring_records_certno[]" class="form-control"/></td>
-            <td>
-                <input type="hidden" name="clb_measuring_records_repaircheck[${index}]" value="0">
-                <input type="checkbox" name="clb_measuring_records_repaircheck[${index}]" value="1" class="form-check-input m-0"/>
-            </td>
-            <td><input type="text" name="clb_measuring_records_repairdocu[]" class="form-control"/></td>
-            <td><input type="text" name="clb_measuring_records_person[]" class="form-control"/></td>
-            <td><input type="text" name="clb_measuring_records_review[]" class="form-control"/></td>
-            <td><input type="text" name="clb_measuring_records_location[]" class="form-control"/></td>
-            <td><input type="text" name="clb_measuring_records_status[]" class="form-control"/></td>
-            <td><input type="text" name="clb_measuring_records_note[]" class="form-control"/></td>
-            <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
-        `;
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td>
+            <span class="row-number"></span>
+            <input type="hidden" name="clb_measuring_records_listno[]" class="row-number-hidden"/>
+            <input type="hidden" name="clb_measuring_records_id[]" value="0">
+        </td>
+        <td><input type="date" name="clb_measuring_records_date[]" class="form-control"/></td>
+        <td><input type="text" name="clb_measuring_records_remark[]" class="form-control"/></td>
+        <td><input type="text" name="clb_measuring_records_timeline[]" class="form-control"/></td>
+        <td>
+            <input type="hidden" name="clb_measuring_records_calibate[${currentIndex}]" value="0">
+            <input type="checkbox" name="clb_measuring_records_calibate[${currentIndex}]" value="1" class="form-check-input m-0"/>
+        </td>
+        <td><input type="text" name="clb_measuring_records_certno[]" class="form-control"/></td>
+        <td>
+            <input type="hidden" name="clb_measuring_records_repaircheck[${currentIndex}]" value="0">
+            <input type="checkbox" name="clb_measuring_records_repaircheck[${currentIndex}]" value="1" class="form-check-input m-0"/>
+        </td>
+        <td><input type="text" name="clb_measuring_records_repairdocu[]" class="form-control"/></td>
+        <td><input type="text" name="clb_measuring_records_person[]" class="form-control"/></td>
+        <td><input type="text" name="clb_measuring_records_review[]" class="form-control"/></td>
+        <td><input type="text" name="clb_measuring_records_location[]" class="form-control"/></td>
+        <td><input type="text" name="clb_measuring_records_status[]" class="form-control"/></td>
+        <td><input type="text" name="clb_measuring_records_note[]" class="form-control"/></td>
+        <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
+    `;
 
-        tbody.appendChild(newRow);
-        updateRowNumbers(); 
+    tbody.appendChild(newRow);
+    updateRowNumbers(); 
 });
 document.getElementById('tableBody').addEventListener('click', function (e) {
     if (e.target.classList.contains('deleteRow')) {

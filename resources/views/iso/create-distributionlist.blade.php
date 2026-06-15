@@ -131,8 +131,10 @@
                                         <td>
                                             @if($item->iso_distribution_lists_status == "N")
                                                 @if ($item->iso_distribution_lists_empcode == auth()->user()->username)
-                                                    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="confirmApproved('{{ $item->iso_distribution_lists_id }}')"><i class="bx bx-edit-alt"></i></a>   
+                                                    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="confirmApproved('{{ $item->iso_distribution_lists_id }}')"><i class="bx bx-edit-alt"></i></a>                                                      
                                                 @endif
+                                            @else
+                                                {{$item->iso_distribution_lists_person}}
                                             @endif
                                         </td>
                                         <td>
