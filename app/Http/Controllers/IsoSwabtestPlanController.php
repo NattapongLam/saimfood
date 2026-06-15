@@ -130,8 +130,20 @@ class IsoSwabtestPlanController extends Controller
      */
     public function edit($id)
     {
-        $list = IsoSwabtestPlan::where('iso_swabtest_plans_date',$id)->where('docutype','Coliform bacteria')->first();
-        $hd = IsoSwabtestPlan::where('iso_swabtest_plans_date',$id)->where('docutype','Coliform bacteria')->get();
+        $list = IsoSwabtestPlan::where('iso_swabtest_plans_date',$id)
+        ->where('docutype','Coliform bacteria')
+        ->where('iso_swabtest_plans_flag',true)
+        ->first();
+        $hd = IsoSwabtestPlan::where('iso_swabtest_plans_date',$id)
+        ->where('docutype','Coliform bacteria')
+        ->where('iso_swabtest_plans_flag',true)
+        ->get();
+        foreach ($hd as $key => $value) {
+            IsoSwabtestPlan::where('iso_swabtest_plans_id',$value->iso_swabtest_plans_id)
+            ->update([
+                'iso_swabtest_plans_listno' => $key+1
+            ]);
+        }
         //dd($hd);
         return view('iso.edit-swabtestplan',compact('hd','list'));
     }
@@ -326,5 +338,83 @@ class IsoSwabtestPlanController extends Controller
                 'msg' => $e->getMessage()
             ]);
         }
+    }
+    public function createRow(Request $request)
+    {
+        try {
+            // ดึงปีที่ส่งมาจากหน้าเว็บ ถ้าไม่มีให้ใช้ปีปัจจุบัน
+            $year = $request->year ?? date('Y');
+
+            // 🔍 แก้ไขจาก whereYear เป็น where ปกติ เพราะฟิลด์นี้เก็บค่าปีตรงๆ
+            $lastRow = IsoSwabtestPlan::where('iso_swabtest_plans_date', $year)
+                                    ->where('docutype', 'Coliform bacteria')
+                                    ->orderBy('iso_swabtest_plans_listno', 'desc')
+                                    ->first();
+            
+            // ถ้าระบบเจอแถวล่าสุด ให้บวกต่ออีก 1 ถ้าไม่เจอให้เริ่มที่ 1
+            $nextListNo = $lastRow ? (((int)$lastRow->iso_swabtest_plans_listno) + 1) : 1;
+
+            // บันทึกข้อมูลแถวเริ่มต้นเปล่าๆ เข้าสู่ Database
+            $newPlan = IsoSwabtestPlan::create([
+                'iso_swabtest_plans_listno'    => $nextListNo,
+                'iso_swabtest_plans_area'      => '',
+                'iso_swabtest_plans_list'      => '',
+                'iso_swabtest_plans_qty'       => '',
+                'iso_swabtest_plans_frequency' => '',
+
+                // แผน 12 เดือนเริ่มต้นเป็น 0
+                'plan_jan' => 0, 'plan_feb' => 0, 'plan_mar' => 0, 'plan_apr' => 0,
+                'plan_may' => 0, 'plan_jun' => 0, 'plan_jul' => 0, 'plan_aug' => 0,
+                'plan_sep' => 0, 'plan_oct' => 0, 'plan_nov' => 0, 'plan_dec' => 0,
+
+                // กิจกรรม 12 เดือนเริ่มต้นเป็น false หรือ 0
+                'action_jan' => 0, 'action_feb' => 0, 'action_mar' => 0, 'action_apr' => 0,
+                'action_may' => 0, 'action_jun' => 0, 'action_jul' => 0, 'action_aug' => 0,
+                'action_sep' => 0, 'action_oct' => 0, 'action_nov' => 0, 'action_dec' => 0,
+
+                'iso_swabtest_plans_flag'   => true,
+                'person_at'                 => Auth::user()->name,
+                'iso_swabtest_plans_date'   => $year,
+                'iso_swabtest_plans_person' => '',
+                'iso_swabtest_plans_review' => '',
+                'docutype'                  => 'Coliform bacteria'
+            ]);
+
+            return response()->json([
+                'status'  => true,
+                // ⚠️ ดึงค่า ID หลักของแถวที่พึ่งสร้างสำเร็จส่งกลับไป
+                'id'      => $newPlan->iso_swabtest_plans_id, 
+                'listno'  => $nextListNo
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'msg'    => $e->getMessage()
+            ]);
+        }
+    }
+    public function confirmDelSwabtestPlan(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoSwabtestPlan::where('iso_swabtest_plans_id',$id)->update([
+                'iso_swabtest_plans_flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }      
     }
 }

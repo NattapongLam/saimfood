@@ -183,7 +183,8 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         Route::post('/iso-swabtestplanallergen/auto-update', [App\Http\Controllers\IsoSwabtestAllergenPlanController::class, 'autoUpdate'])->name('iso-swabtestplanallergen.autoupdate');
         Route::post('/iso-swabtestplanallergen/store-record/{planId}',[App\Http\Controllers\IsoSwabtestAllergenPlanController::class, 'storeRecord'])->name('iso-swabtestplanallergen.storeRecord');
         Route::post('/confirmDelSwabtestallergenRecord' , [App\Http\Controllers\IsoSwabtestAllergenPlanController::class , 'confirmDelSwabtestallergenRecord']);
-        
+        Route::post('/iso-swabtestplan/create-row', [App\Http\Controllers\IsoSwabtestPlanController::class, 'createRow']);
+         Route::post('/confirmDelSwabtestPlan' , [App\Http\Controllers\IsoSwabtestPlanController::class , 'confirmDelSwabtestPlan']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-ncrlist']
