@@ -128,8 +128,12 @@ class IsoAirtestPlanController extends Controller
      */
     public function edit($id)
     {
-        $list = IsoAirtestPlan::where('iso_airtest_plans_date',$id)->first();
-        $hd = IsoAirtestPlan::where('iso_airtest_plans_date',$id)->get();
+        $list = IsoAirtestPlan::where('iso_airtest_plans_date',$id)
+        ->where('iso_airtest_plans_flag',true)
+        ->first();
+        $hd = IsoAirtestPlan::where('iso_airtest_plans_date',$id)
+        ->where('iso_airtest_plans_flag',true)
+        ->get();
         return view('iso.edit-airtestplan',compact('hd','list'));
     }
 
@@ -271,6 +275,30 @@ class IsoAirtestPlanController extends Controller
             DB::beginTransaction();
             IsoAirtestRecord::where('iso_airtest_records_id',$id)->update([
                 'flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }      
+    }
+
+    public function confirmDelAirtestnPlan(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoAirtestPlan::where('iso_airtest_plans_id',$id)->update([
+                'iso_airtest_plans_flag' => false,
                 'updated_at'=> Carbon::now(),
             ]);
             DB::commit();

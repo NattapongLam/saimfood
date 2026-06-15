@@ -56,6 +56,7 @@
                                                     <th rowspan="2" style="width:10%">ผู้รับผิดชอบ</th>
                                                     <th rowspan="2" style="width:10%">ผู้ทวนสอบ</th>
                                                     <th rowspan="2" style="width:3%">บันทึก</th>
+                                                    <th rowspan="2" style="width:3%">ลบ</th>
                                                 </tr>
                                                 <tr>
                                                     <!-- เดือน -->
@@ -193,6 +194,9 @@
                                                         <td>
                                                             <a href="{{ route('iso-airtestplan.show', $item->iso_airtest_plans_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt"></i></a>
                                                         </td>
+                                                        <td>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_airtest_plans_id }}')"><i class="fas fa-trash"></i></a> 
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -264,6 +268,7 @@ document.getElementById('addRowBtn').addEventListener('click', function () {
 
         <td><input type="text" name="iso_airtest_plans_person[]" class="form-control"/></td>
         <td><input type="text" name="iso_airtest_plans_review[]" class="form-control"/></td>
+        <td></td>
         <td><button type="button" class="btn btn-danger btn-sm deleteRow">ลบ</button></td>
     `;
 
@@ -288,5 +293,63 @@ document.getElementById('tableBody').addEventListener('click', function (e) {
         updateRowNumbers(); // อัปเดตลำดับหลังจากลบ
     }
 });
+confirmDel = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelAirtestnPlan') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
 </script>
 @endsection
