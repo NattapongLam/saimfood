@@ -164,6 +164,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:iso-producttestingplan']
     ],function(){
         Route::resource('/iso-producttestingplan' , App\Http\Controllers\IsoProductTestingPlanController::class);
+        Route::post('/confirmDelProducttestingPlan' , [App\Http\Controllers\IsoProductTestingPlanController::class , 'confirmDelProducttestingPlan']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-airtestplan']

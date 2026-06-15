@@ -40,10 +40,10 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3"> 
-                                    {{-- <div class="col-12" style="text-align: right;">
+                                    <div class="col-12" style="text-align: right;">
                                         <a href="javascript:void(0);" class="btn btn-secondary" id="addRowBtn">เพิ่มรายการ</a>
                                     </div>
-                                    <hr> --}}
+                                    <hr>
                                     <div class="col-12">
                                         <div class="table-responsive">
                                         <table class="table table-bordered nowrap w-100 text-center">
@@ -54,6 +54,7 @@
                                                     <th rowspan="2" style="min-width:160px;">รหัสสินค้า</th>
                                                     <th rowspan="2" style="min-width:180px;">กลุ่มผลิตภัณฑ์</th>
                                                     <th colspan="12">เดือน</th>
+                                                    <th>ลบ</th>
                                                 </tr>
                                                 <tr>
                                                     <!-- เดือน -->
@@ -513,6 +514,9 @@
                                                                 </div>
                                                             @endif                       
                                                         </td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_product_testing_plans_id }}')"><i class="fas fa-trash"></i></a> 
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -675,5 +679,63 @@ document.getElementById('tableBody').addEventListener('click', function (e) {
         updateRowNumbers(); // อัปเดตลำดับหลังจากลบ
     }
 });
+confirmDel = (refid) =>{
+Swal.fire({
+    title: 'คุณแน่ใจหรือไม่ !',
+    text: `คุณต้องการลบรายการนี้หรือไม่ ?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ยืนยัน',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false         
+}).then(function(result) {
+    if (result.value) {
+        $.ajax({
+            url: `{{ url('/confirmDelProducttestingPlan') }}`,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "refid": refid,               
+            },           
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ยกเลิกรายการเรียบร้อยแล้ว',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });
+                }
+               
+            },
+            error: function(data) {
+                Swal.fire({
+                        title: 'ไม่สำเร็จ',
+                        text: 'ยกเลิกรายการไม่สำเร็จ',
+                        icon: 'error'
+                    });            }
+        });
+
+    } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'ยกเลิก',
+            text: 'โปรดตรวจสอบข้อมูลอีกครั้งเพื่อความถูกต้อง :)',
+            icon: 'error'
+        });
+    }
+});
+}
 </script>
 @endsection

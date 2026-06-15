@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\IsoProductTestingPlan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class IsoProductTestingPlanController extends Controller
 {
@@ -122,8 +124,12 @@ class IsoProductTestingPlanController extends Controller
      */
     public function edit($id)
     {
-        $list = IsoProductTestingPlan::where('iso_product_testing_plans_date',$id)->first();
-        $hd = IsoProductTestingPlan::where('iso_product_testing_plans_date',$id)->get();
+        $list = IsoProductTestingPlan::where('iso_product_testing_plans_date',$id)
+        ->where('iso_product_testing_plans_flag',true)
+        ->first();
+        $hd = IsoProductTestingPlan::where('iso_product_testing_plans_date',$id)
+        ->where('iso_product_testing_plans_flag',true)
+        ->get();
         return view('iso.edit-producttestingplan',compact('hd','list'));
     }
 
@@ -238,5 +244,28 @@ class IsoProductTestingPlanController extends Controller
     public function destroy($id)
     {
         //
+    }
+      public function confirmDelProducttestingPlan(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoProductTestingPlan::where('iso_product_testing_plans_id',$id)->update([
+                'iso_product_testing_plans_flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }      
     }
 }
