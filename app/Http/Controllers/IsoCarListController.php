@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\IsoCarList;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class IsoCarListController extends Controller
 {
@@ -19,7 +21,7 @@ class IsoCarListController extends Controller
      */
     public function index()
     {
-        $hd = IsoCarList::get();
+        $hd = IsoCarList::where('flag',true)->get();
         return view('iso.list-carlist',compact('hd'));
     }
 
@@ -323,5 +325,29 @@ class IsoCarListController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function confirmDelCarlist(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoCarList::where('iso_car_lists_id',$id)->update([
+                'flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

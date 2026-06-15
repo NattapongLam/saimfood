@@ -195,11 +195,13 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:iso-ncrlist']
     ],function(){
         Route::resource('/iso-ncrlist' , App\Http\Controllers\IsoNcrListController::class);
+        Route::post('/confirmDelNcrlist' , [App\Http\Controllers\IsoNcrListController::class , 'confirmDelNcrlist']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-carlist']
     ],function(){
         Route::resource('/iso-carlist' , App\Http\Controllers\IsoCarListController::class);
+        Route::post('/confirmDelCarlist' , [App\Http\Controllers\IsoCarListController::class , 'confirmDelCarlist']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-darlist']

@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class IsoNcrListController extends Controller
@@ -22,7 +23,9 @@ class IsoNcrListController extends Controller
      */
     public function index()
     {
-        $hd = IsoNcrList::orderby('iso_ncr_lists_id','asc')->get();
+        $hd = IsoNcrList::orderby('iso_ncr_lists_id','asc')
+        ->where('iso_ncr_lists_flag',true)
+        ->get();
         return view('iso.list-ncrlist',compact('hd'));
     }
 
@@ -368,5 +371,28 @@ class IsoNcrListController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function confirmDelNcrlist(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoNcrList::where('iso_ncr_lists_id',$id)->update([
+                'iso_ncr_lists_flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }
