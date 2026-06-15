@@ -245,7 +245,8 @@ class IsoProductTestingPlanController extends Controller
     {
         //
     }
-      public function confirmDelProducttestingPlan(Request $request)
+    
+    public function confirmDelProducttestingPlan(Request $request)
     {
         $id = $request->refid;
         try 

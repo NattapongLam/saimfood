@@ -159,6 +159,7 @@ Route::resource('/persons' , App\Http\Controllers\PersonController::class);
         'middleware' =>  ['auth','permission:iso-waterqualityplan']
     ],function(){
         Route::resource('/iso-waterqualityplan' , App\Http\Controllers\IsoWaterQualityPlanController::class);
+        Route::post('/confirmDelWaterqualityplan' , [App\Http\Controllers\IsoWaterQualityPlanController::class , 'confirmDelWaterqualityplan']);
     });
     Route::group([
         'middleware' =>  ['auth','permission:iso-producttestingplan']

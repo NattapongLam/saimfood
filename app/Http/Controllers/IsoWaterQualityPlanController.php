@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\IsoWaterQualityPlan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class IsoWaterQualityPlanController extends Controller
@@ -125,8 +127,12 @@ class IsoWaterQualityPlanController extends Controller
      */
     public function edit($id)
     {
-        $list = IsoWaterQualityPlan::where('iso_water_quality_plans_date',$id)->first();
-        $hd = IsoWaterQualityPlan::where('iso_water_quality_plans_date',$id)->get();
+        $list = IsoWaterQualityPlan::where('iso_water_quality_plans_date',$id)
+        ->where('iso_water_quality_plans_flag',true)
+        ->first();
+        $hd = IsoWaterQualityPlan::where('iso_water_quality_plans_date',$id)
+        ->where('iso_water_quality_plans_flag',true)
+        ->get();
         return view('iso.edit-waterqualityplan',compact('hd','list'));
     }
 
@@ -246,5 +252,29 @@ class IsoWaterQualityPlanController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function confirmDelWaterqualityplan(Request $request)
+    {
+        $id = $request->refid;
+        try 
+        {
+            DB::beginTransaction();
+            IsoWaterQualityPlan::where('iso_water_quality_plans_id',$id)->update([
+                'iso_water_quality_plans_flag' => false,
+                'updated_at'=> Carbon::now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'ยกเลิกรายการเรียบร้อยแล้ว'
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }      
     }
 }
