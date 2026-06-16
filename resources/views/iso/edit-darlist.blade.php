@@ -347,7 +347,7 @@
                 <div class="row mt-2">
                     <div class="col-4">
                         <div class="form-group">
-                            <label class="form-label">วันที่มีผลลังคับใช้</label>
+                            <label class="form-label">วันที่มีผลบังคับใช้</label>
                             <input class="form-control" type="date" name="effective_date1" value="{{$hd->effective_date1}}">
                         </div>
                     </div>

@@ -56,11 +56,15 @@
                                                     @elseif($item->approved_status =="ทบทวนแล้ว")
                                                         <a href="{{ route('iso-darlist.edit', $item->iso_dar_lists_id) }}"class="btn btn-primary btn-sm"><i class="bx bx-edit-alt">อนุมัติ</i></a>
                                                     @else
-                                                        <a href="{{ route('iso-darlist.edit', $item->iso_dar_lists_id) }}"class="btn btn-info btn-sm"><i class="bx bx-edit-alt">DC</i></a>
+                                                        @if (auth()->user()->username == "admin" || auth()->user()->username == "660223125")
+                                                            <a href="{{ route('iso-darlist.edit', $item->iso_dar_lists_id) }}"class="btn btn-info btn-sm"><i class="bx bx-edit-alt">DC</i></a>
+                                                        @endif
                                                     @endif
                                                 </td>
                                                 <td>
-                                                     <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_dar_lists_id }}')"><i class="fas fa-trash"></i></a> 
+                                                    @if ($item->approved_status =="รอทบทวน")
+                                                     <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_dar_lists_id }}')"><i class="fas fa-trash"></i></a>
+                                                    @endif 
                                                 </td>
                                             </tr> 
                                         @endforeach
