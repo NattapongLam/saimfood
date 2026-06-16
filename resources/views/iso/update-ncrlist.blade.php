@@ -543,26 +543,16 @@
                                         @foreach ($dt as $key => $item)
                                         <tr>
                                             <td class="text-center ncr-row-number">
-                                                {{$key + 1}}
-                                                <input type="hidden" name="iso_ncr_products_id[{{$key}}]" value="{{$item->iso_ncr_products_id}}">
+                                                {{$loop->iteration}}
+                                                {{-- ใช้ iso_ncr_products_id เป็น key แทน $key --}}
+                                                <input type="hidden" name="iso_ncr_products_id[db_{{ $item->iso_ncr_products_id }}]" value="{{ $item->iso_ncr_products_id }}">
                                             </td>
-                                            <td>
-                                                <input class="form-control form-control-sm" type="text" name="following_productname[{{$key}}]" value="{{$item->following_productname}}" required >
-                                            </td>
-                                            <td>
-                                                <input class="form-control form-control-sm" type="text" name="following_productcode[{{$key}}]" value="{{$item->following_productcode}}" required >
-                                            </td>
-                                            <td>
-                                                <input class="form-control form-control-sm" type="text" name="following_productlot[{{$key}}]" value="{{$item->following_productlot}}" >
-                                            </td>
-                                            <td>
-                                                <input class="form-control form-control-sm" type="text" name="following_productqty[{{$key}}]" value="{{$item->following_productqty}}">
-                                            </td>
-                                            <td>
-                                                <textarea class="form-control form-control-sm" rows="1" name="following_productnote[{{$key}}]">{{$item->following_productnote}}</textarea>
-                                            </td>
+                                           <td><input class="form-control form-control-sm" type="text" name="following_productname[db_{{ $item->iso_ncr_products_id }}]" value="{{ $item->following_productname }}" required></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="following_productcode[db_{{ $item->iso_ncr_products_id }}]" value="{{ $item->following_productcode }}" required></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="following_productlot[db_{{ $item->iso_ncr_products_id }}]" value="{{ $item->following_productlot }}"></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="following_productqty[db_{{ $item->iso_ncr_products_id }}]" value="{{ $item->following_productqty }}"></td>
+                                            <td><textarea class="form-control form-control-sm" rows="1" name="following_productnote[db_{{ $item->iso_ncr_products_id }}]">{{ $item->following_productnote }}</textarea></td>
                                             <td class="text-center">
-    
                                                     <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_ncr_products_id }}')">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
@@ -709,7 +699,10 @@ function updateNcrRowNumbers() {
     if (!ncrTbody) return;
     ncrTbody.querySelectorAll('tr').forEach((row, index) => {
         const numberTd = row.querySelector('.ncr-row-number');
-        if (numberTd) numberTd.textContent = index + 1;
+        if (numberTd) {
+            let span = numberTd.querySelector('.row-number-label');
+            if (span) span.textContent = index + 1;
+        }
     });
 }
 
@@ -720,6 +713,7 @@ if (addBtn && ncrTbody) {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
             <td class="text-center ncr-row-number">
+                <span class="row-number-label"></span>
                 <input type="hidden" name="iso_ncr_products_id[${uniqueIndex}]" value="0">
             </td>
             <td><input class="form-control form-control-sm" type="text" name="following_productname[${uniqueIndex}]" required></td>

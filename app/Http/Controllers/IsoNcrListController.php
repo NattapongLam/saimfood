@@ -214,40 +214,38 @@ class IsoNcrListController extends Controller
             {
                 DB::beginTransaction();
                 $hd = IsoNcrList::where('iso_ncr_lists_id',$id)->update($data);
-                 if ($request->has('following_productname')) {
+                if ($request->has('following_productname')) {
                     foreach ($request->following_productname as $key => $value) {
-                        // ตรวจสอบว่ามีข้อมูลชื่อผลิตภัณฑ์ในแถวนั้นๆ หรือไม่
                         if (!empty($value)) {
-                            // เขียนคำสั่งสร้าง Model หรือ Insert DB ตรงนี้
-                            $ck = IsoNcrProduct::where('iso_ncr_products_id',$request->iso_ncr_products_id[$key])->first();
-                            if (!empty($ck)){
-                                IsoNcrProduct::where('iso_ncr_products_id',$request->iso_ncr_products_id[$key])
-                                ->update([
-                                    'following_productname' => $value,
-                                    'following_productcode' => $request->following_productcode[$key] ?? null,
-                                    'following_productlot'  => $request->following_productlot[$key] ?? null,
-                                    'following_productqty'  => $request->following_productqty[$key] ?? null,
-                                    'following_productnote' => $request->following_productnote[$key] ?? null,
-                                    'iso_ncr_lists_id' => $id,
-                                    'person_at' => Auth::user()->name,
-                                    'updated_at' => Carbon::now(),
-                                    'flag' => 1
-                                ]);
-                            }else{
+                            $productId = $request->iso_ncr_products_id[$key] ?? 0;
+
+                            if ($productId == 0) { // ← new row (value="0" from blade)
                                 IsoNcrProduct::create([
                                     'following_productname' => $value,
                                     'following_productcode' => $request->following_productcode[$key] ?? null,
                                     'following_productlot'  => $request->following_productlot[$key] ?? null,
                                     'following_productqty'  => $request->following_productqty[$key] ?? null,
                                     'following_productnote' => $request->following_productnote[$key] ?? null,
-                                    'iso_ncr_lists_id' => $id,
-                                    'person_at' => Auth::user()->name,
-                                    'created_at' => Carbon::now(),
-                                    'updated_at' => Carbon::now(),
-                                    'flag' => 1
+                                    'iso_ncr_lists_id'      => $id,
+                                    'person_at'             => Auth::user()->name,
+                                    'created_at'            => Carbon::now(),
+                                    'updated_at'            => Carbon::now(),
+                                    'flag'                  => 1
                                 ]);
+                            } else { // ← existing row (real id from DB)
+                                IsoNcrProduct::where('iso_ncr_products_id', $productId)
+                                    ->update([
+                                        'following_productname' => $value,
+                                        'following_productcode' => $request->following_productcode[$key] ?? null,
+                                        'following_productlot'  => $request->following_productlot[$key] ?? null,
+                                        'following_productqty'  => $request->following_productqty[$key] ?? null,
+                                        'following_productnote' => $request->following_productnote[$key] ?? null,
+                                        'iso_ncr_lists_id'      => $id,
+                                        'person_at'             => Auth::user()->name,
+                                        'updated_at'            => Carbon::now(),
+                                        'flag'                  => 1
+                                    ]);
                             }
-                            
                         }
                     }
                 }
