@@ -23,6 +23,7 @@ class IsoProductTestingPlanController extends Controller
     public function index()
     {
         $hd = IsoProductTestingPlan::select('iso_product_testing_plans_date')
+            ->where('iso_product_testing_plans_flag',true)
             ->groupBy('iso_product_testing_plans_date')
             ->orderBy('iso_product_testing_plans_date', 'desc')
             ->get();
