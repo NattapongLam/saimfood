@@ -119,7 +119,7 @@ class IsoDarListController extends Controller
     public function edit($id)
     {
         $hd = IsoDarList::find($id);
-        $dt = IsoDarSub::where('flag',true)->get();
+        $dt = IsoDarSub::where('flag',true)->where('iso_dar_lists_id',$id)->get();
         return view('iso.edit-darlist',compact('hd','dt'));
     }
 
