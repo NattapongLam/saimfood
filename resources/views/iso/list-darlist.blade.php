@@ -62,9 +62,7 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if ($item->approved_status =="รอทบทวน")
-                                                     <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_dar_lists_id }}')"><i class="fas fa-trash"></i></a>
-                                                    @endif 
+                                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDel('{{ $item->iso_dar_lists_id }}')"><i class="fas fa-trash"></i></a>
                                                 </td>
                                             </tr> 
                                         @endforeach
