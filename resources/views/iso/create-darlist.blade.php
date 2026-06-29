@@ -19,7 +19,8 @@
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                     <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ใบขอดำเนินการเอกสาร DOCUMENT ACTION REQUSEST (DAR)</h5>
                             </div>
-                            <div class="card-body">
+                            <div class="card">
+                                  <div class="card-body">
                                 <form class="custom-validation" action="{{ route('iso-darlist.store') }}" method="POST" enctype="multipart/form-data" validate>
                                 @csrf  
                                 <div class="row mt-2"> 
@@ -133,6 +134,11 @@
                                     </div>
                                 </div>
                                 </form>
+                            </div>
+                            </div> 
+                            <div class="card">
+                            <div class="card-body">
+                                 <h5>สำหรับผู้ทบทวน</h5>
                                 <div class="row mt-2">
                                     <div class="col-4">
                                         <div class="form-group">
@@ -143,42 +149,48 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">วันที่</label>
-                                            <input class="form-control" type="date" name="iso_dar_lists_reviewerdate">
+                                            <input class="form-control" type="date" name="iso_dar_lists_reviewerdate" readonly>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">หมายเหตุ</label>
-                                            <input class="form-control" type="text" name="iso_dar_lists_reviewernote">
+                                            <input class="form-control" type="text" name="iso_dar_lists_reviewernote" readonly>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            </div>      
+                            <div class="card">                                             
+                            <div class="card-body">
+                                 <h5>สำหรับผู้อนุมัติ</h5>
                                 <div class="row mt-2">
                                     <div class="col-4">
                                           <div class="form-group">
                                             <label class="form-label">การตัดสินใจของผู้อนุมัติ</label>
-                                            <select class="form-select" name="approved_status">
+                                            <select class="form-select" name="approved_status" disabled>
                                                 <option value="">กรุณาเลือก</option>
                                                 <option value="อนุมัติ">อนุมัติ</option>
                                                 <option value="ไม่อนุมัติ">ไม่อนุมัติ</option>
                                             </select>
                                             <br>
-                                            <input class="form-control" type="text" name="approved_remark">
+                                            <input class="form-control" type="text" name="approved_remark" readonly>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">ลงชื่อผู้อนุมัติ</label>
-                                            <input class="form-control" type="text" name="approved_by">
+                                            <input class="form-control" type="text" name="approved_by" readonly>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">วันที่</label>
-                                            <input class="form-control" type="date" name="approved_date">
+                                            <input class="form-control" type="date" name="approved_date" readonly>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                 </div>
@@ -195,7 +207,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label class="form-label">หมายเหตุ</label>
-                            <input class="form-control" type="text" name="dc_remark">
+                            <input class="form-control" type="text" name="dc_remark" readonly>
                         </div>
                     </div>
                 </div>              
@@ -203,13 +215,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="form-label">DAR No.</label>
-                            <input class="form-control" type="text" name="dc_ref1">
+                            <input class="form-control" type="text" name="dc_ref1" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                              <label class="form-label"></label>
-                            <input class="form-control" type="text" name="dc_ref2">
+                            <input class="form-control" type="text" name="dc_ref2" readonly>
                         </div>
                     </div>
                 </div>
@@ -217,13 +229,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="form-label">วันที่มีผลบังคับใช้</label>
-                            <input class="form-control" type="date" name="effective_date1">
+                            <input class="form-control" type="date" name="effective_date1" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                              <label class="form-label"></label>
-                            <input class="form-control" type="date" name="effective_date2">
+                            <input class="form-control" type="date" name="effective_date2" readonly>
                         </div>
                     </div>
                 </div>
@@ -231,13 +243,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="form-label">วันที่เริ่มดำเนินการ</label>
-                            <input class="form-control" type="date" name="start_date1">
+                            <input class="form-control" type="date" name="start_date1" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                              <label class="form-label"></label>
-                            <input class="form-control" type="date" name="start_date2">
+                            <input class="form-control" type="date" name="start_date2" readonly>
                         </div>
                     </div>
                 </div>
@@ -245,18 +257,18 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="form-label">วันที่เอกสารดำเนินการแล้วเสร็จ</label>
-                            <input class="form-control" type="date" name="dc_date">
+                            <input class="form-control" type="date" name="dc_date" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                              <label class="form-label">ลงชื่อผู้รับผิดชอบ (DC)</label>
-                            <input class="form-control" type="text" name="dc_by">
+                            <input class="form-control" type="text" name="dc_by" readonly>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>ะ
+        </div>
     </div>
 </div>
 @endsection

@@ -20,21 +20,18 @@
                                     <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow me-3"></i>ใบขอดำเนินการเอกสาร DOCUMENT ACTION REQUSEST (DAR)</h5>
                             </div>
                             <div class="card">
-                                   <div class="card-body">
-                                <form class="custom-validation" action="{{ route('iso-darlist.update',$hd->iso_dar_lists_id) }}" method="POST" enctype="multipart/form-data" validate>
-                                @csrf  
-                                @method('PUT')
+                                <div class="card-body">
                                 <div class="row mt-2"> 
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">ฝ่าย/แผนก</label>
-                                            <input class="form-control" type="text" name="iso_dar_lists_department" value="{{$hd->iso_dar_lists_department}}" required>
+                                            <input class="form-control" type="text" name="iso_dar_lists_department" value="{{$hd->iso_dar_lists_department}}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">วัตถุประสงค์</label>
-                                            <select class="form-select" name="iso_dar_lists_objective" required>
+                                            <select class="form-select" name="iso_dar_lists_objective" disabled>
                                                 <option value="{{$hd->iso_dar_lists_objective}}">{{$hd->iso_dar_lists_objective}}</option>
                                                 <option value="จัดทำเอกสารใหม่">จัดทำเอกสารใหม่</option>
                                                 <option value="แก้ไข/ปรับปรุงเอกสาร">แก้ไข/ปรับปรุงเอกสาร</option>
@@ -43,13 +40,13 @@
                                                 <option value="อื่นๆ">อื่นๆ</option>
                                             </select>
                                             <br>
-                                            <input class="form-control" type="text" name="objective_remark" value="{{$hd->objective_remark}}">
+                                            <input class="form-control" type="text" name="objective_remark" value="{{$hd->objective_remark}}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                           <div class="form-group">
                                             <label class="form-label">ประเภทเอกสาร</label>
-                                            <select class="form-select" name="iso_dar_lists_docutype" required>
+                                            <select class="form-select" name="iso_dar_lists_docutype" disabled>
                                                 <option value="{{$hd->iso_dar_lists_docutype}}">{{$hd->iso_dar_lists_docutype}}</option>
                                                 <option value="คู่มือคุณภาพ (QM)">คู่มือคุณภาพ (QM)</option>
                                                 <option value="แบบฟอร์ม (F)">แบบฟอร์ม (F)</option>
@@ -59,7 +56,7 @@
                                                 <option value="SE - เอกสารสนับสนุนภายนอกของฝ่าย/แผนก">SE - เอกสารสนับสนุนภายนอกของฝ่าย/แผนก</option>
                                             </select>
                                             <br>
-                                            <input class="form-control" type="text" name="docutype_remark" value="{{$hd->docutype_remark}}">
+                                            <input class="form-control" type="text" name="docutype_remark" value="{{$hd->docutype_remark}}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -96,31 +93,31 @@
                                                     <input type="hidden"
                                                         name="iso_dar_subs_listno[]"
                                                         class="row-number-hidden"
-                                                        value="{{$item->iso_dar_subs_listno}}">
+                                                        value="{{$item->iso_dar_subs_listno}}" readonly>
                                                 </td>
 
                                                 <td>
                                                     <input class="form-control"
                                                         name="iso_dar_subs_code[]"
-                                                        value="{{$item->iso_dar_subs_code}}">
+                                                        value="{{$item->iso_dar_subs_code}}" readonly>
                                                 </td>
 
                                                 <td>
                                                     <input class="form-control"
                                                         name="iso_dar_subs_rev1[]"
-                                                        value="{{$item->iso_dar_subs_rev1}}">
+                                                        value="{{$item->iso_dar_subs_rev1}}" readonly>
                                                 </td>
 
                                                 <td>
                                                     <input class="form-control"
                                                         name="iso_dar_subs_rev2[]"
-                                                        value="{{$item->iso_dar_subs_rev2}}">
+                                                        value="{{$item->iso_dar_subs_rev2}}" readonly>
                                                 </td>
 
                                                 <td>
                                                     <input class="form-control"
                                                         name="iso_dar_subs_name[]"
-                                                        value="{{$item->iso_dar_subs_name}}">
+                                                        value="{{$item->iso_dar_subs_name}}" readonly>
                                                 </td>
 
                                                 <td>
@@ -138,7 +135,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label class="form-label">เหตุผลที่ร้องขอ</label>
-                                            <input class="form-control" type="text" name="iso_dar_lists_reason" value="{{$hd->iso_dar_lists_reason}}" required>
+                                            <input class="form-control" type="text" name="iso_dar_lists_reason" value="{{$hd->iso_dar_lists_reason}}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -146,7 +143,6 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label class="form-label">เอกสารแนบ</label>
-                                            <input class="form-control" type="file" name="iso_dar_lists_file">
                                             @if ($hd->iso_dar_lists_file)
                                                 <a href="{{ asset($hd->iso_dar_lists_file) }}" target="_blank">
                                                     <i class="fas fa-file"></i>
@@ -168,7 +164,7 @@
                                                 type="date" 
                                                 name="iso_dar_lists_date"
                                                 value="{{$hd->iso_dar_lists_date }}"
-                                            >
+                                                readonly >
                                         </div>
                                     </div>
                                 </div>
@@ -177,37 +173,6 @@
                             <div class="card">
                             <div class="card-body">
                                 <h5>สำหรับผู้ทบทวน</h5>
-                                @if ($hd->status_id == 1)
-                                        <div class="row mt-2">
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">ผู้ทบทวน</label>
-                                                    <input class="form-control" type="text" name="iso_dar_lists_reviewer" value="{{auth()->user()->name}}" readonly>
-                                                </div>
-                                            </div>                                  
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">วันที่</label>
-                                                    <input class="form-control" type="date" name="iso_dar_lists_reviewerdate" value="{{ old('iso_dar_lists_date', date('Y-m-d')) }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">หมายเหตุ</label>
-                                                    <input class="form-control" type="text" name="iso_dar_lists_reviewernote">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="form-group">
-                                            <div class="d-flex flex-wrap gap-2 justify-content">
-                                                <button type="submit" class="btn btn-primary waves-effect waves-light" >
-                                                    บันทึกทบทวน
-                                                </button>
-                                            </div>
-                                        </div>
-                                        </form>
-                                @else
                                     <div class="row mt-2">
                                         <div class="col-4">
                                             <div class="form-group">
@@ -228,49 +193,11 @@
                                             </div>
                                         </div>
                                     </div> 
-                                @endif
                             </div>
                             </div> 
                             <div class="card">
                                 <div class="card-body">
                                 <h5>สำหรับผู้อนุมัติ</h5>
-                                    @if ($hd->status_id == 2)
-                                        <div class="row mt-2">
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">การตัดสินใจของผู้อนุมัติ</label>
-                                                    <select class="form-select" name="approved_status">
-                                                        <option value="">กรุณาเลือก</option>
-                                                        <option value="อนุมัติ">อนุมัติ</option>
-                                                        <option value="ไม่อนุมัติ">ไม่อนุมัติ</option>
-                                                    </select>
-                                                    <br>
-                                                    <input class="form-control" type="text" name="approved_remark">
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">ลงชื่อผู้อนุมัติ</label>
-                                                    <input class="form-control" type="text" name="approved_by" value="{{auth()->user()->name}}" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">วันที่</label>
-                                                    <input class="form-control" type="date" name="approved_date" value="{{ old('iso_dar_lists_date', date('Y-m-d')) }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="form-group">
-                                            <div class="d-flex flex-wrap gap-2 justify-content">
-                                                <button type="submit" class="btn btn-primary waves-effect waves-light" >
-                                                    บันทึกอนุมัติ/ไม่อนุมัติ
-                                                </button>
-                                            </div>
-                                        </div>
-                                        </form>
-                                    @else
                                         <div class="row mt-2">
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -297,7 +224,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endif
                                 </div>
                             </div>                        
                         </div>
@@ -315,7 +241,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label class="form-label">หมายเหตุ</label>
-                            <input class="form-control" type="text" name="dc_remark" value="{{$hd->dc_remark}}">
+                            <input class="form-control" type="text" name="dc_remark" value="{{$hd->dc_remark}}" readonly>
                         </div>
                     </div>
                 </div>              
@@ -323,13 +249,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="form-label">DAR No.</label>
-                            <input class="form-control" type="text" name="dc_ref1" value="{{$hd->dc_ref1}}">
+                            <input class="form-control" type="text" name="dc_ref1" value="{{$hd->dc_ref1}}" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                              <label class="form-label"></label>
-                            <input class="form-control" type="text" name="dc_ref2" value="{{$hd->dc_ref2}}">
+                            <input class="form-control" type="text" name="dc_ref2" value="{{$hd->dc_ref2}}" readonly>
                         </div>
                     </div>
                     <div class="col-4">
@@ -342,18 +268,18 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="form-label">วันที่มีผลบังคับใช้</label>
-                            <input class="form-control" type="date" name="effective_date1" value="{{$hd->effective_date1}}">
+                            <input class="form-control" type="date" name="effective_date1" value="{{$hd->effective_date1}}" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                              <label class="form-label"></label>
-                            <input class="form-control" type="date" name="effective_date2" value="{{$hd->effective_date2}}">
+                            <input class="form-control" type="date" name="effective_date2" value="{{$hd->effective_date2}}" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <select class="form-select" name="docutype">
+                            <select class="form-select" name="docutype" disabled>
                                 <option value="เอกสารควบคุม">เอกสารควบคุม</option>
                                 <option value="เอกสารไม่ควบคุม">เอกสารไม่ควบคุม</option>
                             </select>
@@ -364,13 +290,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="form-label">วันที่เริ่มดำเนินการ</label>
-                            <input class="form-control" type="date" name="start_date1" value="{{$hd->start_date1}}">
+                            <input class="form-control" type="date" name="start_date1" value="{{$hd->start_date1}}" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                              <label class="form-label"></label>
-                            <input class="form-control" type="date" name="start_date2" value="{{$hd->start_date2}}">
+                            <input class="form-control" type="date" name="start_date2" value="{{$hd->start_date2}}" readonly>
                         </div>
                     </div>
                 </div>
@@ -378,7 +304,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="form-label">วันที่เอกสารดำเนินการแล้วเสร็จ</label>
-                            <input class="form-control" type="date" name="dc_date" value="{{$hd->dc_date}}">
+                            <input class="form-control" type="date" name="dc_date" value="{{$hd->dc_date}}" readonly>
                         </div>
                     </div>
                     <div class="col-4">
@@ -387,18 +313,7 @@
                             <input class="form-control" type="text" name="dc_by" value="{{$hd->dc_by}}" readonly>
                         </div>
                     </div>
-                </div>
-                @if ($hd->approved_status == "อนุมัติ" || $hd->approved_status == "ไม่อนุมัติ")
-                    <br>
-                                <div class="form-group">
-                                    <div class="d-flex flex-wrap gap-2 justify-content">
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light" >
-                                            บันทึก
-                                        </button>
-                                    </div>
-                                </div>
-                                </form>
-                @endif              
+                </div>        
             </div>
         </div>
     </div>

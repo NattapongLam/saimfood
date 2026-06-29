@@ -65,7 +65,8 @@ class IsoDarListController extends Controller
             'flag' => true,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'approved_status' => "รอทบทวน"
+            'approved_status' => "รอทบทวน",
+            'status_id' => 1
         ];
         if ($request->hasFile('iso_dar_lists_file') && $request->file('iso_dar_lists_file')->isValid()) {
             $filename = "ISO_" . now()->format('YmdHis') . "_" . Str::random(5) . '.' . $request->file('iso_dar_lists_file')->getClientOriginalExtension();
@@ -107,7 +108,9 @@ class IsoDarListController extends Controller
      */
     public function show($id)
     {
-        //
+        $hd = IsoDarList::find($id);
+        $dt = IsoDarSub::where('flag',true)->where('iso_dar_lists_id',$id)->get();
+        return view('iso.view-darlist',compact('hd','dt'));
     }
 
     /**
@@ -133,7 +136,7 @@ class IsoDarListController extends Controller
     public function update(Request $request, $id)
     {
         $hd = IsoDarList::find($id);
-        if($hd->approved_status == "รอทบทวน"){
+        if($hd->status_id == 1){
             try 
             {
                 DB::beginTransaction();
@@ -141,7 +144,8 @@ class IsoDarListController extends Controller
                     'iso_dar_lists_reviewer' => $request->iso_dar_lists_reviewer,
                     'iso_dar_lists_reviewerdate' => $request->iso_dar_lists_reviewerdate,
                     'iso_dar_lists_reviewernote' => $request->iso_dar_lists_reviewernote,
-                    'approved_status' => "ทบทวนแล้ว"
+                    'approved_status' => "ทบทวนเรียบร้อย",
+                    'status_id' => 2
                 ]);
                 DB::commit();
                 return redirect()->route('iso-darlist.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
@@ -151,7 +155,7 @@ class IsoDarListController extends Controller
                 dd($message);
                 return redirect()->route('iso-darlist.index')->with('error', 'บันทึกข้อมูลไม่สำเร็จ');
             }     
-        }elseif($hd->approved_status == "ทบทวนแล้ว"){
+        }elseif($hd->status_id == 2){
             try 
             {
                 DB::beginTransaction();
@@ -159,7 +163,8 @@ class IsoDarListController extends Controller
                     'approved_by' => $request->approved_by,
                     'approved_date' => $request->approved_date,
                     'approved_remark' => $request->approved_remark,
-                    'approved_status' => $request->approved_status
+                    'approved_status' => $request->approved_status,
+                    'status_id' => 3
                 ]);
                 DB::commit();
                 return redirect()->route('iso-darlist.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');
@@ -183,7 +188,8 @@ class IsoDarListController extends Controller
                     'start_date2' => $request->start_date2,
                     'dc_by' => Auth::user()->name,
                     'dc_date' => $request->dc_date,
-                    'docutype' => $request->docutype
+                    'docutype' => $request->docutype,
+                    'status_id' => 4
                 ]);
                 DB::commit();
                 return redirect()->route('iso-darlist.index')->with('success', 'บันทึกข้อมูลเรียบร้อย');

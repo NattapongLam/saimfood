@@ -51,14 +51,16 @@
                                                 <td>{{$item->iso_dar_lists_reason}}</td>
                                                 <td>{{$item->iso_dar_lists_person}} วันที่ {{$item->iso_dar_lists_date}}</td>
                                                 <td>
-                                                    @if ($item->approved_status =="รอทบทวน")
+                                                    @if ($item->status_id == 1)
                                                         <a href="{{ route('iso-darlist.edit', $item->iso_dar_lists_id) }}"class="btn btn-warning btn-sm"><i class="bx bx-edit-alt">ทบทวน</i></a>
-                                                    @elseif($item->approved_status =="ทบทวนแล้ว")
+                                                    @elseif($item->status_id == 2)
                                                         <a href="{{ route('iso-darlist.edit', $item->iso_dar_lists_id) }}"class="btn btn-primary btn-sm"><i class="bx bx-edit-alt">อนุมัติ</i></a>
-                                                    @else
+                                                    @elseif($item->status_id == 3)
                                                         @if (auth()->user()->username == "admin" || auth()->user()->username == "660223125")
                                                             <a href="{{ route('iso-darlist.edit', $item->iso_dar_lists_id) }}"class="btn btn-info btn-sm"><i class="bx bx-edit-alt">DC</i></a>
                                                         @endif
+                                                    @else
+                                                       <a href="{{ route('iso-darlist.show', $item->iso_dar_lists_id) }}"class="btn btn-success btn-sm"><i class="bx bx-street-view">รายละเอียด</i></a>
                                                     @endif
                                                 </td>
                                                 <td>
