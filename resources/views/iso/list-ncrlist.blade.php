@@ -34,7 +34,6 @@
                         <thead class="table-light text-secondary text-uppercase fs-7 text-center">
                             <tr>
                                 <th style="width: 5%">ลำดับ</th>
-                                <th style="width: 12%">สถานะ</th>
                                 <th style="width: 10%">เลขที่ NCR</th>
                                 <th style="width: 10%">วันที่ออก NCR</th>
                                 <th style="width: 25%">ปัญหาที่พบ</th>
@@ -49,21 +48,6 @@
                             @foreach ($hd as $key => $item)
                                 <tr>
                                     <td class="text-center fw-medium text-dark">{{$key+1}}</td>
-                                    <td class="text-center">
-                                        @if ($item->status == 1)
-                                            <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-20 px-2 py-1d5">ส่งคำร้องขอ</span> 
-                                        @elseif($item->status == 2)
-                                            <span class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info border-opacity-20 px-2 py-1d5">ตอบกลับปัญหา</span> 
-                                        @elseif($item->status == 3)
-                                            <span class="badge rounded-pill bg-warning bg-opacity-10 text-warning border border-warning border-opacity-20 px-2 py-1d5">อนุมัติตอบกลับ</span> 
-                                        @elseif($item->status == 4)
-                                            <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary border border-primary border-opacity-20 px-2 py-1d5">ดำเนินการแก้ไข</span>
-                                        @elseif($item->status == 5)
-                                            <span class="badge rounded-pill text-white px-2 py-1d5" style="background-color: #6f42c1;">อนุมัติการแก้ไข</span>
-                                        @elseif($item->status == 6)
-                                            <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-20 px-2 py-1d5"><i class="bx bx-check-circle me-1"></i>เรียบร้อย</span>
-                                        @endif
-                                    </td>
                                     <td class="text-center fw-bold text-dark">{{$item->iso_ncr_lists_docuno}}</td>
                                     <td class="text-center text-nowrap">{{$item->iso_ncr_lists_date}}</td>
                                     <td class="text-start text-wrap text-dark lh-base" style="max-width: 250px;">{{$item->iso_ncr_lists_problem}}</td>
@@ -71,8 +55,21 @@
                                     <td class="text-center text-nowrap">{{$item->iso_ncr_lists_closedate ?? '-'}}</td>
                                     <td class="text-start text-muted" style="max-width: 150px;">{{$item->iso_ncr_lists_remark ?? '-'}}</td>
                                     <td class="text-center">
+                                            @if ($item->status == 1)
+                                            <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-20 px-2 py-1d5">ส่งคำร้องขอ</span> 
+                                            @elseif($item->status == 2)
+                                                <span class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info border-opacity-20 px-2 py-1d5">ตอบกลับปัญหา</span> 
+                                            @elseif($item->status == 3)
+                                                <span class="badge rounded-pill bg-warning bg-opacity-10 text-warning border border-warning border-opacity-20 px-2 py-1d5">อนุมัติตอบกลับ</span> 
+                                            @elseif($item->status == 4)
+                                                <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary border border-primary border-opacity-20 px-2 py-1d5">ดำเนินการแก้ไข</span>
+                                            @elseif($item->status == 5)
+                                                <span class="badge rounded-pill text-white px-2 py-1d5" style="background-color: #6f42c1;">อนุมัติการแก้ไข</span>
+                                            @elseif($item->status == 6)
+                                                <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-20 px-2 py-1d5"><i class="bx bx-check-circle me-1"></i>เรียบร้อย</span>
+                                            @endif
                                         <div class="d-inline-flex gap-1">
-                                            @if (auth()->user()->username == "660223125" || auth()->user()->username == "admin")
+                                            @if (auth()->user()->username == "660223125" || auth()->user()->username == "admin" || auth()->user()->username == "670304216")
                                                 <a href="{{ route('iso-ncrlist.show', $item->iso_ncr_lists_id) }}" class="btn btn-sm btn-outline-danger btn-icon" title="แก้ไขข้อมูลหลัก"><i class="bx bx-edit"></i></a>
                                             @endif
 
